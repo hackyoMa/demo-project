@@ -1,0 +1,185 @@
+{
+  "common": {
+    "slogans": "SpringBoot+Vue+NavieUI",
+    "files": "Files",
+    "setting": "Setting",
+    "empty": "N/A",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Confirm deletion?",
+    "batchDeleteConfirm": "Confirm the deletion of the selected?",
+    "saveSuccess": "Save success",
+    "addSuccess": "Add success",
+    "createSuccess": "Create Success",
+    "deleteSuccess": "Delete success",
+    "yes": "Yes",
+    "no": "No",
+    "user": "User",
+    "role": "Role",
+    "org": "Organization",
+    "config": "Config",
+    "search": "Search",
+    "description": "Description",
+    "add": "Add",
+    "options": "Options",
+    "more": "More",
+    "total": "Total",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "info": "Info",
+    "success": "Success",
+    "warning": "Warning",
+    "error": "Error",
+    "noData": "No data",
+    "sort": "Sort",
+    "asc": "Asc",
+    "desc": "Desc"
+  },
+  "theme": {
+    "syncSystem": "Sync with system",
+    "light": "Day theme",
+    "dark": "Night theme"
+  },
+  "router": {
+    "notLogin": "Please login first",
+    "reLogin": "Please login again",
+    "isLogin": "Is login",
+    "requestFailed": "Please check the network link status"
+  },
+  "login": {
+    "login": "Sign in",
+    "username": "Username",
+    "password": "Password",
+    "remember": "Remember",
+    "success": "Sign in success",
+    "validator": {
+      "username": "Please enter username",
+      "password": "Please enter password"
+    },
+    "welcomeBack": "Welcome back"
+  },
+  "navigationBar": {
+    "logout": "Sign out",
+    "about": "About",
+    "authorizedTo": "Authorized to",
+    "authorizationTime": "Authorization time",
+    "expirationTime": "Expiration time",
+    "edition": "Edition",
+    "license": "License",
+    "version": "Version",
+    "indefinitely": "Indefinitely",
+    "logoutConfirm": "Confirm to log out?"
+  },
+  "noFound": {
+    "title": "404 Page not found",
+    "backHome": "Back to home"
+  },
+  "systemSettings": {
+    "org": {
+      "orgName": "Organization name",
+      "orgNameValidator": "Please enter organization name",
+      "orgUsers": "Users in the organization",
+      "chooseOrgFirst": "Please select the organization on the left to view details",
+      "addUserToOrg": "Add user to organization",
+      "selectAddUser": "Please select the user to be added",
+      "orgUsersDeleteConfirm": "Confirm to remove the selected user from the organization?",
+      "orgUsersDeleteSelectCheck": "Please select the users that need to be removed from the organization"
+    },
+    "role": {
+      "roleName": "Role name",
+      "roleNameValidator": "Please enter role name",
+      "rolePermissions": "Role permissions",
+      "chooseRoleFirst": "Please select the role on the left to view details",
+      "systemRole": "System role"
+    },
+    "user": {
+      "resetPassword": "Reset password",
+      "usersDeleteSelectCheck": "Please select the user to be deleted",
+      "userRolesSelectPlaceholder": "Select user role"
+    },
+    "sysConfig": {
+      "enableRecycleBin": "Whether to enable the recycle bin",
+      "recycleBinRetentionDays": "Recycle bin retention days",
+      "recycleBinRetentionDaysPlaceholder": "Recycle bin retention days (Set to 0 to never expire)",
+      "validator": {
+        "recycleBinRetentionDaysEmpty": "Please enter recycle bin retention day"
+      },
+      "closeRecycleBinTips": "Closing the Recycle Bin will empty all Recycle Bin files, sure you want to close it?"
+    }
+  },
+  "userSettings": {
+    "title": "User center",
+    "profile": {
+      "title": "Profile",
+      "username": "Login name",
+      "originalPassword": "Original password",
+      "newPassword": "New password",
+      "name": "Name",
+      "email": "Email",
+      "areaCode": "Area code",
+      "phone": "Phone",
+      "accountInfo": "Account info",
+      "changePassword": "Change password",
+      "validator": {
+        "usernameEmpty": "Please enter login name",
+        "nameEmpty": "Please enter name",
+        "emailError": "Email format is incorrect",
+        "phoneEmpty": "Please enter phone",
+        "phoneError": "Phone format is incorrect",
+        "areaCodeEmpty": "Please select an area code",
+        "passwordEmpty": "Please enter password",
+        "passwordError": "Password 6-64 characters and must contain uppercase and lowercase letters and numbers"
+      },
+      "accountStatus": {
+        "title": "Account status",
+        "systemdUser": "System user",
+        "enabled": "Enabled",
+        "nonExpired": "Non expired",
+        "credentialsNonExpired": "Credentials non expired",
+        "nonLocked": "Non locked"
+      }
+    }
+  },
+  "files": {
+    "personalFile": "Personal file",
+    "personal": {
+      "download": "Download",
+      "upload": "Upload",
+      "fileName": "Filename",
+      "folderName": "Folder name",
+      "originalPath": "Original path",
+      "size": "Size",
+      "modifiedDate": "Modified date",
+      "deletedDate": "Deleted date",
+      "rename": "Rename",
+      "share": "Share",
+      "move": "Move",
+      "moveSuccess": "Move success",
+      "restoreSuccess": "Restore success",
+      "fileSelectCheck": "Please select the file you want to work on",
+      "uploadFile": "Upload file",
+      "uploadFolder": "Upload folder",
+      "createFolder": "Create folder",
+      "folderNameEmpty": "Please enter folder name",
+      "folderNameError": "The folder name needs to be less than 255 characters and meets the rules",
+      "renameFile": "Rename",
+      "fileNameEmpty": "Please enter file name",
+      "fileNameError": "The file name needs to be less than 255 characters and cannot contain '/'",
+      "fileNotSupportPreview": "This file does not support online preview",
+      "noPermissionPreviewFile": "No permission to preview file",
+      "folderSelectCheck": "Please select a folder",
+      "rootDirectory": "Root directory",
+      "fileReadFailure": "File read failure"
+    },
+    "recycleBinFile": "Recycle bin",
+    "recycleBin": {
+      "restore": "Restore",
+      "restoreTo": "Restore to...",
+      "completelyDelete": "Completely Delete",
+      "completelyDeleteConfirm": "It will be unrecoverable after complete deletion, confirmed?",
+      "deleteAll": "Delete all",
+      "deleteAllConfirm": "Deleting all of them will be unrecoverable, confirmed?"
+    }
+  }
+}

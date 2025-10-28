@@ -1,0 +1,50 @@
+server:
+  shutdown: GRACEFUL
+  compression:
+    enabled: true
+    mime-types:
+      - text/html
+      - text/xml
+      - text/plain
+      - text/css
+      - text/javascript
+      - application/json
+      - application/xml
+      - image/vnd.microsoft.icon
+      - image/svg+xml
+      - font/woff2
+  servlet:
+    session:
+      timeout: 60s
+spring:
+  application:
+    name: demo-project
+  config:
+    # Configuration file path
+    import: optional:file:${FF_CONFIG_FILE:/opt/demo_project/config/conf.properties}
+  threads:
+    virtual:
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  messages:
+    basename: i18n/messages
+    fallback-to-system-locale: false
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+  jpa:
+    open-in-view: false
+  flyway:
+    locations: classpath:/db/migration
+    table: db_version
+logging:
+  level:
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
+    org.eclipse.jetty.ee10.servlet.ServletChannel: ERROR
+security:
+  all-whitelist:
+  whitelist:
+    POST:
+      - /user/_login

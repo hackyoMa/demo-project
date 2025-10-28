@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.7</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.github.demoproject</groupId>
+    <artifactId>demo-project</artifactId>
+    <version>1.0.0</version>
+    <name>Demo Project</name>
+    <description>SpringBoot+Vue+NavieUI</description>
+    <packaging>pom</packaging>
+
+    <url>https://github.com/hackyoMa/demo-project</url>
+    <licenses>
+        <license>
+            <name>GPL-3.0-only</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0-standalone.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>hackyo</name>
+            <email>137120918@qq.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:https://github.com/hackyoMa/demo-project.git</connection>
+        <developerConnection>scm:git:https://github.com/hackyoMa/demo-project.git</developerConnection>
+        <url>https://github.com/hackyoMa/demo-project</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <java.version>25</java.version>
+        <netty.version>4.2.7.Final</netty.version>
+        <ulid.version>8.3.0</ulid.version>
+        <jjwt.version>0.13.0</jjwt.version>
+        <bouncycastle.version>1.82</bouncycastle.version>
+        <commons-exec.version>1.5.0</commons-exec.version>
+        <redisson.version>3.52.0</redisson.version>
+        <hikaricp.version>7.0.2</hikaricp.version>
+        <flyway.version>11.15.0</flyway.version>
+        <postgresql.version>42.7.8</postgresql.version>
+        <lombok.version>1.18.42</lombok.version>
+        <smart-doc.version>3.1.2</smart-doc.version>
+        <exec-maven-plugin.version>3.6.2</exec-maven-plugin.version>
+    </properties>
+
+    <modules>
+        <module>backend</module>
+        <module>frontend</module>
+    </modules>
+
+</project>
