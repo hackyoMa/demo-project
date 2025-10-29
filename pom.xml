@@ -47,7 +47,7 @@
         <netty.version>4.2.7.Final</netty.version>
         <ulid.version>8.3.0</ulid.version>
         <jjwt.version>0.13.0</jjwt.version>
-        <bouncycastle.version>1.82</bouncycastle.version>
+        <commons-codec.version>1.19.0</commons-codec.version>
         <commons-exec.version>1.5.0</commons-exec.version>
         <redisson.version>3.52.0</redisson.version>
         <hikaricp.version>7.0.2</hikaricp.version>

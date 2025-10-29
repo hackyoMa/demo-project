@@ -1,31 +1,31 @@
 server:
-  http-port: ${FF_PORT:18880}
+  http-port: ${APP_PORT:18880}
   http2:
-    enabled: ${FF_HTTPS:false}
+    enabled: ${APP_HTTPS:false}
   ssl:
-    enabled: ${FF_HTTPS:false}
-    port: ${FF_HTTPS_PORT:18881}
-    forced: ${FF_HTTPS_FORCED:true}
-    certificate: file:${FF_HTTPS_CERTIFICATE:/opt/demo_project/ssl/ssl_certificate.crt}
-    certificate-private-key:  file:${FF_HTTPS_CERTIFICATE_PRIVATE_KEY:/opt/demo_project/ssl/ssl_private.key}
+    enabled: ${APP_HTTPS:false}
+    port: ${APP_HTTPS_PORT:18881}
+    forced: ${APP_HTTPS_FORCED:true}
+    certificate: file:${APP_HTTPS_CERTIFICATE:/opt/demo_project/ssl/ssl_certificate.crt}
+    certificate-private-key:  file:${APP_HTTPS_CERTIFICATE_PRIVATE_KEY:/opt/demo_project/ssl/ssl_private.key}
 logging:
   level:
-    root: ${FF_LOG_LEVEL:INFO}
+    root: ${APP_LOG_LEVEL:INFO}
   file:
-    name: ${FF_LOG_DIR:/opt/demo_project/logs}/log.log
+    name: ${APP_LOG_DIR:/opt/demo_project/logs}/log.log
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${FF_DATASOURCE_HOST:localhost}:${FF_DATASOURCE_PORT:5432}/${FF_DATASOURCE_DATABASE:demo_project}
-    username: ${FF_DATASOURCE_USERNAME:demo_project}
-    password: ${FF_DATASOURCE_PASSWORD:demo_project}
+    url: jdbc:postgresql://${APP_DATASOURCE_HOST:localhost}:${APP_DATASOURCE_PORT:5432}/${APP_DATASOURCE_DATABASE:demo_project}
+    username: ${APP_DATASOURCE_USERNAME:demo_project}
+    password: ${APP_DATASOURCE_PASSWORD:demo_project}
 redisson:
-  file: ${FF_REDIS_CONFIG_FILE:}
-  host: ${FF_REDIS_HOST:localhost}
-  port: ${FF_REDIS_PORT:6379}
-  database: ${FF_REDIS_DATABASE:0}
-  password: ${FF_REDIS_PASSWORD:redis}
+  file: ${APP_REDIS_CONFIG_FILE:}
+  host: ${APP_REDIS_HOST:localhost}
+  port: ${APP_REDIS_PORT:6379}
+  database: ${APP_REDIS_DATABASE:0}
+  password: ${APP_REDIS_PASSWORD:redis}
 security:
   secret:
-    public-key: ${FF_SECRET_PUBLIC_KEY:/opt/demo_project/secret/id_ed25519.pub}
-    private-key: ${FF_SECRET_PRIVATE_KEY:/opt/demo_project/secret/id_ed25519}
+    public-key: ${APP_SECRET_PUBLIC_KEY:/opt/demo_project/secret/id_ed25519.pub}
+    private-key: ${APP_SECRET_PRIVATE_KEY:/opt/demo_project/secret/id_ed25519}

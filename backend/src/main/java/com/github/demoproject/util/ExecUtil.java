@@ -67,7 +67,7 @@ public final class ExecUtil {
                     }
                 }, EXECUTOR)
                 .orTimeout(execTimeout.toMillis() + TIMEOUT_BUFFER_MS, TimeUnit.MILLISECONDS)
-                .exceptionally(ex -> {
+                .exceptionally(_ -> {
                     watchdog.destroyProcess();
                     return -1;
                 });

@@ -16,211 +16,211 @@ api[0].list[0].list.push({
     order: '1',
     deprecated: 'false',
     url: '/api/license/current',
-    methodId: 'd9dca096b0af12e90395f31f32127871',
+    methodId: 'e0b43068f4727eeeb2eb1f4f49d5b1b6',
     desc: 'get current license',
 });
 api[0].list.push({
-    alias: 'UserController',
+    alias: 'PermissionController',
     order: '2',
-    link: 'usercontroller',
-    desc: 'UserController',
+    link: 'permissioncontroller',
+    desc: 'PermissionController',
     list: []
 })
 api[0].list[1].list.push({
     order: '1',
     deprecated: 'false',
-    url: '/api/user/_login',
-    methodId: 'df371d8afa0772afa2c5c3af539c505f',
-    desc: 'user login',
-});
-api[0].list[1].list.push({
-    order: '2',
-    deprecated: 'false',
-    url: '/api/user/current',
-    methodId: '8685bf45d9747c25d033e501ce981361',
-    desc: 'get current user',
-});
-api[0].list[1].list.push({
-    order: '3',
-    deprecated: 'false',
-    url: '/api/user/current',
-    methodId: '8f9239804620badca866902c1d744829',
-    desc: 'update current user',
-});
-api[0].list[1].list.push({
-    order: '4',
-    deprecated: 'false',
-    url: '/api/user/current/password',
-    methodId: 'f600ca073f19b98e37ff9c37a7009cbc',
-    desc: 'update current user password',
-});
-api[0].list[1].list.push({
-    order: '5',
-    deprecated: 'false',
-    url: '/api/user/{page}/{pageSize}',
-    methodId: 'ff8ce93d5f6a497316a38cd340188380',
-    desc: 'get user list - paged',
-});
-api[0].list[1].list.push({
-    order: '6',
-    deprecated: 'false',
-    url: '/api/user',
-    methodId: '2498f40adc7f1c162e4b55c1bfea289b',
-    desc: 'add user',
-});
-api[0].list[1].list.push({
-    order: '7',
-    deprecated: 'false',
-    url: '/api/user',
-    methodId: 'aba3d05fb4a5572e927e494d7b81a3d0',
-    desc: 'update user',
-});
-api[0].list[1].list.push({
-    order: '8',
-    deprecated: 'false',
-    url: '/api/user/{userId}',
-    methodId: '5bfa0e729eaae180920b44a2b0f53a83',
-    desc: 'delete user',
-});
-api[0].list.push({
-    alias: 'OrgController',
-    order: '3',
-    link: 'orgcontroller',
-    desc: 'OrgController',
-    list: []
-})
-api[0].list[2].list.push({
-    order: '1',
-    deprecated: 'false',
-    url: '/api/org',
-    methodId: 'c06afe6d74732c2aa5b6f26300d73e16',
-    desc: 'get org list',
-});
-api[0].list[2].list.push({
-    order: '2',
-    deprecated: 'false',
-    url: '/api/org',
-    methodId: '90d81556ef973529d7f165412b07f5ee',
-    desc: 'add org',
-});
-api[0].list[2].list.push({
-    order: '3',
-    deprecated: 'false',
-    url: '/api/org',
-    methodId: 'afce49f5f2530e8b1b8e36bbab0a825a',
-    desc: 'update org',
-});
-api[0].list[2].list.push({
-    order: '4',
-    deprecated: 'false',
-    url: '/api/org/{orgId}',
-    methodId: '57130408f70f9b2d6d68420956656bce',
-    desc: 'delete org',
-});
-api[0].list[2].list.push({
-    order: '5',
-    deprecated: 'false',
-    url: '/api/org/{orgId}/user/{page}/{pageSize}',
-    methodId: '3a6f06099f08679b328878ea04c9d065',
-    desc: 'get org user list - paged',
-});
-api[0].list[2].list.push({
-    order: '6',
-    deprecated: 'false',
-    url: '/api/org/{orgId}/user/not_exits',
-    methodId: 'e80592a574155393b08a45ea066f054e',
-    desc: 'get not exits org user',
-});
-api[0].list[2].list.push({
-    order: '7',
-    deprecated: 'false',
-    url: '/api/org/{orgId}/user',
-    methodId: 'adc30f2edfd932fcda8c0907f22f8bbd',
-    desc: 'add org user',
-});
-api[0].list[2].list.push({
-    order: '8',
-    deprecated: 'false',
-    url: '/api/org/{orgId}/user/{userId}',
-    methodId: '22184f8c5ff7daf9acdb6e9dd294f8b9',
-    desc: 'delete org user',
-});
-api[0].list.push({
-    alias: 'SysConfigController',
-    order: '4',
-    link: 'sysconfigcontroller',
-    desc: 'SysConfigController',
-    list: []
-})
-api[0].list[3].list.push({
-    order: '1',
-    deprecated: 'false',
-    url: '/api/sys-config',
-    methodId: '695a0942598f329a2e0ec5d42a3610eb',
-    desc: 'get sys config',
-});
-api[0].list[3].list.push({
-    order: '2',
-    deprecated: 'false',
-    url: '/api/sys-config',
-    methodId: '14e25b01ceb601e345d2b832a2c8b00f',
-    desc: 'update sys config',
+    url: '/api/permission',
+    methodId: 'ce72026ec54c822ae8eafeeaebfab896',
+    desc: 'get permission list',
 });
 api[0].list.push({
     alias: 'RoleController',
-    order: '5',
+    order: '3',
     link: 'rolecontroller',
     desc: 'RoleController',
     list: []
 })
-api[0].list[4].list.push({
+api[0].list[2].list.push({
     order: '1',
     deprecated: 'false',
     url: '/api/role',
-    methodId: '71c60f34f1e52e1785d46a51e85dbfec',
+    methodId: '8a40f1d0fbc28f66bf9cc0a8dcc0ba83',
     desc: 'get role list',
+});
+api[0].list[2].list.push({
+    order: '2',
+    deprecated: 'false',
+    url: '/api/role',
+    methodId: '735d8136f0cbdb13f312208d5b8388d1',
+    desc: 'add role',
+});
+api[0].list[2].list.push({
+    order: '3',
+    deprecated: 'false',
+    url: '/api/role',
+    methodId: 'b1898239b41023f9b53689dcbcd2d646',
+    desc: 'update role',
+});
+api[0].list[2].list.push({
+    order: '4',
+    deprecated: 'false',
+    url: '/api/role/{roleId}',
+    methodId: '16db08a7bc7ce888676b47ffc47a0cb5',
+    desc: 'delete role',
+});
+api[0].list[2].list.push({
+    order: '5',
+    deprecated: 'false',
+    url: '/api/role/{roleId}/permission',
+    methodId: '930b7e3bad0123d8496df6aa8e856c5d',
+    desc: 'get role permission list',
+});
+api[0].list.push({
+    alias: 'OrgController',
+    order: '4',
+    link: 'orgcontroller',
+    desc: 'OrgController',
+    list: []
+})
+api[0].list[3].list.push({
+    order: '1',
+    deprecated: 'false',
+    url: '/api/org',
+    methodId: '393ebc0f121e34326e00af5cbbcd8fc9',
+    desc: 'get org list',
+});
+api[0].list[3].list.push({
+    order: '2',
+    deprecated: 'false',
+    url: '/api/org',
+    methodId: '679eeb097a21d3d61378b711cbcf3f4c',
+    desc: 'add org',
+});
+api[0].list[3].list.push({
+    order: '3',
+    deprecated: 'false',
+    url: '/api/org',
+    methodId: 'a3b82a6869e50d7da156bd0853c0ebc5',
+    desc: 'update org',
+});
+api[0].list[3].list.push({
+    order: '4',
+    deprecated: 'false',
+    url: '/api/org/{orgId}',
+    methodId: '875c727487753be36ecd2ead022c536c',
+    desc: 'delete org',
+});
+api[0].list[3].list.push({
+    order: '5',
+    deprecated: 'false',
+    url: '/api/org/{orgId}/user/{page}/{pageSize}',
+    methodId: '43f12c0a474382ea56368e03ffc40e76',
+    desc: 'get org user list - paged',
+});
+api[0].list[3].list.push({
+    order: '6',
+    deprecated: 'false',
+    url: '/api/org/{orgId}/user/not_exits',
+    methodId: '002ebb149b1318df10258e1f264801fa',
+    desc: 'get not exits org user',
+});
+api[0].list[3].list.push({
+    order: '7',
+    deprecated: 'false',
+    url: '/api/org/{orgId}/user',
+    methodId: 'cb882fc74c3b23554d38d90b091eeebc',
+    desc: 'add org user',
+});
+api[0].list[3].list.push({
+    order: '8',
+    deprecated: 'false',
+    url: '/api/org/{orgId}/user/{userId}',
+    methodId: 'ff649fa5016774fbe6272b4028b9581f',
+    desc: 'delete org user',
+});
+api[0].list.push({
+    alias: 'UserController',
+    order: '5',
+    link: 'usercontroller',
+    desc: 'UserController',
+    list: []
+})
+api[0].list[4].list.push({
+    order: '1',
+    deprecated: 'false',
+    url: '/api/user/_login',
+    methodId: 'fa608c93406150e7c5afbcebab3d9822',
+    desc: 'user login',
 });
 api[0].list[4].list.push({
     order: '2',
     deprecated: 'false',
-    url: '/api/role',
-    methodId: 'a8deb55585dd4dad4e0c7cbd1ae758f2',
-    desc: 'add role',
+    url: '/api/user/current',
+    methodId: 'f94d599b93eb2e575b300f6a7b963160',
+    desc: 'get current user',
 });
 api[0].list[4].list.push({
     order: '3',
     deprecated: 'false',
-    url: '/api/role',
-    methodId: '0875307d23ad4ed44f0ef2cc9c293fb6',
-    desc: 'update role',
+    url: '/api/user/current',
+    methodId: '1f1e605cee35a832d5d2bb57ac80923c',
+    desc: 'update current user',
 });
 api[0].list[4].list.push({
     order: '4',
     deprecated: 'false',
-    url: '/api/role/{roleId}',
-    methodId: '056fe7d9a8f5221970e3b6dfc03f2b0c',
-    desc: 'delete role',
+    url: '/api/user/current/password',
+    methodId: '6d3623d631c0e1aa4e093758aa2bddd7',
+    desc: 'update current user password',
 });
 api[0].list[4].list.push({
     order: '5',
     deprecated: 'false',
-    url: '/api/role/{roleId}/permission',
-    methodId: '05b142d1dca29c27545f3f4bad772cf2',
-    desc: 'get role permission list',
+    url: '/api/user/{page}/{pageSize}',
+    methodId: 'bef88759f3d2f0e8eb458998f37374a3',
+    desc: 'get user list - paged',
+});
+api[0].list[4].list.push({
+    order: '6',
+    deprecated: 'false',
+    url: '/api/user',
+    methodId: '374a9add91220af2016842ac7d42b412',
+    desc: 'add user',
+});
+api[0].list[4].list.push({
+    order: '7',
+    deprecated: 'false',
+    url: '/api/user',
+    methodId: '1b863c7b7f54282c4f7704e10520f17e',
+    desc: 'update user',
+});
+api[0].list[4].list.push({
+    order: '8',
+    deprecated: 'false',
+    url: '/api/user/{userId}',
+    methodId: '322a7778bcf01800cdfa86c9f0710332',
+    desc: 'delete user',
 });
 api[0].list.push({
-    alias: 'PermissionController',
+    alias: 'SysConfigController',
     order: '6',
-    link: 'permissioncontroller',
-    desc: 'PermissionController',
+    link: 'sysconfigcontroller',
+    desc: 'SysConfigController',
     list: []
 })
 api[0].list[5].list.push({
     order: '1',
     deprecated: 'false',
-    url: '/api/permission',
-    methodId: '9b1b6b8352b4baa0cd5284cafdbc571d',
-    desc: 'get permission list',
+    url: '/api/sys-config',
+    methodId: 'b1111d20b095ae57afaf2f86e553b0d9',
+    desc: 'get sys config',
+});
+api[0].list[5].list.push({
+    order: '2',
+    deprecated: 'false',
+    url: '/api/sys-config',
+    methodId: '151641ce92f9b3e26db99ca69e4ba5af',
+    desc: 'update sys config',
 });
 document.onkeydown = keyDownSearch;
 function keyDownSearch(e) {
