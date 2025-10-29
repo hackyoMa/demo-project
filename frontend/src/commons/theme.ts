@@ -61,7 +61,7 @@ export function osThemeChange(theme: string | null) {
 }
 
 export function themeChange(theme: SupportTheme) {
-  document.documentElement.setAttribute('class', theme + '-theme');
+  document.documentElement.setAttribute('class', `${theme}-theme`);
 }
 
 export const defaultTheme: SupportTheme = getDefaultTheme();

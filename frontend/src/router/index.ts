@@ -1,15 +1,15 @@
 import type { Component } from 'vue';
 import type { RouteLocationNormalized } from 'vue-router';
-import type { PermissionType } from '@/commons/permission';
 import { createRouter, createWebHistory } from 'vue-router';
-import IconHome from '~icons/icon-park-outline/home';
-import IconPeople from '~icons/icon-park-outline/people';
-import IconSettingTwo from '~icons/icon-park-outline/setting-two';
-import { mainStore } from '@/store';
+import type { PermissionType } from '@/commons/permission';
 import { hasPermission } from '@/commons/permission';
 import home from '@/router/home';
 import systemSettings from '@/router/system-settings';
 import userSettings from '@/router/user-settings';
+import { mainStore } from '@/store';
+import IconHome from '~icons/icon-park-outline/home';
+import IconPeople from '~icons/icon-park-outline/people';
+import IconSettingTwo from '~icons/icon-park-outline/setting-two';
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -129,7 +129,7 @@ export function getRouteTitle(to: RouteLocationNormalized) {
   for (let i = to.matched.length; i--; i >= 0) {
     const title = to.matched[i]?.meta.title;
     if (title) {
-      return window.$t(title) + ' - Demo Project';
+      return `${window.$t(title)} - Demo Project`;
     }
   }
   return 'Demo Project';

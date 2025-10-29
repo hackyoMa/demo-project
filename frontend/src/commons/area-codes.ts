@@ -967,7 +967,7 @@ export default function (language: SupportLanguage) {
   const ac = [];
   for (const areaCode of areaCodes) {
     ac.push({
-      label: areaCode.value + ' (' + areaCode[language] + ')',
+      label: `${areaCode.value} (${areaCode[language]})`,
       value: areaCode.value
     });
   }

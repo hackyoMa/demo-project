@@ -1,8 +1,10 @@
 import 'virtual:uno.css';
 import '@/style.css';
-import type { NotificationApi, DialogApi, LoadingBarApi } from 'naive-ui';
-import { createApp } from 'vue';
+import type { DialogApi, LoadingBarApi, NotificationApi } from 'naive-ui';
 import { createPinia, type Pinia } from 'pinia';
+import { createApp } from 'vue';
+import App from '@/App.vue';
+import http from '@/commons/http';
 import i18n from '@/commons/i18n';
 import msg from '@/commons/msg';
 import {
@@ -10,8 +12,6 @@ import {
   hasPermissionOrDirective
 } from '@/commons/permission';
 import router from '@/router';
-import http from '@/commons/http';
-import App from '@/App.vue';
 
 declare global {
   interface Window {

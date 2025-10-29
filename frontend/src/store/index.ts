@@ -50,7 +50,7 @@ export const mainStore = defineStore('main', {
       localStorage.setItem('theme', theme);
     },
     setSideMenuCollapsed(sideMenuCollapsed: boolean) {
-      this.sideMenuCollapsed = '' + sideMenuCollapsed;
+      this.sideMenuCollapsed = `${sideMenuCollapsed}`;
       localStorage.setItem('sideMenuCollapsed', this.sideMenuCollapsed);
     },
     setToken(token: string | null, remember?: boolean) {

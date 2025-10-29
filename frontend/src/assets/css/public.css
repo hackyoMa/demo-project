@@ -8,5 +8,6 @@ body,
 }
 
 .permission-hidden {
+  /* biome-ignore lint/complexity/noImportantStyles: mandatory */
   display: none !important;
 }

@@ -17,14 +17,14 @@ const http = createAlova({
     method.config.headers['Accept-Language'] = mStore.getLanguage;
     const token = mStore.getToken;
     if (token) {
-      method.config.headers['Authorization'] = token;
+      method.config.headers.Authorization = token;
     }
   },
   responded: {
     onSuccess: async (response) => {
       const data = await response.json();
-      let code;
-      let message;
+      let code: number;
+      let message: string;
       if (data) {
         if (data.success) {
           window.$loading.finish();
@@ -54,12 +54,12 @@ const http = createAlova({
 
       window.$loading.error();
       window.$msg.error(code, message);
-      throw new Error(code + ': ' + message);
+      throw new Error(`${code}: ${message}`);
     },
     onError: (err) => {
       window.$loading.error();
       window.$msg.error(400, err.message);
-      throw new Error(400 + ': ' + err.message);
+      throw new Error(`400: ${err.message}`);
     }
   }
 });

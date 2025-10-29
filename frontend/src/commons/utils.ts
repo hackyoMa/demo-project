@@ -1,5 +1,5 @@
 import { NIcon } from 'naive-ui';
-import { h, type Component } from 'vue';
+import { type Component, h } from 'vue';
 
 function arrayToTree(items: any[], parentId: string): any[] {
   return arrayToTreeCustom(items, parentId, 'id', 'parentId');
@@ -13,7 +13,7 @@ function arrayToTreeCustom(
 ): any[] {
   const temp: any[] = [];
   for (const item of items) {
-    if (item[parentIdField] == parentId) {
+    if (item[parentIdField] === parentId) {
       const children = arrayToTreeCustom(
         items,
         item[idField],
@@ -55,10 +55,10 @@ function renderIcon(icon: Component, color?: string, size?: number) {
   }
   const props: any = {};
   if (color) {
-    props['color'] = color;
+    props.color = color;
   }
   if (size) {
-    props['size'] = size;
+    props.size = size;
   }
   return h(NIcon, props, { default: () => h(icon) });
 }

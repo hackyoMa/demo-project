@@ -1,8 +1,8 @@
 import IconBuildingOne from '~icons/icon-park-outline/building-one';
-import IconPermissions from '~icons/icon-park-outline/permissions';
-import IconPeoples from '~icons/icon-park-outline/peoples';
-import IconSettingConfig from '~icons/icon-park-outline/setting-config';
 import IconDeleteThemes from '~icons/icon-park-outline/delete-themes';
+import IconPeoples from '~icons/icon-park-outline/peoples';
+import IconPermissions from '~icons/icon-park-outline/permissions';
+import IconSettingConfig from '~icons/icon-park-outline/setting-config';
 
 export default [
   {

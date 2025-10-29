@@ -1,7 +1,7 @@
-import IconPersonalPrivacy from '~icons/icon-park-outline/personal-privacy';
-import IconWrongUser from '~icons/icon-park-outline/wrong-user';
-import IconUser from '~icons/icon-park-outline/user';
 import IconEditName from '~icons/icon-park-outline/edit-name';
+import IconPersonalPrivacy from '~icons/icon-park-outline/personal-privacy';
+import IconUser from '~icons/icon-park-outline/user';
+import IconWrongUser from '~icons/icon-park-outline/wrong-user';
 
 export default [
   {
