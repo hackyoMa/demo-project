@@ -34,7 +34,6 @@
     "globals": "16.4.0",
     "meow": "14.0.0",
     "naive-ui": "2.43.1",
-    "optionator": "0.9.4",
     "prettier": "3.6.2",
     "stylelint": "16.25.0",
     "stylelint-config-recess-order": "7.4.0",
