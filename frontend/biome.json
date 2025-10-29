@@ -53,7 +53,26 @@
   "html": {
     "formatter": {
       "enabled": true,
-      "indentStyle": "space"
+      "indentStyle": "space",
+      "bracketSameLine": true,
+      "selfCloseVoidElements": "always"
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useConst": "off",
+            "useImportType": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off"
+          }
+        }
+      }
+    }
+  ]
 }
