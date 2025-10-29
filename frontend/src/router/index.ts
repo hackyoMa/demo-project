@@ -2,7 +2,7 @@ import type { Component } from 'vue';
 import type { RouteLocationNormalized } from 'vue-router';
 import type { PermissionType } from '@/commons/permission';
 import { createRouter, createWebHistory } from 'vue-router';
-import IconDocumentFolder from '~icons/icon-park-outline/document-folder';
+import IconHome from '~icons/icon-park-outline/home';
 import IconPeople from '~icons/icon-park-outline/people';
 import IconSettingTwo from '~icons/icon-park-outline/setting-two';
 import { mainStore } from '@/store';
@@ -35,7 +35,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           title: 'common.home',
-          icon: IconDocumentFolder
+          icon: IconHome
         },
         children: home
       },

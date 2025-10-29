@@ -173,12 +173,13 @@ const emailAutoCompleteOptions = computed(() => {
   });
 });
 
-const { loading: getCurrentUserLoading, data: profileForm } = useRequest(
-  () => http.Get<any>('/user/current'),
-  {
-    initialData: {}
-  }
-).onSuccess(() => {
+const {
+  loading: getCurrentUserLoading,
+  data: profileForm,
+  send: doGetProfile
+} = useRequest(() => http.Get<any>('/user/current'), {
+  initialData: {}
+}).onSuccess(() => {
   mStore.setUser(profileForm.value);
 });
 
@@ -188,7 +189,7 @@ const { loading: saveProfileLoading, send: doSaveProfile } = useRequest(
     immediate: false
   }
 ).onSuccess(() => {
-  mStore.setUser(profileForm.value);
+  doGetProfile();
   window.$msg.success(t('common.saveSuccess'));
 });
 

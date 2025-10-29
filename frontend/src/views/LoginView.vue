@@ -2,11 +2,11 @@
   <div class="h-full">
     <div class="inset-0 absolute">
       <n-grid :cols="2" class="h-full">
-        <n-gi :span="1" class="text-center filter bg-primary">
+        <n-gi :span="1" class="filter bg-primary">
           <img
             :src="loginSide"
             alt="login side image"
-            class="w-7/12 top-1/2 relative -translate-y-2/4" />
+            class="w-7/12 left-1/2 top-1/2 relative -translate-x-2/4 -translate-y-2/4" />
         </n-gi>
         <n-gi :span="1" class="h-full relative">
           <div class="pr-6 flex h-16 items-center justify-end">
@@ -14,7 +14,7 @@
           </div>
           <div
             class="w-80 left-1/2 top-1/2 absolute -translate-x-2/4 -translate-y-2/4">
-            <div class="text-center">
+            <div class="flex justify-center">
               <img
                 class="h-12 object-contain"
                 :src="theme === SupportThemes.DARK ? logoTitleWhite : logoTitle"
