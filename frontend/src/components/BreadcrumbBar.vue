@@ -33,7 +33,7 @@ watch(
   route,
   () => {
     if (route.name === 'files-personal') {
-      const parentId = <string>route.params.parentId;
+      const parentId = route.params.parentId as string;
       if (parentId) {
         doGetAllParent(parentId);
       }
@@ -46,9 +46,9 @@ const breadcrumb = computed(() => {
   let b = [];
   for (let i = 1; i < route.matched.length; i++) {
     b.push({
-      name: route.matched[i].name,
-      label: route.matched[i].meta.title,
-      icon: route.matched[i].meta.icon,
+      name: route.matched[i]?.name,
+      label: route.matched[i]?.meta.title,
+      icon: route.matched[i]?.meta.icon,
       i18n: true
     });
   }

@@ -26,7 +26,7 @@ const router = useRouter();
 const route = useRoute();
 
 const routeName = computed((): string => {
-  return <string>route.name;
+  return route.name as string;
 });
 
 function switchTab(value: string) {

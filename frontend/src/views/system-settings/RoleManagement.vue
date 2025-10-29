@@ -129,11 +129,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { FormRules } from 'naive-ui';
 import { computed, h, ref } from 'vue';
-import { NText } from 'naive-ui';
+import { NText, type FormRules } from 'naive-ui';
 import { useI18n } from 'vue-i18n';
-import { ulid } from 'ulidx';
+import { ulid } from 'ulid';
 import { useRequest } from 'alova/client';
 import { arrayToTreeCustom } from '@/commons/utils';
 import { hasPermission } from '@/commons/permission';

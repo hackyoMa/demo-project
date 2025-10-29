@@ -1,6 +1,5 @@
-import type { AxiosResponse, AxiosError } from 'axios';
 import { createAlova } from 'alova';
-import { axiosRequestAdapter } from '@alova/adapter-axios';
+import adapterFetch from 'alova/fetch';
 import VueHook from 'alova/vue';
 import router from '@/router';
 import { mainStore } from '@/store';
@@ -8,7 +7,7 @@ import { mainStore } from '@/store';
 const http = createAlova({
   baseURL: '/api',
   statesHook: VueHook,
-  requestAdapter: axiosRequestAdapter(),
+  requestAdapter: adapterFetch(),
   cacheFor: null,
   beforeRequest: (method) => {
     if (!method.meta || method.meta.loading !== false) {
@@ -22,36 +21,21 @@ const http = createAlova({
     }
   },
   responded: {
-    onSuccess: (response: AxiosResponse) => {
-      const data = response.data;
-      if (response.config.responseType === 'blob') {
-        window.$loading.finish();
-        return data;
-      }
-      if (data.success) {
-        window.$loading.finish();
-        return data.data;
-      }
-      window.$loading.error();
-      window.$msg.error(data.code, data.message);
-      throw new Error(data.code + ': ' + data.message);
-    },
-    onError: (err: AxiosError) => {
-      window.$loading.error();
+    onSuccess: async (response) => {
+      const data = await response.json();
       let code;
       let message;
-      if (err.response) {
-        if (err.response.data) {
-          const data: any = err.response.data;
+      if (data) {
+        if (data.success) {
+          window.$loading.finish();
+          return data.data;
+        } else {
           code = data.code;
           message = data.message;
-        } else {
-          code = err.response.status;
-          message = err.response.statusText;
         }
       } else {
-        code = err.code;
-        message = err.message;
+        code = response.status;
+        message = response.statusText;
       }
 
       if (code === 401) {
@@ -68,8 +52,14 @@ const http = createAlova({
         }
       }
 
+      window.$loading.error();
       window.$msg.error(code, message);
       throw new Error(code + ': ' + message);
+    },
+    onError: (err) => {
+      window.$loading.error();
+      window.$msg.error(400, err.message);
+      throw new Error(400 + ': ' + err.message);
     }
   }
 });

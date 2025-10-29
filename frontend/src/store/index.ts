@@ -1,17 +1,14 @@
-import type { SUPPORT_LANGUAGES } from '@/commons/i18n';
-import type { SUPPORT_THEMES } from '@/commons/theme';
 import { defineStore } from 'pinia';
-import { defaultLanguage } from '@/commons/i18n';
-import { defaultTheme, getTheme } from '@/commons/theme';
+import { defaultLanguage, type SupportLanguage } from '@/commons/i18n';
+import { defaultTheme, getTheme, type SupportTheme } from '@/commons/theme';
 
 interface MainState {
-  language: SUPPORT_LANGUAGES;
-  theme: SUPPORT_THEMES;
+  language: SupportLanguage;
+  theme: SupportTheme;
   sideMenuCollapsed: string | null;
   token: string | null;
   user: any | null;
   permissionIds: string[] | null;
-  fileShowType: string | null;
 }
 
 export const mainStore = defineStore('main', {
@@ -21,14 +18,13 @@ export const mainStore = defineStore('main', {
     sideMenuCollapsed: localStorage.getItem('sideMenuCollapsed'),
     token: localStorage.getItem('token') || sessionStorage.getItem('token'),
     user: null,
-    permissionIds: null,
-    fileShowType: localStorage.getItem('fileShowType')
+    permissionIds: null
   }),
   getters: {
-    getLanguage(state): SUPPORT_LANGUAGES {
+    getLanguage(state): SupportLanguage {
       return state.language;
     },
-    getTheme(state): SUPPORT_THEMES {
+    getTheme(state): SupportTheme {
       return getTheme(state.theme);
     },
     getSideMenuCollapsed(state): boolean {
@@ -42,17 +38,14 @@ export const mainStore = defineStore('main', {
     },
     getPermissionIds(state): string[] | null {
       return state.permissionIds;
-    },
-    getFileShowType(state): string {
-      return state.fileShowType ? state.fileShowType : 'grid';
     }
   },
   actions: {
-    setLanguage(language: SUPPORT_LANGUAGES) {
+    setLanguage(language: SupportLanguage) {
       this.language = language;
       localStorage.setItem('language', language);
     },
-    setTheme(theme: SUPPORT_THEMES) {
+    setTheme(theme: SupportTheme) {
       this.theme = theme;
       localStorage.setItem('theme', theme);
     },
@@ -79,10 +72,6 @@ export const mainStore = defineStore('main', {
       this.permissionIds = user.permissionIds;
       user.permissionIds = null;
       this.user = user;
-    },
-    setFileShowType(fileShowType: string) {
-      this.fileShowType = fileShowType;
-      localStorage.setItem('fileShowType', this.fileShowType);
     }
   }
 });

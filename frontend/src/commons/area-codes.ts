@@ -1,4 +1,4 @@
-import type { SUPPORT_LANGUAGES } from '@/commons/i18n.ts';
+import type { SupportLanguage } from '@/commons/i18n.ts';
 
 const areaCodes = [
   {
@@ -963,7 +963,7 @@ const areaCodes = [
   }
 ];
 
-export default function (language: SUPPORT_LANGUAGES) {
+export default function (language: SupportLanguage) {
   const ac = [];
   for (const areaCode of areaCodes) {
     ac.push({

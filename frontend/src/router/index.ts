@@ -129,7 +129,7 @@ router.afterEach((to: RouteLocationNormalized) => {
 
 export function getRouteTitle(to: RouteLocationNormalized) {
   for (let i = to.matched.length; i--; i >= 0) {
-    const title = to.matched[i].meta.title;
+    const title = to.matched[i]?.meta.title;
     if (title) {
       return window.$t(title) + ' - Demo Project';
     }

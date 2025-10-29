@@ -1,7 +1,6 @@
 {
   "common": {
     "slogans": "SpringBoot+Vue+NavieUI",
-    "files": "文件",
     "setting": "系统设置",
     "empty": "无",
     "save": "保存",
@@ -98,15 +97,7 @@
       "usersDeleteSelectCheck": "请选择需要删除的用户",
       "userRolesSelectPlaceholder": "选择用户角色"
     },
-    "sysConfig": {
-      "enableRecycleBin": "是否开启回收站",
-      "recycleBinRetentionDays": "回收站保留天数",
-      "recycleBinRetentionDaysPlaceholder": "回收站保留天数（设置为0则永不过期）",
-      "validator": {
-        "recycleBinRetentionDaysEmpty": "请输入回收站保留天数"
-      },
-      "closeRecycleBinTips": "关闭回收站会清空所有回收站文件，确定要关闭吗？"
-    }
+    "sysConfig": {}
   },
   "userSettings": {
     "title": "用户中心",
@@ -139,47 +130,6 @@
         "credentialsNonExpired": "认证未过期",
         "nonLocked": "未锁定"
       }
-    }
-  },
-  "files": {
-    "personalFile": "个人文件",
-    "personal": {
-      "download": "下载",
-      "upload": "上传",
-      "fileName": "文件名",
-      "folderName": "文件夹名",
-      "originalPath": "原路径",
-      "size": "大小",
-      "modifiedDate": "修改时间",
-      "deletedDate": "删除时间",
-      "rename": "重命名",
-      "share": "分享",
-      "move": "移动",
-      "moveSuccess": "移动成功",
-      "restoreSuccess": "还原成功",
-      "fileSelectCheck": "请选择需要操作的文件",
-      "uploadFile": "上传文件",
-      "uploadFolder": "上传文件夹",
-      "createFolder": "新建文件夹",
-      "folderNameEmpty": "请输入文件夹名",
-      "folderNameError": "文件夹名称需要小于255个字符且符合规则",
-      "renameFile": "重命名",
-      "fileNameEmpty": "请输入文件名",
-      "fileNameError": "文件名称需要小于255个字符且不能包含'/'",
-      "fileNotSupportPreview": "该文件不支持在线预览",
-      "noPermissionPreviewFile": "没有预览文件的权限",
-      "folderSelectCheck": "请选择文件夹",
-      "rootDirectory": "根目录",
-      "fileReadFailure": "文件读取失败"
-    },
-    "recycleBinFile": "回收站",
-    "recycleBin": {
-      "restore": "还原",
-      "restoreTo": "还原至...",
-      "completelyDelete": "彻底删除",
-      "completelyDeleteConfirm": "彻底删除后将无法恢复，确认吗？",
-      "deleteAll": "清空",
-      "deleteAllConfirm": "清空后将无法恢复，确认吗？"
     }
   }
 }

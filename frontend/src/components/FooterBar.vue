@@ -1,5 +1,5 @@
 <template>
-  <n-layout-footer bordered class="h-16 text-center leading-16">
+  <n-layout-footer bordered class="leading-16 text-center h-16">
     <n-button class="underline" text @click="jumpGithub()">
       Demo Project
     </n-button>

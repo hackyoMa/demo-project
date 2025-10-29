@@ -1,25 +1,23 @@
 <template>
   <div class="h-full">
-    <div class="absolute inset-0">
+    <div class="inset-0 absolute">
       <n-grid :cols="2" class="h-full">
         <n-gi :span="1" class="text-center filter bg-primary">
           <img
             :src="loginSide"
             alt="login side image"
-            class="relative top-1/2 w-7/12 -translate-y-2/4" />
+            class="w-7/12 top-1/2 relative -translate-y-2/4" />
         </n-gi>
-        <n-gi :span="1" class="relative h-full">
-          <div class="h-16 flex items-center justify-end pr-6">
+        <n-gi :span="1" class="h-full relative">
+          <div class="pr-6 flex h-16 items-center justify-end">
             <language-and-theme></language-and-theme>
           </div>
           <div
-            class="absolute left-1/2 top-1/2 w-80 -translate-x-2/4 -translate-y-2/4">
+            class="w-80 left-1/2 top-1/2 absolute -translate-x-2/4 -translate-y-2/4">
             <div class="text-center">
               <img
                 class="h-12 object-contain"
-                :src="
-                  theme === SUPPORT_THEMES.DARK ? logoTitleWhite : logoTitle
-                "
+                :src="theme === SupportThemes.DARK ? logoTitleWhite : logoTitle"
                 alt="title logo" />
             </div>
             <div class="mt-1 text-center">
@@ -100,7 +98,7 @@ import { mainStore } from '@/store';
 import loginSide from '@/assets/images/login-side.webp';
 import logoTitle from '@/assets/images/logo-title.webp';
 import logoTitleWhite from '@/assets/images/logo-title-white.webp';
-import { SUPPORT_THEMES } from '@/commons/theme.ts';
+import { SupportThemes } from '@/commons/theme.ts';
 
 const mStore = mainStore();
 const router = useRouter();
@@ -145,7 +143,7 @@ const {
 }).onSuccess(() => {
   mStore.setToken(loginRes.value, loginForm.value.remember);
   window.$msg.success(t('login.success'), t('login.welcomeBack'));
-  const redirect = <string>route.query['redirect'];
+  const redirect = route.query['redirect'] as string;
   if (redirect && !redirect.startsWith('/login')) {
     router.push(redirect);
   } else {

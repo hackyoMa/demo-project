@@ -208,7 +208,7 @@ import { NButton } from 'naive-ui';
 import { computed, h, ref } from 'vue';
 import IconAdd from '~icons/icon-park-outline/add';
 import { useI18n } from 'vue-i18n';
-import { ulid } from 'ulidx';
+import { ulid } from 'ulid';
 import { useRequest, usePagination } from 'alova/client';
 import { hasPermission } from '@/commons/permission';
 import { arrayToTree, renderIconMethod, treeForeach } from '@/commons/utils';
@@ -533,7 +533,7 @@ function validateAddOrgUsersForm() {
 }
 
 function userTableHandleCheck(rowKeys: Array<string | number>) {
-  userTableCheck.value = <string[]>rowKeys;
+  userTableCheck.value = rowKeys as string[];
 }
 
 async function deleteOrgUsers() {

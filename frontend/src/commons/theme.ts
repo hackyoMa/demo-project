@@ -1,65 +1,67 @@
 import { useOsTheme } from 'naive-ui';
 
-export enum SUPPORT_THEMES {
-  SYNC_SYSTEM = 'syncSystem',
-  LIGHT = 'light',
-  DARK = 'dark'
-}
+export const SupportThemes = {
+  SYNC_SYSTEM: 'syncSystem',
+  LIGHT: 'light',
+  DARK: 'dark'
+} as const;
 
-function getDefaultTheme(): SUPPORT_THEMES {
-  const theme = <SUPPORT_THEMES>localStorage.getItem('theme');
-  return Object.values(SUPPORT_THEMES).includes(theme)
+export type SupportTheme = (typeof SupportThemes)[keyof typeof SupportThemes];
+
+function getDefaultTheme(): SupportTheme {
+  const theme = localStorage.getItem('theme') as SupportTheme;
+  return Object.values(SupportThemes).includes(theme)
     ? theme
-    : SUPPORT_THEMES.SYNC_SYSTEM;
+    : SupportThemes.SYNC_SYSTEM;
 }
 
-export function getTheme(theme: SUPPORT_THEMES): SUPPORT_THEMES {
-  if (theme !== SUPPORT_THEMES.SYNC_SYSTEM) {
+export function getTheme(theme: SupportTheme): SupportTheme {
+  if (theme !== SupportThemes.SYNC_SYSTEM) {
     return theme;
   }
   const osTheme = useOsTheme().value;
-  return osTheme === SUPPORT_THEMES.DARK
-    ? SUPPORT_THEMES.DARK
-    : SUPPORT_THEMES.LIGHT;
+  return osTheme === SupportThemes.DARK
+    ? SupportThemes.DARK
+    : SupportThemes.LIGHT;
 }
 
-const ICON_MAP = {
+const IconMap = {
   icon: {
     selector: 'link[rel="icon"]',
     paths: {
-      [SUPPORT_THEMES.DARK]: '/favicon-white.svg',
-      [SUPPORT_THEMES.LIGHT]: '/favicon.svg'
+      [SupportThemes.DARK]: '/favicon-white.svg',
+      [SupportThemes.LIGHT]: '/favicon.svg'
     }
   },
   shortcutIcon: {
     selector: 'link[rel="shortcut icon"]',
     paths: {
-      [SUPPORT_THEMES.DARK]: '/favicon-white.ico',
-      [SUPPORT_THEMES.LIGHT]: '/favicon.ico'
+      [SupportThemes.DARK]: '/favicon-white.ico',
+      [SupportThemes.LIGHT]: '/favicon.ico'
     }
   },
   appleTouchIconPrecomposed: {
     selector: 'link[rel="apple-touch-icon-precomposed"]',
     paths: {
-      [SUPPORT_THEMES.DARK]: '/icon72x72@2x-white.png',
-      [SUPPORT_THEMES.LIGHT]: '/icon72x72@2x.png'
+      [SupportThemes.DARK]: '/icon72x72@2x-white.png',
+      [SupportThemes.LIGHT]: '/icon72x72@2x.png'
     }
   }
 };
 
 export function osThemeChange(theme: string | null) {
   const targetTheme =
-    theme === SUPPORT_THEMES.DARK ? SUPPORT_THEMES.DARK : SUPPORT_THEMES.LIGHT;
-  Object.values(ICON_MAP).forEach(({ selector, paths }) => {
-    const icon = <HTMLLinkElement>document.querySelector(selector);
+    theme === SupportThemes.DARK ? SupportThemes.DARK : SupportThemes.LIGHT;
+  Object.values(IconMap).forEach(({ selector, paths }) => {
+    const icon = document.querySelector(selector) as HTMLLinkElement;
     if (icon) {
       icon.href = paths[targetTheme];
     }
   });
 }
 
-export function themeChange(theme: SUPPORT_THEMES) {
+export function themeChange(theme: SupportTheme) {
   document.documentElement.setAttribute('class', theme + '-theme');
 }
 
-export const defaultTheme: SUPPORT_THEMES = getDefaultTheme();
+export const defaultTheme: SupportTheme = getDefaultTheme();

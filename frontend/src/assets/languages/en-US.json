@@ -1,7 +1,6 @@
 {
   "common": {
     "slogans": "SpringBoot+Vue+NavieUI",
-    "files": "Files",
     "setting": "Setting",
     "empty": "N/A",
     "save": "Save",
@@ -98,15 +97,7 @@
       "usersDeleteSelectCheck": "Please select the user to be deleted",
       "userRolesSelectPlaceholder": "Select user role"
     },
-    "sysConfig": {
-      "enableRecycleBin": "Whether to enable the recycle bin",
-      "recycleBinRetentionDays": "Recycle bin retention days",
-      "recycleBinRetentionDaysPlaceholder": "Recycle bin retention days (Set to 0 to never expire)",
-      "validator": {
-        "recycleBinRetentionDaysEmpty": "Please enter recycle bin retention day"
-      },
-      "closeRecycleBinTips": "Closing the Recycle Bin will empty all Recycle Bin files, sure you want to close it?"
-    }
+    "sysConfig": {}
   },
   "userSettings": {
     "title": "User center",
@@ -139,47 +130,6 @@
         "credentialsNonExpired": "Credentials non expired",
         "nonLocked": "Non locked"
       }
-    }
-  },
-  "files": {
-    "personalFile": "Personal file",
-    "personal": {
-      "download": "Download",
-      "upload": "Upload",
-      "fileName": "Filename",
-      "folderName": "Folder name",
-      "originalPath": "Original path",
-      "size": "Size",
-      "modifiedDate": "Modified date",
-      "deletedDate": "Deleted date",
-      "rename": "Rename",
-      "share": "Share",
-      "move": "Move",
-      "moveSuccess": "Move success",
-      "restoreSuccess": "Restore success",
-      "fileSelectCheck": "Please select the file you want to work on",
-      "uploadFile": "Upload file",
-      "uploadFolder": "Upload folder",
-      "createFolder": "Create folder",
-      "folderNameEmpty": "Please enter folder name",
-      "folderNameError": "The folder name needs to be less than 255 characters and meets the rules",
-      "renameFile": "Rename",
-      "fileNameEmpty": "Please enter file name",
-      "fileNameError": "The file name needs to be less than 255 characters and cannot contain '/'",
-      "fileNotSupportPreview": "This file does not support online preview",
-      "noPermissionPreviewFile": "No permission to preview file",
-      "folderSelectCheck": "Please select a folder",
-      "rootDirectory": "Root directory",
-      "fileReadFailure": "File read failure"
-    },
-    "recycleBinFile": "Recycle bin",
-    "recycleBin": {
-      "restore": "Restore",
-      "restoreTo": "Restore to...",
-      "completelyDelete": "Completely Delete",
-      "completelyDeleteConfirm": "It will be unrecoverable after complete deletion, confirmed?",
-      "deleteAll": "Delete all",
-      "deleteAllConfirm": "Deleting all of them will be unrecoverable, confirmed?"
     }
   }
 }

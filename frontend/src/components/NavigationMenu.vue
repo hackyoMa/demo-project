@@ -20,7 +20,7 @@ const menus = ref<any>([]);
 
 const activeMenu = computed((): string => {
   if (route.matched.length >= 2) {
-    return <string>route.matched[1].name;
+    return route.matched[1]?.name as string;
   }
   return '';
 });
@@ -31,7 +31,7 @@ watchEffect(async () => {
   }
   if (route.matched.length === 1) {
     if (menus.value.length > 0) {
-      await router.push({ name: <string>menus.value[0].key });
+      await router.push({ name: menus.value[0].key as string });
     } else {
       await router.push({ name: 'user-settings' });
     }
@@ -59,7 +59,7 @@ async function getAllMenus() {
       }
       const roTitle = ro.meta.title;
       newMenus.push({
-        key: <string>ro.name,
+        key: ro.name as string,
         label: () =>
           h(
             RouterLink,

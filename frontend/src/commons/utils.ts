@@ -1,5 +1,5 @@
 import { NIcon } from 'naive-ui';
-import { Component, h } from 'vue';
+import { h, type Component } from 'vue';
 
 function arrayToTree(items: any[], parentId: string): any[] {
   return arrayToTreeCustom(items, parentId, 'id', 'parentId');

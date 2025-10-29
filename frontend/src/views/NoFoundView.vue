@@ -4,7 +4,7 @@
       :title="$t('noFound.title')"
       size="large"
       status="404"
-      class="relative top-1/2 -translate-y-2/4">
+      class="top-1/2 relative -translate-y-2/4">
       <template #footer>
         <n-button @click="backHome()">{{ $t('noFound.backHome') }}</n-button>
       </template>

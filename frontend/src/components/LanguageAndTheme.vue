@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-end gap-3">
+  <div class="flex gap-3 items-center justify-end">
     <n-dropdown
       :options="languagesOptions"
       :show-arrow="true"
@@ -36,8 +36,8 @@ import IconMoon from '~icons/icon-park-outline/moon';
 import IconIntermediateMode from '~icons/icon-park-outline/intermediate-mode';
 import { mainStore } from '@/store';
 import { renderIconMethod } from '@/commons/utils.ts';
-import { SUPPORT_LANGUAGES } from '@/commons/i18n.ts';
-import { SUPPORT_THEMES } from '@/commons/theme.ts';
+import { type SupportLanguage, SupportLanguages } from '@/commons/i18n.ts';
+import { type SupportTheme, SupportThemes } from '@/commons/theme.ts';
 
 const mStore = mainStore();
 const { t } = useI18n();
@@ -45,12 +45,12 @@ const { t } = useI18n();
 const languagesOptions = [
   {
     label: 'English',
-    key: SUPPORT_LANGUAGES.EN_US,
+    key: SupportLanguages.EN_US,
     icon: renderIconMethod(IconEnglish)
   },
   {
     label: '中文',
-    key: SUPPORT_LANGUAGES.ZH_CN,
+    key: SupportLanguages.ZH_CN,
     icon: renderIconMethod(IconChinese)
   }
 ];
@@ -58,26 +58,26 @@ const languagesOptions = [
 const themeOptions = computed(() => [
   {
     label: t('theme.syncSystem'),
-    key: SUPPORT_THEMES.SYNC_SYSTEM,
+    key: SupportThemes.SYNC_SYSTEM,
     icon: renderIconMethod(IconIntermediateMode)
   },
   {
     label: t('theme.light'),
-    key: SUPPORT_THEMES.LIGHT,
+    key: SupportThemes.LIGHT,
     icon: renderIconMethod(IconSun)
   },
   {
     label: t('theme.dark'),
-    key: SUPPORT_THEMES.DARK,
+    key: SupportThemes.DARK,
     icon: renderIconMethod(IconMoon)
   }
 ]);
 
-function switchLanguage(language: SUPPORT_LANGUAGES) {
+function switchLanguage(language: SupportLanguage) {
   mStore.setLanguage(language);
 }
 
-function switchTheme(theme: SUPPORT_THEMES) {
+function switchTheme(theme: SupportTheme) {
   mStore.setTheme(theme);
 }
 </script>

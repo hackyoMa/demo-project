@@ -275,7 +275,7 @@ const currentOptionUser = ref({
   password: '',
   systemdUser: false,
   enabled: true,
-  roleIds: <string[]>[]
+  roleIds: [] as string[]
 });
 const emailAutoCompleteStatus = ref<'success' | 'warning' | 'error'>('success');
 const changePassword = ref(false);
@@ -742,7 +742,7 @@ function addOrUpdateUserSuccess() {
 }
 
 function userTableHandleCheck(rowKeys: Array<string | number>) {
-  userTableCheck.value = <string[]>rowKeys;
+  userTableCheck.value = rowKeys as string[];
 }
 
 function userTableHandleSorter(params: DataTableSortState | null) {

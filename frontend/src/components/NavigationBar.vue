@@ -3,10 +3,10 @@
     <n-config-provider>
       <n-layout-header bordered class="h-16">
         <n-grid class="h-full items-center">
-          <n-gi :span="6" class="h-8 pl-6">
+          <n-gi :span="6" class="pl-6 h-8">
             <img
               class="h-8 object-contain"
-              :src="theme === SUPPORT_THEMES.DARK ? logoTitleWhite : logoTitle"
+              :src="theme === SupportThemes.DARK ? logoTitleWhite : logoTitle"
               alt="title logo" />
           </n-gi>
           <n-gi :span="14">
@@ -48,12 +48,12 @@
             @close="handleClose()">
             <template #cover>
               <n-grid
-                class="h-16 items-center border-0 border-b border-solid border-color">
+                class="border-0 border-b border-solid h-16 items-center border-color">
                 <n-gi :span="12" class="pl-6">
                   <img
                     class="h-8 object-contain !w-unset"
                     :src="
-                      theme === SUPPORT_THEMES.DARK ? logoTitleWhite : logoTitle
+                      theme === SupportThemes.DARK ? logoTitleWhite : logoTitle
                     "
                     alt="title logo" />
                 </n-gi>
@@ -114,7 +114,7 @@ import { renderIconMethod } from '@/commons/utils';
 import logoTitle from '@/assets/images/logo-title.webp';
 import logoTitleWhite from '@/assets/images/logo-title-white.webp';
 import packageInfo from '../../package.json';
-import { SUPPORT_THEMES } from '@/commons/theme.ts';
+import { SupportThemes } from '@/commons/theme.ts';
 
 const mStore = mainStore();
 const router = useRouter();

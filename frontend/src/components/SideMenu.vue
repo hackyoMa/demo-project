@@ -27,7 +27,7 @@
 <script lang="ts" setup>
 import type { MenuOption } from 'naive-ui';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
-import { Component, computed, h, ref, watchEffect } from 'vue';
+import { computed, h, ref, watchEffect, type Component } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { mainStore } from '@/store';
 import { hasPermission } from '@/commons/permission';
@@ -42,7 +42,7 @@ const sideMenuCollapsed = computed(() => mStore.getSideMenuCollapsed);
 
 const activeMenu = computed((): string => {
   if (route.matched.length >= 3) {
-    return <string>route.matched[2].name;
+    return route.matched[2]?.name as string;
   }
   return '';
 });
@@ -50,8 +50,8 @@ const activeMenu = computed((): string => {
 const currentSideMenus = ref<any[]>([]);
 
 const renderMenuLabel = (option: MenuOption) => {
-  const key = <string>option.key;
-  const label = <string>option.label;
+  const key = option.key as string;
+  const label = option.label as string;
   return h(
     RouterLink,
     { to: { name: key } },
@@ -60,7 +60,7 @@ const renderMenuLabel = (option: MenuOption) => {
 };
 
 const renderMenuIcon = (option: MenuOption) => {
-  const icon = <Component>option.customIcon;
+  const icon = option.customIcon as Component;
   return renderIcon(icon);
 };
 
@@ -69,7 +69,7 @@ watchEffect(async () => {
     if (!route.matched || route.matched.length < 2) {
       currentSideMenus.value = [];
     } else {
-      const parentName = <string>route.matched[1].name;
+      const parentName = route.matched[1]?.name as string;
       const allSideMenus = await getAllSideMenus();
       if (!Object.prototype.hasOwnProperty.call(allSideMenus, parentName)) {
         currentSideMenus.value = [];
@@ -106,7 +106,7 @@ async function getAllSideMenus() {
         if (r.meta.show && !(await r.meta.show())) {
           continue;
         }
-        const roName = <string>ro.name;
+        const roName = ro.name as string;
         if (!newAllSideMenus[roName]) {
           newAllSideMenus[roName] = [];
         }
