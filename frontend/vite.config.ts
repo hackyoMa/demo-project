@@ -1,12 +1,12 @@
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'url';
-import { defineConfig } from 'vite';
+import { fileURLToPath } from 'node:url';
 import vue from '@vitejs/plugin-vue';
 import UnoCSS from 'unocss/vite';
-import Components from 'unplugin-vue-components/vite';
-import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
+import Icons from 'unplugin-icons/vite';
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
+import Components from 'unplugin-vue-components/vite';
+import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
 
 export default defineConfig({
@@ -51,13 +51,7 @@ export default defineConfig({
     checker({
       typescript: true,
       vueTsc: true,
-      eslint: {
-        lintCommand: 'eslint "**/*.{html,mjs,ts,vue}"',
-        useFlatConfig: true
-      },
-      stylelint: {
-        lintCommand: 'stylelint **/*.{css,vue}'
-      }
+      biome: true
     })
   ]
 });

@@ -12,7 +12,6 @@
 *.vue             text diff=html
 *.css             text diff=css
 *.js              text
-*.mjs             text
 *.ts              text
 *.json            text
 *.txt             text
