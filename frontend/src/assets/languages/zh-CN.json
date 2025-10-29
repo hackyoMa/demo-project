@@ -1,6 +1,7 @@
 {
   "common": {
     "slogans": "SpringBoot+Vue+NavieUI",
+    "home": "首页",
     "setting": "系统设置",
     "empty": "无",
     "save": "保存",
@@ -131,5 +132,8 @@
         "nonLocked": "未锁定"
       }
     }
+  },
+  "demoView": {
+    "title": "样例"
   }
 }

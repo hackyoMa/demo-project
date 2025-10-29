@@ -86,7 +86,7 @@ watchEffect(async () => {
 async function getAllSideMenus() {
   let newAllSideMenus: any = {};
   for (const route of router.options.routes) {
-    if (route.name !== 'home' || !route.children) {
+    if (route.name !== 'index' || !route.children) {
       continue;
     }
     for (const ro of route.children) {

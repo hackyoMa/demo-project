@@ -147,7 +147,7 @@ const {
   if (redirect && !redirect.startsWith('/login')) {
     router.push(redirect);
   } else {
-    router.push({ name: 'home' });
+    router.push({ name: 'index' });
   }
 });
 

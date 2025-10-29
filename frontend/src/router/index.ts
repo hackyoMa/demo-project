@@ -7,7 +7,7 @@ import IconPeople from '~icons/icon-park-outline/people';
 import IconSettingTwo from '~icons/icon-park-outline/setting-two';
 import { mainStore } from '@/store';
 import { hasPermission } from '@/commons/permission';
-import files from '@/router/files';
+import home from '@/router/home';
 import systemSettings from '@/router/system-settings';
 import userSettings from '@/router/user-settings';
 
@@ -25,21 +25,19 @@ declare module 'vue-router' {
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'index',
     meta: { requiresAuth: true },
-    component: () => import('@/views/HomeView.vue'),
+    component: () => import('@/views/IndexView.vue'),
     children: [
       {
-        path: '/files',
-        name: 'files',
+        path: '/home',
+        name: 'home',
         meta: {
           requiresAuth: true,
-          title: 'common.files',
-          icon: IconDocumentFolder,
-          permission: ['personal_file:read', 'recycle_bin_file:read'],
-          permissionOr: true
+          title: 'common.home',
+          icon: IconDocumentFolder
         },
-        children: files
+        children: home
       },
       {
         path: '/system-settings',

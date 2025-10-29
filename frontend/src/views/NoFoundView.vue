@@ -6,7 +6,7 @@
       status="404"
       class="top-1/2 relative -translate-y-2/4">
       <template #footer>
-        <n-button @click="backHome()">{{ $t('noFound.backHome') }}</n-button>
+        <n-button @click="backIndex()">{{ $t('noFound.backHome') }}</n-button>
       </template>
     </n-result>
   </n-layout>
@@ -17,7 +17,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-function backHome() {
-  router.push({ name: 'home' });
+function backIndex() {
+  router.push({ name: 'index' });
 }
 </script>

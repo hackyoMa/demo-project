@@ -1,6 +1,7 @@
 {
   "common": {
     "slogans": "SpringBoot+Vue+NavieUI",
+    "home": "Home",
     "setting": "Setting",
     "empty": "N/A",
     "save": "Save",
@@ -131,5 +132,8 @@
         "nonLocked": "Non locked"
       }
     }
+  },
+  "demoView": {
+    "title": "Demo"
   }
 }

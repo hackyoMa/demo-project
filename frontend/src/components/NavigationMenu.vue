@@ -41,7 +41,7 @@ watchEffect(async () => {
 async function getAllMenus() {
   let newMenus = [];
   for (const route of router.options.routes) {
-    if (route.name !== 'home' || !route.children) {
+    if (route.name !== 'index' || !route.children) {
       continue;
     }
     for (const ro of route.children) {
