@@ -1,3 +1,13 @@
+<script lang="ts" setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+function backIndex() {
+  router.push({ name: 'index' });
+}
+</script>
+
 <template>
   <n-layout class="h-full">
     <n-result
@@ -11,13 +21,3 @@
     </n-result>
   </n-layout>
 </template>
-
-<script lang="ts" setup>
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-
-function backIndex() {
-  router.push({ name: 'index' });
-}
-</script>

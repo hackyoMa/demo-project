@@ -1,3 +1,5 @@
+<script lang="ts" setup></script>
+
 <template>
   <n-layout class="h-full">
     <navigation-bar></navigation-bar>
@@ -16,5 +18,3 @@
     </n-layout>
   </n-layout>
 </template>
-
-<script lang="ts" setup></script>

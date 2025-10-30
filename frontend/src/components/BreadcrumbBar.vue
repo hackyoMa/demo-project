@@ -1,19 +1,3 @@
-<template>
-  <n-breadcrumb class="overflow-y-auto">
-    <n-breadcrumb-item
-      v-for="(b, index) in breadcrumb"
-      :key="index"
-      @click="clickBreadcrumb(b, index)">
-      <n-flex :size="4">
-        <n-icon>
-          <component :is="b.icon" />
-        </n-icon>
-        <n-text>{{ b.label ? (b.i18n ? $t(b.label) : b.label) : '' }}</n-text>
-      </n-flex>
-    </n-breadcrumb-item>
-  </n-breadcrumb>
-</template>
-
 <script lang="ts" setup>
 import { useRequest } from 'alova/client';
 import { computed, watch } from 'vue';
@@ -84,3 +68,19 @@ function clickBreadcrumb(breadcrumb: any, index: number) {
   });
 }
 </script>
+
+<template>
+  <n-breadcrumb class="overflow-y-auto">
+    <n-breadcrumb-item
+      v-for="(b, index) in breadcrumb"
+      :key="index"
+      @click="clickBreadcrumb(b, index)">
+      <n-flex :size="4">
+        <n-icon>
+          <component :is="b.icon" />
+        </n-icon>
+        <n-text>{{ b.label ? (b.i18n ? $t(b.label) : b.label) : '' }}</n-text>
+      </n-flex>
+    </n-breadcrumb-item>
+  </n-breadcrumb>
+</template>

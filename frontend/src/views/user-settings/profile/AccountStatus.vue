@@ -1,3 +1,12 @@
+<script lang="ts" setup>
+import { computed } from 'vue';
+import { mainStore } from '@/store';
+
+const mStore = mainStore();
+
+const user = computed(() => mStore.getUser);
+</script>
+
 <template>
   <n-grid v-if="user" :cols="2">
     <n-gi :span="1">
@@ -69,12 +78,3 @@
     </n-gi>
   </n-grid>
 </template>
-
-<script lang="ts" setup>
-import { computed } from 'vue';
-import { mainStore } from '@/store';
-
-const mStore = mainStore();
-
-const user = computed(() => mStore.getUser);
-</script>

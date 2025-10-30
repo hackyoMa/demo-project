@@ -1,3 +1,19 @@
+<script lang="ts" setup>
+import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+const router = useRouter();
+const route = useRoute();
+
+const routeName = computed((): string => {
+  return route.name as string;
+});
+
+function switchTab(value: string) {
+  router.push({ name: value });
+}
+</script>
+
 <template>
   <n-card hoverable>
     <n-tabs :value="routeName" animated type="line" @update:value="switchTab">
@@ -17,19 +33,3 @@
     </div>
   </n-card>
 </template>
-
-<script lang="ts" setup>
-import { useRoute, useRouter } from 'vue-router';
-import { computed } from 'vue';
-
-const router = useRouter();
-const route = useRoute();
-
-const routeName = computed((): string => {
-  return route.name as string;
-});
-
-function switchTab(value: string) {
-  router.push({ name: value });
-}
-</script>

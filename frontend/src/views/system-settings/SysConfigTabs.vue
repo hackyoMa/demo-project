@@ -1,16 +1,3 @@
-<template>
-  <n-card hoverable>
-    <n-tabs :value="routeName" animated type="line" @update:value="switchTab">
-      <n-tab
-        :tab="$t('files.recycleBinFile')"
-        name="system-settings-sys-config-recycle-bin"></n-tab>
-    </n-tabs>
-    <div class="mt-6">
-      <router-view-content></router-view-content>
-    </div>
-  </n-card>
-</template>
-
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -43,3 +30,16 @@ function switchTab(value: string) {
   router.push({ name: value });
 }
 </script>
+
+<template>
+  <n-card hoverable>
+    <n-tabs :value="routeName" animated type="line" @update:value="switchTab">
+      <n-tab
+        :tab="$t('files.recycleBinFile')"
+        name="system-settings-sys-config-recycle-bin"></n-tab>
+    </n-tabs>
+    <div class="mt-6">
+      <router-view-content></router-view-content>
+    </div>
+  </n-card>
+</template>

@@ -1,133 +1,3 @@
-<template>
-  <n-card hoverable>
-    <n-grid :cols="4" x-gap="24">
-      <n-gi :span="1">
-        <n-flex :size="12" vertical>
-          <n-flex :wrap="false" justify="space-between">
-            <n-input
-              v-model:value="rolePattern"
-              :placeholder="$t('common.search')"
-              clearable>
-              <template #prefix>
-                <n-icon>
-                  <i-search />
-                </n-icon>
-              </template>
-            </n-input>
-            <n-button
-              v-permission="'role:add'"
-              ghost
-              type="primary"
-              @click="addRole()"
-              >{{ $t('common.add') }}</n-button
-            >
-          </n-flex>
-          <n-spin
-            :show="
-              getAllPermissionLoading ||
-              getAllBasicsPermissionLoading ||
-              getAllRoleLoading
-            ">
-            <n-tree
-              :cancelable="false"
-              :data="roles"
-              :pattern="rolePattern"
-              :selected-keys="[currentRoleId]"
-              :virtual-scroll="true"
-              block-line
-              key-field="id"
-              label-field="name"
-              @update:selected-keys="selectedRole" />
-          </n-spin>
-        </n-flex>
-      </n-gi>
-      <n-gi v-if="currentRole" :span="3">
-        <n-spin
-          :show="addRoleLoading || updateRoleLoading || deleteRoleLoading">
-          <n-form
-            ref="roleFormRef"
-            :model="currentRole"
-            :rules="roleFormRules"
-            inline>
-            <n-form-item
-              :label="$t('systemSettings.role.roleName')"
-              path="name">
-              <n-input
-                v-model:value="currentRole.name"
-                :placeholder="$t('systemSettings.role.roleName')"
-                clearable
-                maxlength="100"
-                show-count />
-            </n-form-item>
-            <n-form-item :label="$t('common.description')" path="description">
-              <n-input
-                v-model:value="currentRole.description"
-                :placeholder="$t('common.description')"
-                clearable
-                maxlength="500"
-                show-count />
-            </n-form-item>
-            <n-form-item v-permission="'role:edit'">
-              <n-button type="primary" @click="validateRoleForm()">
-                {{ $t('common.save') }}
-              </n-button>
-            </n-form-item>
-            <n-form-item
-              v-if="!currentRole.systemRole"
-              v-permission="'role:delete'">
-              <n-popconfirm
-                :positive-button-props="{ type: 'error' }"
-                @positive-click="deleteRole()">
-                <template #trigger>
-                  <n-button type="error">
-                    {{ $t('common.delete') }}
-                  </n-button>
-                </template>
-                {{ $t('common.deleteConfirm') }}
-              </n-popconfirm>
-            </n-form-item>
-          </n-form>
-          <div>
-            <div>
-              <n-text strong>
-                {{ $t('systemSettings.role.rolePermissions') }}
-              </n-text>
-            </div>
-            <n-flex :size="12" vertical class="mt-3">
-              <n-input
-                v-model:value="permissionPattern"
-                :placeholder="$t('common.search')"
-                clearable>
-                <template #prefix>
-                  <n-icon>
-                    <i-search />
-                  </n-icon>
-                </template>
-              </n-input>
-              <n-spin :show="getRolePermissionLoading">
-                <n-tree
-                  :checked-keys="permissionsChecked"
-                  :data="permissions"
-                  :pattern="permissionPattern"
-                  block-line
-                  cascade
-                  checkable
-                  key-field="id"
-                  label-field="name"
-                  @update:checked-keys="updatePermissionsChecked" />
-              </n-spin>
-            </n-flex>
-          </div>
-        </n-spin>
-      </n-gi>
-      <n-gi v-if="!currentRole" :span="3" class="mt-6">
-        <n-empty
-          :description="$t('systemSettings.role.chooseRoleFirst')"></n-empty>
-      </n-gi>
-    </n-grid>
-  </n-card>
-</template>
-
 <script lang="ts" setup>
 import { useRequest } from 'alova/client';
 import { type FormRules, NText } from 'naive-ui';
@@ -339,3 +209,133 @@ function updatePermissionsChecked(permissionIds: string[]) {
   permissionsChecked.value = permissionIds;
 }
 </script>
+
+<template>
+  <n-card hoverable>
+    <n-grid :cols="4" x-gap="24">
+      <n-gi :span="1">
+        <n-flex :size="12" vertical>
+          <n-flex :wrap="false" justify="space-between">
+            <n-input
+              v-model:value="rolePattern"
+              :placeholder="$t('common.search')"
+              clearable>
+              <template #prefix>
+                <n-icon>
+                  <i-search />
+                </n-icon>
+              </template>
+            </n-input>
+            <n-button
+              v-permission="'role:add'"
+              ghost
+              type="primary"
+              @click="addRole()"
+              >{{ $t('common.add') }}</n-button
+            >
+          </n-flex>
+          <n-spin
+            :show="
+              getAllPermissionLoading ||
+              getAllBasicsPermissionLoading ||
+              getAllRoleLoading
+            ">
+            <n-tree
+              :cancelable="false"
+              :data="roles"
+              :pattern="rolePattern"
+              :selected-keys="[currentRoleId]"
+              :virtual-scroll="true"
+              block-line
+              key-field="id"
+              label-field="name"
+              @update:selected-keys="selectedRole" />
+          </n-spin>
+        </n-flex>
+      </n-gi>
+      <n-gi v-if="currentRole" :span="3">
+        <n-spin
+          :show="addRoleLoading || updateRoleLoading || deleteRoleLoading">
+          <n-form
+            ref="roleFormRef"
+            :model="currentRole"
+            :rules="roleFormRules"
+            inline>
+            <n-form-item
+              :label="$t('systemSettings.role.roleName')"
+              path="name">
+              <n-input
+                v-model:value="currentRole.name"
+                :placeholder="$t('systemSettings.role.roleName')"
+                clearable
+                maxlength="100"
+                show-count />
+            </n-form-item>
+            <n-form-item :label="$t('common.description')" path="description">
+              <n-input
+                v-model:value="currentRole.description"
+                :placeholder="$t('common.description')"
+                clearable
+                maxlength="500"
+                show-count />
+            </n-form-item>
+            <n-form-item v-permission="'role:edit'">
+              <n-button type="primary" @click="validateRoleForm()">
+                {{ $t('common.save') }}
+              </n-button>
+            </n-form-item>
+            <n-form-item
+              v-if="!currentRole.systemRole"
+              v-permission="'role:delete'">
+              <n-popconfirm
+                :positive-button-props="{ type: 'error' }"
+                @positive-click="deleteRole()">
+                <template #trigger>
+                  <n-button type="error">
+                    {{ $t('common.delete') }}
+                  </n-button>
+                </template>
+                {{ $t('common.deleteConfirm') }}
+              </n-popconfirm>
+            </n-form-item>
+          </n-form>
+          <div>
+            <div>
+              <n-text strong>
+                {{ $t('systemSettings.role.rolePermissions') }}
+              </n-text>
+            </div>
+            <n-flex :size="12" vertical class="mt-3">
+              <n-input
+                v-model:value="permissionPattern"
+                :placeholder="$t('common.search')"
+                clearable>
+                <template #prefix>
+                  <n-icon>
+                    <i-search />
+                  </n-icon>
+                </template>
+              </n-input>
+              <n-spin :show="getRolePermissionLoading">
+                <n-tree
+                  :checked-keys="permissionsChecked"
+                  :data="permissions"
+                  :pattern="permissionPattern"
+                  block-line
+                  cascade
+                  checkable
+                  key-field="id"
+                  label-field="name"
+                  @update:checked-keys="updatePermissionsChecked" />
+              </n-spin>
+            </n-flex>
+          </div>
+        </n-spin>
+      </n-gi>
+      <n-gi v-if="!currentRole" :span="3" class="mt-6">
+        <n-empty
+          :description="$t('systemSettings.role.chooseRoleFirst')"></n-empty>
+      </n-gi>
+    </n-grid>
+  </n-card>
+</template>

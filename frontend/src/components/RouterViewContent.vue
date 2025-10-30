@@ -1,3 +1,5 @@
+<script lang="ts" setup></script>
+
 <template>
   <router-view v-slot="{ Component }">
     <transition name="fade-slide">
@@ -5,5 +7,3 @@
     </transition>
   </router-view>
 </template>
-
-<script lang="ts" setup></script>

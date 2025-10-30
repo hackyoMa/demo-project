@@ -1,26 +1,3 @@
-<template>
-  <suspense>
-    <n-config-provider
-      :date-locale="uiLanguage.date"
-      :locale="uiLanguage.language"
-      :theme="uiTheme"
-      :theme-overrides="uiTheme === null ? lightThemeParams : darkThemeParams"
-      class="h-full">
-      <n-notification-provider :max="3">
-        <notice-view></notice-view>
-      </n-notification-provider>
-      <n-dialog-provider>
-        <dialog-view></dialog-view>
-      </n-dialog-provider>
-      <n-loading-bar-provider>
-        <loading-bar-view></loading-bar-view>
-      </n-loading-bar-provider>
-      <router-view-content></router-view-content>
-      <n-global-style></n-global-style>
-    </n-config-provider>
-  </suspense>
-</template>
-
 <script lang="ts" setup>
 import {
   darkTheme,
@@ -76,3 +53,26 @@ watch(actualTheme, osThemeChange, { immediate: true });
 watch(theme, themeChange, { immediate: true });
 watch(language, languageChange, { immediate: true });
 </script>
+
+<template>
+  <suspense>
+    <n-config-provider
+      :date-locale="uiLanguage.date"
+      :locale="uiLanguage.language"
+      :theme="uiTheme"
+      :theme-overrides="uiTheme === null ? lightThemeParams : darkThemeParams"
+      class="h-full">
+      <n-notification-provider :max="3">
+        <notice-view></notice-view>
+      </n-notification-provider>
+      <n-dialog-provider>
+        <dialog-view></dialog-view>
+      </n-dialog-provider>
+      <n-loading-bar-provider>
+        <loading-bar-view></loading-bar-view>
+      </n-loading-bar-provider>
+      <router-view-content></router-view-content>
+      <n-global-style></n-global-style>
+    </n-config-provider>
+  </suspense>
+</template>

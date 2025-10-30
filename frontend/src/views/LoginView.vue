@@ -1,3 +1,77 @@
+<script lang="ts" setup>
+import { useRequest } from 'alova/client';
+import type { FormRules } from 'naive-ui';
+import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute, useRouter } from 'vue-router';
+import loginSide from '@/assets/images/login-side.webp';
+import logoTitle from '@/assets/images/logo-title.webp';
+import logoTitleWhite from '@/assets/images/logo-title-white.webp';
+import { SupportThemes } from '@/commons/theme.ts';
+import { mainStore } from '@/store';
+
+const mStore = mainStore();
+const router = useRouter();
+const route = useRoute();
+const { t } = useI18n();
+const http = window.$http;
+const loginFormRef = ref<HTMLFormElement>();
+
+const theme = computed(() => mStore.getTheme);
+
+const loginForm = ref({
+  username: '',
+  password: '',
+  remember: true
+});
+
+const loginRules = computed<FormRules>(() => {
+  return {
+    username: [
+      {
+        required: true,
+        message: t('login.validator.username'),
+        trigger: ['input', 'blur']
+      }
+    ],
+    password: [
+      {
+        required: true,
+        message: t('login.validator.password'),
+        trigger: ['input', 'blur']
+      }
+    ]
+  };
+});
+
+const {
+  loading: loginLoading,
+  data: loginRes,
+  send: doLogin
+} = useRequest(() => http.Post<any>('/user/_login', loginForm.value), {
+  immediate: false
+}).onSuccess(() => {
+  mStore.setToken(loginRes.value, loginForm.value.remember);
+  window.$msg.success(t('login.success'), t('login.welcomeBack'));
+  const redirect = route.query['redirect'] as string;
+  if (redirect && !redirect.startsWith('/login')) {
+    router.push(redirect);
+  } else {
+    router.push({ name: 'index' });
+  }
+});
+
+function validateLoginForm() {
+  if (loginFormRef.value) {
+    loginFormRef.value.validate((errors: any) => {
+      if (!errors) {
+        doLogin();
+      }
+    });
+  }
+}
+</script>
+
 <template>
   <div class="h-full">
     <div class="inset-0 absolute">
@@ -87,77 +161,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import type { FormRules } from 'naive-ui';
-import { computed, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
-import { useRequest } from 'alova/client';
-import { mainStore } from '@/store';
-import loginSide from '@/assets/images/login-side.webp';
-import logoTitle from '@/assets/images/logo-title.webp';
-import logoTitleWhite from '@/assets/images/logo-title-white.webp';
-import { SupportThemes } from '@/commons/theme.ts';
-
-const mStore = mainStore();
-const router = useRouter();
-const route = useRoute();
-const { t } = useI18n();
-const http = window.$http;
-const loginFormRef = ref<HTMLFormElement>();
-
-const theme = computed(() => mStore.getTheme);
-
-const loginForm = ref({
-  username: '',
-  password: '',
-  remember: true
-});
-
-const loginRules = computed<FormRules>(() => {
-  return {
-    username: [
-      {
-        required: true,
-        message: t('login.validator.username'),
-        trigger: ['input', 'blur']
-      }
-    ],
-    password: [
-      {
-        required: true,
-        message: t('login.validator.password'),
-        trigger: ['input', 'blur']
-      }
-    ]
-  };
-});
-
-const {
-  loading: loginLoading,
-  data: loginRes,
-  send: doLogin
-} = useRequest(() => http.Post<any>('/user/_login', loginForm.value), {
-  immediate: false
-}).onSuccess(() => {
-  mStore.setToken(loginRes.value, loginForm.value.remember);
-  window.$msg.success(t('login.success'), t('login.welcomeBack'));
-  const redirect = route.query['redirect'] as string;
-  if (redirect && !redirect.startsWith('/login')) {
-    router.push(redirect);
-  } else {
-    router.push({ name: 'index' });
-  }
-});
-
-function validateLoginForm() {
-  if (loginFormRef.value) {
-    loginFormRef.value.validate((errors: any) => {
-      if (!errors) {
-        doLogin();
-      }
-    });
-  }
-}
-</script>

@@ -1,105 +1,3 @@
-<template>
-  <div>
-    <n-config-provider>
-      <n-layout-header bordered class="h-16">
-        <n-grid class="h-full items-center">
-          <n-gi :span="6" class="pl-6 h-8">
-            <img
-              class="h-8 object-contain"
-              :src="theme === SupportThemes.DARK ? logoTitleWhite : logoTitle"
-              alt="title logo" />
-          </n-gi>
-          <n-gi :span="14">
-            <navigation-menu></navigation-menu>
-          </n-gi>
-          <n-gi :span="4" class="pr-6 text-right">
-            <language-and-theme>
-              <n-dropdown
-                :options="userOptions"
-                :show-arrow="true"
-                trigger="hover">
-                <n-button text>
-                  <n-icon :size="20">
-                    <i-people />
-                  </n-icon>
-                </n-button>
-              </n-dropdown>
-            </language-and-theme>
-          </n-gi>
-        </n-grid>
-      </n-layout-header>
-    </n-config-provider>
-    <n-modal v-model:show="showAbout" :auto-focus="false">
-      <n-watermark
-        :content="license.authorizedTo"
-        :height="128"
-        :rotate="-15"
-        :width="192"
-        :x-offset="12"
-        :y-offset="28"
-        cross
-        selectable>
-        <n-spin :show="getLicenseLoading">
-          <n-card
-            class="w-120"
-            closable
-            hoverable
-            :title="$t('navigationBar.about')"
-            @close="handleClose()">
-            <template #cover>
-              <n-grid
-                class="border-0 border-b border-solid h-16 items-center border-color">
-                <n-gi :span="12" class="pl-6">
-                  <img
-                    class="h-8 object-contain !w-unset"
-                    :src="
-                      theme === SupportThemes.DARK ? logoTitleWhite : logoTitle
-                    "
-                    alt="title logo" />
-                </n-gi>
-                <n-gi :span="12" class="pr-6 text-right">
-                  <n-text class="text-sm">
-                    {{ $t('common.slogans') }}
-                  </n-text>
-                </n-gi>
-              </n-grid>
-            </template>
-            <n-descriptions :column="2" label-placement="left">
-              <n-descriptions-item :label="$t('navigationBar.authorizedTo')">
-                {{ license.authorizedTo }}
-              </n-descriptions-item>
-              <n-descriptions-item
-                :label="$t('navigationBar.authorizationTime')">
-                <n-time
-                  v-if="license.startDate"
-                  :time="license.startDate"
-                  format="PP"></n-time>
-                <n-text v-else>{{ $t('common.empty') }}</n-text>
-              </n-descriptions-item>
-              <n-descriptions-item :label="$t('navigationBar.expirationTime')">
-                <n-time
-                  v-if="license.endDate"
-                  :time="license.endDate"
-                  format="PP"></n-time>
-                <n-text v-else>{{ $t('navigationBar.indefinitely') }}</n-text>
-              </n-descriptions-item>
-              <n-descriptions-item :label="$t('navigationBar.edition')">
-                {{ license.edition }}
-              </n-descriptions-item>
-              <n-descriptions-item :label="$t('navigationBar.license')">
-                GPL-3.0
-              </n-descriptions-item>
-              <n-descriptions-item :label="$t('navigationBar.version')">
-                V{{ packageInfo.version }}
-              </n-descriptions-item>
-            </n-descriptions>
-          </n-card>
-        </n-spin>
-      </n-watermark>
-    </n-modal>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { useRequest } from 'alova/client';
 import { NIcon } from 'naive-ui';
@@ -201,3 +99,105 @@ function handleClose() {
   showAbout.value = false;
 }
 </script>
+
+<template>
+  <div>
+    <n-config-provider>
+      <n-layout-header bordered class="h-16">
+        <n-grid class="h-full items-center">
+          <n-gi :span="6" class="pl-6 h-8">
+            <img
+              class="h-8 object-contain"
+              :src="theme === SupportThemes.DARK ? logoTitleWhite : logoTitle"
+              alt="title logo" />
+          </n-gi>
+          <n-gi :span="14">
+            <navigation-menu></navigation-menu>
+          </n-gi>
+          <n-gi :span="4" class="pr-6 text-right">
+            <language-and-theme>
+              <n-dropdown
+                :options="userOptions"
+                :show-arrow="true"
+                trigger="hover">
+                <n-button text>
+                  <n-icon :size="20">
+                    <i-people />
+                  </n-icon>
+                </n-button>
+              </n-dropdown>
+            </language-and-theme>
+          </n-gi>
+        </n-grid>
+      </n-layout-header>
+    </n-config-provider>
+    <n-modal v-model:show="showAbout" :auto-focus="false">
+      <n-watermark
+        :content="license.authorizedTo"
+        :height="128"
+        :rotate="-15"
+        :width="192"
+        :x-offset="12"
+        :y-offset="28"
+        cross
+        selectable>
+        <n-spin :show="getLicenseLoading">
+          <n-card
+            class="w-120"
+            closable
+            hoverable
+            :title="$t('navigationBar.about')"
+            @close="handleClose()">
+            <template #cover>
+              <n-grid
+                class="border-0 border-b border-solid h-16 items-center border-color">
+                <n-gi :span="12" class="pl-6">
+                  <img
+                    class="h-8 object-contain !w-unset"
+                    :src="
+                      theme === SupportThemes.DARK ? logoTitleWhite : logoTitle
+                    "
+                    alt="title logo" />
+                </n-gi>
+                <n-gi :span="12" class="pr-6 text-right">
+                  <n-text class="text-sm">
+                    {{ $t('common.slogans') }}
+                  </n-text>
+                </n-gi>
+              </n-grid>
+            </template>
+            <n-descriptions :column="2" label-placement="left">
+              <n-descriptions-item :label="$t('navigationBar.authorizedTo')">
+                {{ license.authorizedTo }}
+              </n-descriptions-item>
+              <n-descriptions-item
+                :label="$t('navigationBar.authorizationTime')">
+                <n-time
+                  v-if="license.startDate"
+                  :time="license.startDate"
+                  format="PP"></n-time>
+                <n-text v-else>{{ $t('common.empty') }}</n-text>
+              </n-descriptions-item>
+              <n-descriptions-item :label="$t('navigationBar.expirationTime')">
+                <n-time
+                  v-if="license.endDate"
+                  :time="license.endDate"
+                  format="PP"></n-time>
+                <n-text v-else>{{ $t('navigationBar.indefinitely') }}</n-text>
+              </n-descriptions-item>
+              <n-descriptions-item :label="$t('navigationBar.edition')">
+                {{ license.edition }}
+              </n-descriptions-item>
+              <n-descriptions-item :label="$t('navigationBar.license')">
+                GPL-3.0
+              </n-descriptions-item>
+              <n-descriptions-item :label="$t('navigationBar.version')">
+                V{{ packageInfo.version }}
+              </n-descriptions-item>
+            </n-descriptions>
+          </n-card>
+        </n-spin>
+      </n-watermark>
+    </n-modal>
+  </div>
+</template>

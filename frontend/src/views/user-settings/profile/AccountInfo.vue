@@ -1,91 +1,8 @@
-<template>
-  <n-spin :show="saveProfileLoading || getCurrentUserLoading">
-    <n-form ref="profileFormRef" :model="profileForm" :rules="profileRules">
-      <n-grid :cols="24" :x-gap="24">
-        <n-form-item-gi
-          :label="$t('userSettings.profile.username')"
-          :span="12"
-          path="username">
-          <n-input
-            v-model:value="profileForm.username"
-            :disabled="true"
-            :placeholder="$t('userSettings.profile.username')"
-            clearable
-            maxlength="100"
-            show-count />
-        </n-form-item-gi>
-        <n-form-item-gi
-          :label="$t('userSettings.profile.name')"
-          :span="12"
-          path="name">
-          <n-input
-            v-model:value="profileForm.name"
-            :placeholder="$t('userSettings.profile.name')"
-            clearable
-            maxlength="50"
-            show-count />
-        </n-form-item-gi>
-        <n-form-item-gi
-          :label="$t('userSettings.profile.email')"
-          :span="12"
-          path="email">
-          <n-auto-complete
-            v-model:value="profileForm.email"
-            :options="emailAutoCompleteOptions">
-            <template
-              #default="{
-                handleInput,
-                handleBlur,
-                handleFocus,
-                value: slotValue
-              }">
-              <n-input
-                :placeholder="$t('userSettings.profile.email')"
-                :status="emailAutoCompleteStatus"
-                :value="slotValue"
-                clearable
-                maxlength="100"
-                show-count
-                @blur="handleBlur"
-                @focus="handleFocus"
-                @input="handleInput" />
-            </template>
-          </n-auto-complete>
-        </n-form-item-gi>
-        <n-form-item-gi
-          :label="$t('userSettings.profile.phone')"
-          :span="12"
-          path="phone">
-          <n-input-group>
-            <n-select
-              v-model:value="profileForm.areaCode"
-              :options="areaCodes(language)"
-              :placeholder="$t('userSettings.profile.areaCode')"
-              clearable
-              filterable />
-            <n-input
-              v-model:value="profileForm.phone"
-              :placeholder="$t('userSettings.profile.phone')"
-              clearable
-              maxlength="40"
-              show-count />
-          </n-input-group>
-        </n-form-item-gi>
-      </n-grid>
-      <div v-permission="'user:edit'" class="text-right">
-        <n-button type="primary" @click="validateProfileForm()">{{
-          $t('common.save')
-        }}</n-button>
-      </div>
-    </n-form>
-  </n-spin>
-</template>
-
 <script lang="ts" setup>
-import type { FormRules, FormItemRule } from 'naive-ui';
+import { useRequest } from 'alova/client';
+import type { FormItemRule, FormRules } from 'naive-ui';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRequest } from 'alova/client';
 import areaCodes from '@/commons/area-codes';
 import emailSuffix from '@/commons/email-suffix';
 import { mainStore } from '@/store';
@@ -203,3 +120,86 @@ function validateProfileForm() {
   }
 }
 </script>
+
+<template>
+  <n-spin :show="saveProfileLoading || getCurrentUserLoading">
+    <n-form ref="profileFormRef" :model="profileForm" :rules="profileRules">
+      <n-grid :cols="24" :x-gap="24">
+        <n-form-item-gi
+          :label="$t('userSettings.profile.username')"
+          :span="12"
+          path="username">
+          <n-input
+            v-model:value="profileForm.username"
+            :disabled="true"
+            :placeholder="$t('userSettings.profile.username')"
+            clearable
+            maxlength="100"
+            show-count />
+        </n-form-item-gi>
+        <n-form-item-gi
+          :label="$t('userSettings.profile.name')"
+          :span="12"
+          path="name">
+          <n-input
+            v-model:value="profileForm.name"
+            :placeholder="$t('userSettings.profile.name')"
+            clearable
+            maxlength="50"
+            show-count />
+        </n-form-item-gi>
+        <n-form-item-gi
+          :label="$t('userSettings.profile.email')"
+          :span="12"
+          path="email">
+          <n-auto-complete
+            v-model:value="profileForm.email"
+            :options="emailAutoCompleteOptions">
+            <template
+              #default="{
+                handleInput,
+                handleBlur,
+                handleFocus,
+                value: slotValue
+              }">
+              <n-input
+                :placeholder="$t('userSettings.profile.email')"
+                :status="emailAutoCompleteStatus"
+                :value="slotValue"
+                clearable
+                maxlength="100"
+                show-count
+                @blur="handleBlur"
+                @focus="handleFocus"
+                @input="handleInput" />
+            </template>
+          </n-auto-complete>
+        </n-form-item-gi>
+        <n-form-item-gi
+          :label="$t('userSettings.profile.phone')"
+          :span="12"
+          path="phone">
+          <n-input-group>
+            <n-select
+              v-model:value="profileForm.areaCode"
+              :options="areaCodes(language)"
+              :placeholder="$t('userSettings.profile.areaCode')"
+              clearable
+              filterable />
+            <n-input
+              v-model:value="profileForm.phone"
+              :placeholder="$t('userSettings.profile.phone')"
+              clearable
+              maxlength="40"
+              show-count />
+          </n-input-group>
+        </n-form-item-gi>
+      </n-grid>
+      <div v-permission="'user:edit'" class="text-right">
+        <n-button type="primary" @click="validateProfileForm()">{{
+          $t('common.save')
+        }}</n-button>
+      </div>
+    </n-form>
+  </n-spin>
+</template>

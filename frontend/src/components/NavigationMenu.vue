@@ -1,11 +1,3 @@
-<template>
-  <n-menu
-    :options="menus"
-    :value="activeMenu"
-    mode="horizontal"
-    class="text-base" />
-</template>
-
 <script lang="ts" setup>
 import { computed, h, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -77,3 +69,11 @@ async function getAllMenus() {
   return newMenus;
 }
 </script>
+
+<template>
+  <n-menu
+    :options="menus"
+    :value="activeMenu"
+    mode="horizontal"
+    class="text-base" />
+</template>

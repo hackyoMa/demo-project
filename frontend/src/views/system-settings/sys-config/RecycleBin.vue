@@ -1,51 +1,3 @@
-<template>
-  <n-spin
-    :show="
-      saveSysConfigRecycleBinRetentionDaysLoading ||
-      saveSysConfigRecycleBinLoading ||
-      getSysConfigRecycleBinLoading ||
-      getSysConfigRecycleBinRetentionDaysLoading
-    ">
-    <n-form
-      ref="sysConfigFormRef"
-      :model="sysConfigForm"
-      :rules="sysConfigRules">
-      <n-grid :cols="24" :x-gap="24">
-        <n-form-item-gi
-          :label="$t('systemSettings.sysConfig.enableRecycleBin')"
-          :span="12"
-          path="recycleBin">
-          <n-switch
-            v-model:value="sysConfigForm.recycleBin"
-            :checked-value="'true'"
-            :unchecked-value="'false'" />
-        </n-form-item-gi>
-        <n-form-item-gi
-          v-if="sysConfigForm.recycleBin === 'true'"
-          :label="$t('systemSettings.sysConfig.recycleBinRetentionDays')"
-          :span="12"
-          path="recycleBinRetentionDays">
-          <n-input-number
-            v-model:value="sysConfigForm.recycleBinRetentionDays"
-            class="w-full"
-            :min="0"
-            :precision="0"
-            :placeholder="
-              $t('systemSettings.sysConfig.recycleBinRetentionDaysPlaceholder')
-            ">
-            <template #suffix> 天 </template>
-          </n-input-number>
-        </n-form-item-gi>
-      </n-grid>
-      <div v-permission="'sys_config:recycle_bin_edit'" class="text-right">
-        <n-button type="primary" @click="validateSysConfigForm()">{{
-          $t('common.save')
-        }}</n-button>
-      </div>
-    </n-form>
-  </n-spin>
-</template>
-
 <script lang="ts" setup>
 import { useRequest } from 'alova/client';
 import type { FormItemRule, FormRules } from 'naive-ui';
@@ -152,3 +104,51 @@ async function saveSysConfig() {
   window.$msg.success(t('common.saveSuccess'));
 }
 </script>
+
+<template>
+  <n-spin
+    :show="
+      saveSysConfigRecycleBinRetentionDaysLoading ||
+      saveSysConfigRecycleBinLoading ||
+      getSysConfigRecycleBinLoading ||
+      getSysConfigRecycleBinRetentionDaysLoading
+    ">
+    <n-form
+      ref="sysConfigFormRef"
+      :model="sysConfigForm"
+      :rules="sysConfigRules">
+      <n-grid :cols="24" :x-gap="24">
+        <n-form-item-gi
+          :label="$t('systemSettings.sysConfig.enableRecycleBin')"
+          :span="12"
+          path="recycleBin">
+          <n-switch
+            v-model:value="sysConfigForm.recycleBin"
+            :checked-value="'true'"
+            :unchecked-value="'false'" />
+        </n-form-item-gi>
+        <n-form-item-gi
+          v-if="sysConfigForm.recycleBin === 'true'"
+          :label="$t('systemSettings.sysConfig.recycleBinRetentionDays')"
+          :span="12"
+          path="recycleBinRetentionDays">
+          <n-input-number
+            v-model:value="sysConfigForm.recycleBinRetentionDays"
+            class="w-full"
+            :min="0"
+            :precision="0"
+            :placeholder="
+              $t('systemSettings.sysConfig.recycleBinRetentionDaysPlaceholder')
+            ">
+            <template #suffix> 天 </template>
+          </n-input-number>
+        </n-form-item-gi>
+      </n-grid>
+      <div v-permission="'sys_config:recycle_bin_edit'" class="text-right">
+        <n-button type="primary" @click="validateSysConfigForm()">{{
+          $t('common.save')
+        }}</n-button>
+      </div>
+    </n-form>
+  </n-spin>
+</template>

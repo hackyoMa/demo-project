@@ -1,65 +1,9 @@
-<template>
-  <n-spin :show="changePasswordLoading">
-    <n-form
-      ref="changePasswordFormRef"
-      :model="changePasswordForm"
-      :rules="changePasswordRules">
-      <n-grid :cols="24" :x-gap="24">
-        <n-form-item-gi
-          :label="$t('userSettings.profile.originalPassword')"
-          :span="12"
-          path="originalPassword">
-          <n-input
-            v-model:value="changePasswordForm.originalPassword"
-            :placeholder="$t('userSettings.profile.originalPassword')"
-            clearable
-            maxlength="64"
-            show-count
-            show-password-on="mousedown"
-            type="password">
-            <template #prefix>
-              <n-icon>
-                <i-lock />
-              </n-icon>
-            </template>
-          </n-input>
-        </n-form-item-gi>
-        <n-form-item-gi
-          :label="$t('userSettings.profile.newPassword')"
-          :span="12"
-          path="newPassword">
-          <n-input
-            v-model:value="changePasswordForm.newPassword"
-            :placeholder="$t('userSettings.profile.newPassword')"
-            clearable
-            maxlength="64"
-            minlength="6"
-            show-count
-            show-password-on="mousedown"
-            type="password">
-            <template #prefix>
-              <n-icon>
-                <i-lock />
-              </n-icon>
-            </template>
-          </n-input>
-        </n-form-item-gi>
-      </n-grid>
-      <div class="text-right">
-        <n-button type="primary" @click="validateChangePasswordForm()">
-          {{ $t('common.save') }}
-        </n-button>
-      </div>
-    </n-form>
-  </n-spin>
-</template>
-
 <script lang="ts" setup>
+import { useRequest } from 'alova/client';
 import type { FormItemRule, FormRules } from 'naive-ui';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import { useRequest } from 'alova/client';
 import { mainStore } from '@/store';
 
 const router = useRouter();
@@ -131,3 +75,59 @@ function validateChangePasswordForm() {
   }
 }
 </script>
+
+<template>
+  <n-spin :show="changePasswordLoading">
+    <n-form
+      ref="changePasswordFormRef"
+      :model="changePasswordForm"
+      :rules="changePasswordRules">
+      <n-grid :cols="24" :x-gap="24">
+        <n-form-item-gi
+          :label="$t('userSettings.profile.originalPassword')"
+          :span="12"
+          path="originalPassword">
+          <n-input
+            v-model:value="changePasswordForm.originalPassword"
+            :placeholder="$t('userSettings.profile.originalPassword')"
+            clearable
+            maxlength="64"
+            show-count
+            show-password-on="mousedown"
+            type="password">
+            <template #prefix>
+              <n-icon>
+                <i-lock />
+              </n-icon>
+            </template>
+          </n-input>
+        </n-form-item-gi>
+        <n-form-item-gi
+          :label="$t('userSettings.profile.newPassword')"
+          :span="12"
+          path="newPassword">
+          <n-input
+            v-model:value="changePasswordForm.newPassword"
+            :placeholder="$t('userSettings.profile.newPassword')"
+            clearable
+            maxlength="64"
+            minlength="6"
+            show-count
+            show-password-on="mousedown"
+            type="password">
+            <template #prefix>
+              <n-icon>
+                <i-lock />
+              </n-icon>
+            </template>
+          </n-input>
+        </n-form-item-gi>
+      </n-grid>
+      <div class="text-right">
+        <n-button type="primary" @click="validateChangePasswordForm()">
+          {{ $t('common.save') }}
+        </n-button>
+      </div>
+    </n-form>
+  </n-spin>
+</template>

@@ -1,238 +1,3 @@
-<template>
-  <div>
-    <n-card hoverable>
-      <n-flex justify="space-between">
-        <n-flex>
-          <n-button
-            v-permission="'user_management:add'"
-            type="primary"
-            @click="addUser()">
-            {{ $t('common.add') }}
-          </n-button>
-          <n-popconfirm
-            :positive-button-props="{ type: 'error' }"
-            @positive-click="deleteUsers(userTableCheck)">
-            <template #trigger>
-              <n-button
-                v-permission="'user_management:delete'"
-                :loading="deleteUserLoading"
-                type="error">
-                {{ $t('common.delete') }}
-              </n-button>
-            </template>
-            {{ $t('common.batchDeleteConfirm') }}
-          </n-popconfirm>
-        </n-flex>
-        <n-flex :wrap="false" justify="end">
-          <n-input-group>
-            <n-input
-              v-model:value="userPattern"
-              :placeholder="
-                $t('common.search') +
-                ' ' +
-                $t('userSettings.profile.username') +
-                '/' +
-                $t('userSettings.profile.name') +
-                '/' +
-                $t('userSettings.profile.email') +
-                '/' +
-                $t('userSettings.profile.phone')
-              "
-              clearable
-              @keyup.enter="userTableReload()">
-              <template #prefix>
-                <n-icon>
-                  <i-search />
-                </n-icon>
-              </template>
-            </n-input>
-            <n-button ghost type="primary" @click="userTableReload()">
-              {{ $t('common.search') }}
-            </n-button>
-          </n-input-group>
-        </n-flex>
-      </n-flex>
-      <n-data-table
-        :bordered="false"
-        :checked-row-keys="userTableCheck"
-        :columns="userTableColumns"
-        :data="userTableData"
-        :loading="userTableLoading"
-        :pagination="{
-          page: userTablePage,
-          pageSize: userTablePageSize,
-          pageSizes: [10, 20, 50],
-          itemCount: userTableTotal,
-          showSizePicker: true,
-          showQuickJumper: true,
-          prefix: (pagination: PaginationInfo) => {
-            return $t('common.total') + ': ' + pagination.itemCount;
-          }
-        }"
-        :row-key="(row: any) => row.id"
-        remote
-        class="mt-3"
-        @update:sorter="userTableHandleSorter"
-        @update:page="userTablePageChange"
-        @update:page-size="userTablePageSizeChange"
-        @update:checked-row-keys="userTableHandleCheck" />
-    </n-card>
-    <n-drawer v-model:show="showUserEdit" :width="502" placement="right">
-      <n-drawer-content>
-        <template #header>
-          {{
-            (showUserEditIsAdd ? $t('common.add') : $t('common.edit')) +
-            $t('common.user')
-          }}
-        </template>
-        <n-spin
-          :show="getAllRoleLoading || addUserLoading || updateUserLoading">
-          <n-form
-            ref="profileFormRef"
-            :model="currentOptionUser"
-            :rules="profileRules">
-            <n-grid :cols="24">
-              <n-form-item-gi
-                :label="$t('userSettings.profile.username')"
-                :span="24"
-                path="username">
-                <n-input
-                  v-model:value="currentOptionUser.username"
-                  :disabled="!showUserEditIsAdd"
-                  :placeholder="$t('userSettings.profile.username')"
-                  clearable
-                  maxlength="100"
-                  show-count />
-              </n-form-item-gi>
-              <n-form-item-gi
-                :label="$t('userSettings.profile.name')"
-                :span="24"
-                path="name">
-                <n-input
-                  v-model:value="currentOptionUser.name"
-                  :placeholder="$t('userSettings.profile.name')"
-                  clearable
-                  maxlength="50"
-                  show-count />
-              </n-form-item-gi>
-              <n-form-item-gi
-                :label="$t('userSettings.profile.email')"
-                :span="24"
-                path="email">
-                <n-auto-complete
-                  v-model:value="currentOptionUser.email"
-                  :options="emailAutoCompleteOptions">
-                  <template
-                    #default="{
-                      handleInput,
-                      handleBlur,
-                      handleFocus,
-                      value: slotValue
-                    }">
-                    <n-input
-                      :placeholder="$t('userSettings.profile.email')"
-                      :status="emailAutoCompleteStatus"
-                      :value="slotValue"
-                      clearable
-                      maxlength="100"
-                      show-count
-                      @blur="handleBlur"
-                      @focus="handleFocus"
-                      @input="handleInput" />
-                  </template>
-                </n-auto-complete>
-              </n-form-item-gi>
-              <n-form-item-gi
-                :label="$t('userSettings.profile.phone')"
-                :span="24"
-                path="phone">
-                <n-input-group>
-                  <n-select
-                    v-model:value="currentOptionUser.areaCode"
-                    :options="areaCodes(language)"
-                    :placeholder="$t('userSettings.profile.areaCode')"
-                    clearable
-                    filterable />
-                  <n-input
-                    v-model:value="currentOptionUser.phone"
-                    :placeholder="$t('userSettings.profile.phone')"
-                    clearable
-                    maxlength="40"
-                    show-count />
-                </n-input-group>
-              </n-form-item-gi>
-              <n-form-item-gi
-                :label="$t('common.role')"
-                :span="24"
-                path="roleIds">
-                <n-select
-                  v-model:value="currentOptionUser.roleIds"
-                  :disabled="currentOptionUser.systemdUser"
-                  :options="allRoles"
-                  label-field="name"
-                  value-field="id"
-                  :placeholder="
-                    $t('systemSettings.user.userRolesSelectPlaceholder')
-                  "
-                  clearable
-                  filterable
-                  multiple />
-              </n-form-item-gi>
-              <n-form-item-gi
-                v-if="showUserEditIsAdd"
-                :label="$t('login.password')"
-                :span="24"
-                path="password">
-                <n-input
-                  v-model:value="currentOptionUser.password"
-                  :placeholder="$t('login.password')"
-                  clearable
-                  maxlength="64"
-                  show-count />
-              </n-form-item-gi>
-              <n-form-item-gi
-                v-if="!showUserEditIsAdd"
-                :label="$t('userSettings.profile.changePassword')"
-                :span="6"
-                path="changePassword">
-                <n-switch v-model:value="changePassword" />
-              </n-form-item-gi>
-              <n-form-item-gi
-                v-if="!showUserEditIsAdd && changePassword"
-                :label="$t('userSettings.profile.newPassword')"
-                :span="18"
-                path="password">
-                <n-input
-                  v-model:value="newPassword"
-                  :placeholder="$t('userSettings.profile.newPassword')"
-                  clearable
-                  maxlength="64"
-                  show-count />
-              </n-form-item-gi>
-              <n-form-item-gi
-                :label="$t('userSettings.profile.accountStatus.enabled')"
-                :span="24"
-                path="enabled">
-                <n-switch
-                  v-model:value="currentOptionUser.enabled"
-                  :disabled="currentOptionUser.systemdUser" />
-              </n-form-item-gi>
-            </n-grid>
-          </n-form>
-        </n-spin>
-        <template #footer>
-          <n-button @click="showUserEdit = false">
-            {{ $t('common.cancel') }}
-          </n-button>
-          <n-button class="ml-3" type="primary" @click="validateProfileForm()"
-            >{{ $t('common.save') }}
-          </n-button>
-        </template>
-      </n-drawer-content>
-    </n-drawer>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { usePagination, useRequest } from 'alova/client';
 import type {
@@ -826,3 +591,238 @@ function validateProfileForm() {
   }
 }
 </script>
+
+<template>
+  <div>
+    <n-card hoverable>
+      <n-flex justify="space-between">
+        <n-flex>
+          <n-button
+            v-permission="'user_management:add'"
+            type="primary"
+            @click="addUser()">
+            {{ $t('common.add') }}
+          </n-button>
+          <n-popconfirm
+            :positive-button-props="{ type: 'error' }"
+            @positive-click="deleteUsers(userTableCheck)">
+            <template #trigger>
+              <n-button
+                v-permission="'user_management:delete'"
+                :loading="deleteUserLoading"
+                type="error">
+                {{ $t('common.delete') }}
+              </n-button>
+            </template>
+            {{ $t('common.batchDeleteConfirm') }}
+          </n-popconfirm>
+        </n-flex>
+        <n-flex :wrap="false" justify="end">
+          <n-input-group>
+            <n-input
+              v-model:value="userPattern"
+              :placeholder="
+                $t('common.search') +
+                ' ' +
+                $t('userSettings.profile.username') +
+                '/' +
+                $t('userSettings.profile.name') +
+                '/' +
+                $t('userSettings.profile.email') +
+                '/' +
+                $t('userSettings.profile.phone')
+              "
+              clearable
+              @keyup.enter="userTableReload()">
+              <template #prefix>
+                <n-icon>
+                  <i-search />
+                </n-icon>
+              </template>
+            </n-input>
+            <n-button ghost type="primary" @click="userTableReload()">
+              {{ $t('common.search') }}
+            </n-button>
+          </n-input-group>
+        </n-flex>
+      </n-flex>
+      <n-data-table
+        :bordered="false"
+        :checked-row-keys="userTableCheck"
+        :columns="userTableColumns"
+        :data="userTableData"
+        :loading="userTableLoading"
+        :pagination="{
+          page: userTablePage,
+          pageSize: userTablePageSize,
+          pageSizes: [10, 20, 50],
+          itemCount: userTableTotal,
+          showSizePicker: true,
+          showQuickJumper: true,
+          prefix: (pagination: PaginationInfo) => {
+            return $t('common.total') + ': ' + pagination.itemCount;
+          }
+        }"
+        :row-key="(row: any) => row.id"
+        remote
+        class="mt-3"
+        @update:sorter="userTableHandleSorter"
+        @update:page="userTablePageChange"
+        @update:page-size="userTablePageSizeChange"
+        @update:checked-row-keys="userTableHandleCheck" />
+    </n-card>
+    <n-drawer v-model:show="showUserEdit" :width="502" placement="right">
+      <n-drawer-content>
+        <template #header>
+          {{
+            (showUserEditIsAdd ? $t('common.add') : $t('common.edit')) +
+            $t('common.user')
+          }}
+        </template>
+        <n-spin
+          :show="getAllRoleLoading || addUserLoading || updateUserLoading">
+          <n-form
+            ref="profileFormRef"
+            :model="currentOptionUser"
+            :rules="profileRules">
+            <n-grid :cols="24">
+              <n-form-item-gi
+                :label="$t('userSettings.profile.username')"
+                :span="24"
+                path="username">
+                <n-input
+                  v-model:value="currentOptionUser.username"
+                  :disabled="!showUserEditIsAdd"
+                  :placeholder="$t('userSettings.profile.username')"
+                  clearable
+                  maxlength="100"
+                  show-count />
+              </n-form-item-gi>
+              <n-form-item-gi
+                :label="$t('userSettings.profile.name')"
+                :span="24"
+                path="name">
+                <n-input
+                  v-model:value="currentOptionUser.name"
+                  :placeholder="$t('userSettings.profile.name')"
+                  clearable
+                  maxlength="50"
+                  show-count />
+              </n-form-item-gi>
+              <n-form-item-gi
+                :label="$t('userSettings.profile.email')"
+                :span="24"
+                path="email">
+                <n-auto-complete
+                  v-model:value="currentOptionUser.email"
+                  :options="emailAutoCompleteOptions">
+                  <template
+                    #default="{
+                      handleInput,
+                      handleBlur,
+                      handleFocus,
+                      value: slotValue
+                    }">
+                    <n-input
+                      :placeholder="$t('userSettings.profile.email')"
+                      :status="emailAutoCompleteStatus"
+                      :value="slotValue"
+                      clearable
+                      maxlength="100"
+                      show-count
+                      @blur="handleBlur"
+                      @focus="handleFocus"
+                      @input="handleInput" />
+                  </template>
+                </n-auto-complete>
+              </n-form-item-gi>
+              <n-form-item-gi
+                :label="$t('userSettings.profile.phone')"
+                :span="24"
+                path="phone">
+                <n-input-group>
+                  <n-select
+                    v-model:value="currentOptionUser.areaCode"
+                    :options="areaCodes(language)"
+                    :placeholder="$t('userSettings.profile.areaCode')"
+                    clearable
+                    filterable />
+                  <n-input
+                    v-model:value="currentOptionUser.phone"
+                    :placeholder="$t('userSettings.profile.phone')"
+                    clearable
+                    maxlength="40"
+                    show-count />
+                </n-input-group>
+              </n-form-item-gi>
+              <n-form-item-gi
+                :label="$t('common.role')"
+                :span="24"
+                path="roleIds">
+                <n-select
+                  v-model:value="currentOptionUser.roleIds"
+                  :disabled="currentOptionUser.systemdUser"
+                  :options="allRoles"
+                  label-field="name"
+                  value-field="id"
+                  :placeholder="
+                    $t('systemSettings.user.userRolesSelectPlaceholder')
+                  "
+                  clearable
+                  filterable
+                  multiple />
+              </n-form-item-gi>
+              <n-form-item-gi
+                v-if="showUserEditIsAdd"
+                :label="$t('login.password')"
+                :span="24"
+                path="password">
+                <n-input
+                  v-model:value="currentOptionUser.password"
+                  :placeholder="$t('login.password')"
+                  clearable
+                  maxlength="64"
+                  show-count />
+              </n-form-item-gi>
+              <n-form-item-gi
+                v-if="!showUserEditIsAdd"
+                :label="$t('userSettings.profile.changePassword')"
+                :span="6"
+                path="changePassword">
+                <n-switch v-model:value="changePassword" />
+              </n-form-item-gi>
+              <n-form-item-gi
+                v-if="!showUserEditIsAdd && changePassword"
+                :label="$t('userSettings.profile.newPassword')"
+                :span="18"
+                path="password">
+                <n-input
+                  v-model:value="newPassword"
+                  :placeholder="$t('userSettings.profile.newPassword')"
+                  clearable
+                  maxlength="64"
+                  show-count />
+              </n-form-item-gi>
+              <n-form-item-gi
+                :label="$t('userSettings.profile.accountStatus.enabled')"
+                :span="24"
+                path="enabled">
+                <n-switch
+                  v-model:value="currentOptionUser.enabled"
+                  :disabled="currentOptionUser.systemdUser" />
+              </n-form-item-gi>
+            </n-grid>
+          </n-form>
+        </n-spin>
+        <template #footer>
+          <n-button @click="showUserEdit = false">
+            {{ $t('common.cancel') }}
+          </n-button>
+          <n-button class="ml-3" type="primary" @click="validateProfileForm()"
+            >{{ $t('common.save') }}
+          </n-button>
+        </template>
+      </n-drawer-content>
+    </n-drawer>
+  </div>
+</template>

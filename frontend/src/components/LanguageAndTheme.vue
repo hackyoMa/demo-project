@@ -1,31 +1,3 @@
-<template>
-  <div class="flex gap-3 items-center justify-end">
-    <n-dropdown
-      :options="languagesOptions"
-      :show-arrow="true"
-      trigger="hover"
-      @select="switchLanguage">
-      <n-button text>
-        <n-icon :size="20">
-          <i-text />
-        </n-icon>
-      </n-button>
-    </n-dropdown>
-    <n-dropdown
-      :options="themeOptions"
-      :show-arrow="true"
-      trigger="hover"
-      @select="switchTheme">
-      <n-button text>
-        <n-icon :size="20">
-          <i-contrast />
-        </n-icon>
-      </n-button>
-    </n-dropdown>
-    <slot></slot>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -81,3 +53,31 @@ function switchTheme(theme: SupportTheme) {
   mStore.setTheme(theme);
 }
 </script>
+
+<template>
+  <div class="flex gap-3 items-center justify-end">
+    <n-dropdown
+      :options="languagesOptions"
+      :show-arrow="true"
+      trigger="hover"
+      @select="switchLanguage">
+      <n-button text>
+        <n-icon :size="20">
+          <i-text />
+        </n-icon>
+      </n-button>
+    </n-dropdown>
+    <n-dropdown
+      :options="themeOptions"
+      :show-arrow="true"
+      trigger="hover"
+      @select="switchTheme">
+      <n-button text>
+        <n-icon :size="20">
+          <i-contrast />
+        </n-icon>
+      </n-button>
+    </n-dropdown>
+    <slot></slot>
+  </div>
+</template>

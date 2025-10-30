@@ -1,29 +1,3 @@
-<template>
-  <n-layout-sider
-    :collapsed="sideMenuCollapsed"
-    :collapsed-width="64"
-    :native-scrollbar="false"
-    :width="192"
-    bordered
-    collapse-mode="width"
-    show-trigger="arrow-circle"
-    @collapse="switchSideMenuCollapsed(true)"
-    @expand="switchSideMenuCollapsed(false)">
-    <n-menu
-      :collapsed="sideMenuCollapsed"
-      :collapsed-icon-size="24"
-      :collapsed-width="64"
-      :icon-size="24"
-      :indent="12"
-      :options="currentSideMenus"
-      :render-label="renderMenuLabel"
-      :render-icon="renderMenuIcon"
-      :root-indent="24"
-      :value="activeMenu"
-      accordion />
-  </n-layout-sider>
-</template>
-
 <script lang="ts" setup>
 import type { MenuOption } from 'naive-ui';
 import { type Component, computed, h, ref, watchEffect } from 'vue';
@@ -128,3 +102,29 @@ function switchSideMenuCollapsed(value: boolean) {
   mStore.setSideMenuCollapsed(value);
 }
 </script>
+
+<template>
+  <n-layout-sider
+    :collapsed="sideMenuCollapsed"
+    :collapsed-width="64"
+    :native-scrollbar="false"
+    :width="192"
+    bordered
+    collapse-mode="width"
+    show-trigger="arrow-circle"
+    @collapse="switchSideMenuCollapsed(true)"
+    @expand="switchSideMenuCollapsed(false)">
+    <n-menu
+      :collapsed="sideMenuCollapsed"
+      :collapsed-icon-size="24"
+      :collapsed-width="64"
+      :icon-size="24"
+      :indent="12"
+      :options="currentSideMenus"
+      :render-label="renderMenuLabel"
+      :render-icon="renderMenuIcon"
+      :root-indent="24"
+      :value="activeMenu"
+      accordion />
+  </n-layout-sider>
+</template>
