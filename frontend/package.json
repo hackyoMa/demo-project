@@ -42,10 +42,7 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "core-js",
-      "es5-ext",
-      "esbuild",
-      "vue-demi"
+      "esbuild"
     ]
   }
 }
