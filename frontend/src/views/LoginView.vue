@@ -53,7 +53,7 @@ const {
 }).onSuccess(() => {
   mStore.setToken(loginRes.value, loginForm.value.remember);
   window.$msg.success(t('login.success'), t('login.welcomeBack'));
-  const redirect = route.query['redirect'] as string;
+  const redirect = route.query.redirect as string;
   if (redirect && !redirect.startsWith('/login')) {
     router.push(redirect);
   } else {

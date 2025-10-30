@@ -40,7 +40,7 @@ const changePasswordRules = computed<FormRules>(() => {
             return new Error(t('userSettings.profile.validator.passwordEmpty'));
           }
           const regular = new RegExp(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{6,64}$/
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\s\S]{6,64}$/
           );
           if (!regular.test(value)) {
             return new Error(t('userSettings.profile.validator.passwordError'));

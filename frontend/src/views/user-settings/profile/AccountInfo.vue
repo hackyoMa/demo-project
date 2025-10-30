@@ -75,7 +75,7 @@ const emailAutoCompleteOptions = computed(() => {
   }
   let mailsFilter = [];
   let suffix = email.split('@')[1];
-  suffix = '@' + (suffix ? suffix : '');
+  suffix = `@${suffix ? suffix : ''}`;
   for (const es of emailSuffix) {
     if (es.startsWith(suffix)) {
       mailsFilter.push(es);
