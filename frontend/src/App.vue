@@ -27,15 +27,15 @@ import {
   dateEnUS,
   dateZhCN,
   enUS,
-  zhCN,
-  useOsTheme
+  useOsTheme,
+  zhCN
 } from 'naive-ui';
 import { computed, nextTick, onMounted, watch } from 'vue';
-import { mainStore } from '@/store';
-import lightThemeParams from '@/assets/themes/light.json';
 import darkThemeParams from '@/assets/themes/dark.json';
+import lightThemeParams from '@/assets/themes/light.json';
 import { languageChange, SupportLanguages } from '@/commons/i18n.ts';
-import { themeChange, osThemeChange, SupportThemes } from '@/commons/theme.ts';
+import { osThemeChange, SupportThemes, themeChange } from '@/commons/theme.ts';
+import { mainStore } from '@/store';
 
 const mStore = mainStore();
 const actualTheme = useOsTheme();

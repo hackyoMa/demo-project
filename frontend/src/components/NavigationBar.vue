@@ -101,20 +101,20 @@
 </template>
 
 <script lang="ts" setup>
-import IconPeople from '~icons/icon-park-outline/people';
-import IconBack from '~icons/icon-park-outline/back';
-import IconInfo from '~icons/icon-park-outline/info';
+import { useRequest } from 'alova/client';
 import { NIcon } from 'naive-ui';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import { useRequest } from 'alova/client';
-import { mainStore } from '@/store';
-import { renderIconMethod } from '@/commons/utils';
 import logoTitle from '@/assets/images/logo-title.webp';
 import logoTitleWhite from '@/assets/images/logo-title-white.webp';
-import packageInfo from '../../package.json';
 import { SupportThemes } from '@/commons/theme.ts';
+import { renderIconMethod } from '@/commons/utils';
+import { mainStore } from '@/store';
+import IconBack from '~icons/icon-park-outline/back';
+import IconInfo from '~icons/icon-park-outline/info';
+import IconPeople from '~icons/icon-park-outline/people';
+import packageInfo from '../../package.json';
 
 const mStore = mainStore();
 const router = useRouter();

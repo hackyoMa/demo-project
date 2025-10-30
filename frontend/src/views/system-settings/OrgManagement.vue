@@ -203,15 +203,15 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataTableColumn, FormRules, FormItemRule } from 'naive-ui';
+import { usePagination, useRequest } from 'alova/client';
+import type { DataTableColumn, FormItemRule, FormRules } from 'naive-ui';
 import { NButton } from 'naive-ui';
-import { computed, h, ref } from 'vue';
-import IconAdd from '~icons/icon-park-outline/add';
-import { useI18n } from 'vue-i18n';
 import { ulid } from 'ulid';
-import { useRequest, usePagination } from 'alova/client';
+import { computed, h, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { hasPermission } from '@/commons/permission';
 import { arrayToTree, renderIconMethod, treeForeach } from '@/commons/utils';
+import IconAdd from '~icons/icon-park-outline/add';
 
 const { t } = useI18n();
 const http = window.$http;
@@ -363,7 +363,7 @@ function addOrUpdateOrgSuccess(res: any) {
 }
 
 const { loading: deleteOrgLoading, send: doDeleteOrg } = useRequest(
-  () => http.Delete('/org/' + currentOrgId.value),
+  () => http.Delete(`/org/${currentOrgId.value}`),
   {
     immediate: false
   }
@@ -384,14 +384,7 @@ const {
 } = usePagination(
   (page, pageSize) =>
     http.Get<any>(
-      '/org/' +
-        currentOrgId.value +
-        '/user/' +
-        page +
-        '/' +
-        pageSize +
-        '?search=' +
-        userPattern.value
+      `/org/${currentOrgId.value}/user/${page}/${pageSize}?search=${userPattern.value}`
     ),
   {
     immediate: false,
@@ -405,15 +398,14 @@ const {
   data: notExistOrgUsers,
   send: doGetNotExistOrgUsers
 } = useRequest(
-  () => http.Get<any[]>('/org/' + currentOrgId.value + '/user/not_exits'),
+  () => http.Get<any[]>(`/org/${currentOrgId.value}/user/not_exits`),
   {
     immediate: false
   }
 );
 
 const { loading: addUsersToOrgLoading, send: doAddUsersToOrg } = useRequest(
-  () =>
-    http.Put('/org/' + currentOrgId.value + '/user', addOrgUsers.value.users),
+  () => http.Put(`/org/${currentOrgId.value}/user`, addOrgUsers.value.users),
   {
     immediate: false
   }
@@ -426,7 +418,7 @@ const { loading: addUsersToOrgLoading, send: doAddUsersToOrg } = useRequest(
 const { loading: removeUsersFromOrgLoading, send: doRemoveUsersFromOrg } =
   useRequest(
     (userId: string) =>
-      http.Delete('/org/' + currentOrgId.value + '/user/' + userId),
+      http.Delete(`/org/${currentOrgId.value}/user/${userId}`),
     {
       immediate: false
     }

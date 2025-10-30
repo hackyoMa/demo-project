@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts" setup>
+import { computed, h, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { ref, computed, h, watchEffect } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { hasPermission } from '@/commons/permission';
 

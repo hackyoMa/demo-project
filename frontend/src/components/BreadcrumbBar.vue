@@ -15,17 +15,17 @@
 </template>
 
 <script lang="ts" setup>
-import { useRoute, useRouter } from 'vue-router';
-import { computed, watch } from 'vue';
-import IconFolderClose from '~icons/icon-park-outline/folder-close';
 import { useRequest } from 'alova/client';
+import { computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import IconFolderClose from '~icons/icon-park-outline/folder-close';
 
 const router = useRouter();
 const route = useRoute();
 const http = window.$http;
 
 const { data: allParentList, send: doGetAllParent } = useRequest(
-  (id: string) => http.Get<any>('/file_data/' + id + '/parent'),
+  (id: string) => http.Get<any>(`/file_data/${id}/parent`),
   { immediate: false }
 );
 

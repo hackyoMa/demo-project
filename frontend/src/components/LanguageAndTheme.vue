@@ -29,15 +29,15 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import IconEnglish from '~icons/icon-park-outline/english';
-import IconChinese from '~icons/icon-park-outline/chinese';
-import IconSun from '~icons/icon-park-outline/sun';
-import IconMoon from '~icons/icon-park-outline/moon';
-import IconIntermediateMode from '~icons/icon-park-outline/intermediate-mode';
-import { mainStore } from '@/store';
-import { renderIconMethod } from '@/commons/utils.ts';
 import { type SupportLanguage, SupportLanguages } from '@/commons/i18n.ts';
 import { type SupportTheme, SupportThemes } from '@/commons/theme.ts';
+import { renderIconMethod } from '@/commons/utils.ts';
+import { mainStore } from '@/store';
+import IconChinese from '~icons/icon-park-outline/chinese';
+import IconEnglish from '~icons/icon-park-outline/english';
+import IconIntermediateMode from '~icons/icon-park-outline/intermediate-mode';
+import IconMoon from '~icons/icon-park-outline/moon';
+import IconSun from '~icons/icon-park-outline/sun';
 
 const mStore = mainStore();
 const { t } = useI18n();

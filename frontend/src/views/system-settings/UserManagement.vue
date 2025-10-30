@@ -234,25 +234,25 @@
 </template>
 
 <script lang="ts" setup>
+import { usePagination, useRequest } from 'alova/client';
 import type {
   DataTableColumn,
   DataTableSortState,
-  FormRules,
   FormItemRule,
+  FormRules,
   PaginationInfo
 } from 'naive-ui';
 import { NButton, NDropdown, NGi, NGrid, NTag, NText } from 'naive-ui';
 import { computed, h, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import IconDelete from '~icons/icon-park-outline/delete';
-import IconEditTwo from '~icons/icon-park-outline/edit-two';
-import IconDown from '~icons/icon-park-outline/down';
-import { useRequest, usePagination } from 'alova/client';
-import emailSuffix from '@/commons/email-suffix';
 import areaCodes from '@/commons/area-codes';
-import { mainStore } from '@/store';
+import emailSuffix from '@/commons/email-suffix';
 import { hasPermission } from '@/commons/permission';
 import { renderIconMethod } from '@/commons/utils';
+import { mainStore } from '@/store';
+import IconDelete from '~icons/icon-park-outline/delete';
+import IconDown from '~icons/icon-park-outline/down';
+import IconEditTwo from '~icons/icon-park-outline/edit-two';
 
 const mStore = mainStore();
 const { t } = useI18n();
@@ -356,7 +356,7 @@ const profileRules = computed<FormRules>(() => {
             return new Error(t('userSettings.profile.validator.passwordEmpty'));
           }
           const regular = new RegExp(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{6,64}$/
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\s\S]{6,64}$/
           );
           if (!regular.test(value)) {
             return new Error(t('userSettings.profile.validator.passwordError'));
@@ -376,7 +376,7 @@ const emailAutoCompleteOptions = computed(() => {
   }
   let mailsFilter = [];
   let suffix = email.split('@')[1];
-  suffix = '@' + (suffix ? suffix : '');
+  suffix = `@${suffix ? suffix : ''}`;
   for (const es of emailSuffix) {
     if (es.startsWith(suffix)) {
       mailsFilter.push(es);
@@ -695,13 +695,7 @@ const {
   (page, pageSize) => {
     const sorter = getUserTableSorter.value;
     return http.Get<any>(
-      '/user/' +
-        page +
-        '/' +
-        pageSize +
-        '?search=' +
-        userPattern.value +
-        (sorter ? '&' + sorter : '')
+      `/user/${page}/${pageSize}?search=${userPattern.value}${sorter ? `&${sorter}` : ''}`
     );
   },
   {
@@ -711,7 +705,7 @@ const {
 );
 
 const { loading: deleteUserLoading, send: doDeleteUser } = useRequest(
-  (userId: string) => http.Delete('/user/' + userId),
+  (userId: string) => http.Delete(`/user/${userId}`),
   {
     immediate: false
   }

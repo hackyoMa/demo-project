@@ -129,13 +129,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, h, ref } from 'vue';
-import { NText, type FormRules } from 'naive-ui';
-import { useI18n } from 'vue-i18n';
-import { ulid } from 'ulid';
 import { useRequest } from 'alova/client';
-import { arrayToTreeCustom } from '@/commons/utils';
+import { type FormRules, NText } from 'naive-ui';
+import { ulid } from 'ulid';
+import { computed, h, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { hasPermission } from '@/commons/permission';
+import { arrayToTreeCustom } from '@/commons/utils';
 
 const { t } = useI18n();
 const http = window.$http;
@@ -242,7 +242,7 @@ function addOrUpdateRoleSuccess(res: any) {
 }
 
 const { loading: deleteRoleLoading, send: doDeleteRole } = useRequest(
-  () => http.Delete('/role/' + currentRoleId.value),
+  () => http.Delete(`/role/${currentRoleId.value}`),
   {
     immediate: false
   }
@@ -258,7 +258,7 @@ const {
   data: permissionsChecked,
   send: doGetRolePermissionRole
 } = useRequest(
-  () => http.Get<string[]>('/role/' + currentRoleId.value + '/permission'),
+  () => http.Get<string[]>(`/role/${currentRoleId.value}/permission`),
   {
     immediate: false,
     initialData: []

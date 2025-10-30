@@ -47,10 +47,10 @@
 </template>
 
 <script lang="ts" setup>
+import { useRequest } from 'alova/client';
 import type { FormItemRule, FormRules } from 'naive-ui';
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRequest } from 'alova/client';
 
 const http = window.$http;
 const { t } = useI18n();
@@ -91,7 +91,8 @@ const { loading: getSysConfigRecycleBinRetentionDaysLoading } = useRequest(() =>
   http.Get<any>('/sys-config?configKey=RECYCLE_BIN_RETENTION_DAYS')
 ).onSuccess((response: any) => {
   sysConfigForm.value.recycleBinRetentionDays = parseInt(
-    response.data.configValue
+    response.data.configValue,
+    10
   );
 });
 

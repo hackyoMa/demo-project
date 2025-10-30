@@ -26,12 +26,12 @@
 
 <script lang="ts" setup>
 import type { MenuOption } from 'naive-ui';
-import { RouterLink, useRoute, useRouter } from 'vue-router';
-import { computed, h, ref, watchEffect, type Component } from 'vue';
+import { type Component, computed, h, ref, watchEffect } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { mainStore } from '@/store';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { hasPermission } from '@/commons/permission';
 import { renderIcon } from '@/commons/utils';
+import { mainStore } from '@/store';
 
 const mStore = mainStore();
 const router = useRouter();
@@ -71,6 +71,7 @@ watchEffect(async () => {
     } else {
       const parentName = route.matched[1]?.name as string;
       const allSideMenus = await getAllSideMenus();
+      // biome-ignore lint/suspicious/noPrototypeBuiltins: is safe
       if (!Object.prototype.hasOwnProperty.call(allSideMenus, parentName)) {
         currentSideMenus.value = [];
       } else {
