@@ -1,8 +1,9 @@
 package com.github.demoproject.config;
 
 import org.eclipse.jetty.server.ServerConnector;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
+import org.springframework.boot.jetty.servlet.JettyServletWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -15,7 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
  * @since 2022/4/1
  */
 @Configuration
-public class WebServerFactory implements WebServerFactoryCustomizer<JettyServletWebServerFactory> {
+public class WebServerFactory implements WebServerFactoryCustomizer<@NonNull JettyServletWebServerFactory> {
 
     @Value("${server.ssl.enabled}")
     private Boolean serverSslEnabled;
@@ -42,7 +43,7 @@ public class WebServerFactory implements WebServerFactoryCustomizer<JettyServlet
         }
     }
 
-    public void setSslRedirect(HttpSecurity http) throws Exception {
+    public void setSslRedirect(HttpSecurity http) {
         if (serverSslEnabled && serverSslForced) {
             http.portMapper(portMapper -> portMapper.http(serverHttpPort).mapsTo(serverSslPort))
                     .redirectToHttps(Customizer.withDefaults());

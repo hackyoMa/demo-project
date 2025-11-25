@@ -3,6 +3,7 @@ package com.github.demoproject.user.controller;
 import com.github.demoproject.user.entity.Org;
 import com.github.demoproject.user.entity.UserInfo;
 import com.github.demoproject.user.service.OrgService;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -85,10 +86,10 @@ public class OrgController {
      */
     @GetMapping("/{orgId}/user/{page}/{pageSize}")
     @PreAuthorize("hasAuthority('org:read')")
-    public Page<UserInfo> getOrgUser(@PathVariable String orgId,
-                                     @PathVariable Integer page,
-                                     @PathVariable Integer pageSize,
-                                     @RequestParam String search) {
+    public Page<@NonNull UserInfo> getOrgUser(@PathVariable String orgId,
+                                              @PathVariable Integer page,
+                                              @PathVariable Integer pageSize,
+                                              @RequestParam String search) {
         return orgService.getOrgUser(orgId, PageRequest.of(page - 1, pageSize), search);
     }
 

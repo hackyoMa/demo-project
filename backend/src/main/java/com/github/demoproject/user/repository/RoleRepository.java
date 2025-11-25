@@ -1,6 +1,7 @@
 package com.github.demoproject.user.repository;
 
 import com.github.demoproject.user.entity.Role;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * @since 2022/4/1
  */
 @Repository
-public interface RoleRepository extends JpaRepository<Role, String> {
+public interface RoleRepository extends JpaRepository<@NonNull Role, @NonNull String> {
 
     /**
      * existsByNameAndIdNot

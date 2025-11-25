@@ -17,6 +17,7 @@ import com.github.demoproject.util.I18n;
 import com.github.demoproject.util.ULID;
 import io.jsonwebtoken.Jwts;
 import jakarta.persistence.EntityNotFoundException;
+import org.jspecify.annotations.NonNull;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,8 +170,8 @@ public class UserService {
         return u;
     }
 
-    public Page<UserInfo> get(PageRequest page, String search) {
-        Page<UserInfo> users = userRepository.findAllOrderBySort(search, page);
+    public Page<@NonNull UserInfo> get(PageRequest page, String search) {
+        Page<@NonNull UserInfo> users = userRepository.findAllOrderBySort(search, page);
         Map<String, List<String>> userIdRoleListMap = userRoleRepository.findAllByUserIdIn(users.getContent().stream().map(UserInfo::getId).toList())
                 .stream().collect(Collectors.groupingBy(
                         UserRole::getUserId,

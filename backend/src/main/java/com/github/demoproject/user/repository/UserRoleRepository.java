@@ -1,6 +1,7 @@
 package com.github.demoproject.user.repository;
 
 import com.github.demoproject.user.entity.UserRole;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ import java.util.List;
  * @since 2022/4/1
  */
 @Repository
-public interface UserRoleRepository extends JpaRepository<UserRole, String> {
+public interface UserRoleRepository extends JpaRepository<@NonNull UserRole, @NonNull String> {
 
     /**
      * deleteAllByRoleId

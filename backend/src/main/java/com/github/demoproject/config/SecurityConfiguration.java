@@ -9,11 +9,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -73,7 +73,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         webServerFactory.setSslRedirect(http);
         http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -92,7 +92,7 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    private void configureWhitelistAccess(HttpSecurity http) throws Exception {
+    private void configureWhitelistAccess(HttpSecurity http) {
         PathPatternRequestMatcher.Builder requestMatcher = PathPatternRequestMatcher.withDefaults().basePath(WebConfig.CONTEXT_PATH);
         http.authorizeHttpRequests(authorizeHttpRequests -> {
             Arrays.stream(securityProperties.getAllWhitelist())
@@ -126,22 +126,24 @@ public class SecurityConfiguration {
         private static final UrlPathHelper PATH_HELPER = new UrlPathHelper();
 
         @Override
-        protected void doFilterInternal(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain filterChain) throws ServletException, IOException {
+        protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication != null && authentication.isAuthenticated() && authentication instanceof JwtAuthenticationToken) {
                 try {
                     Jwt jwt = (Jwt) authentication.getPrincipal();
-                    String userId = jwt.getSubject();
+                    if (jwt != null) {
+                        String userId = jwt.getSubject();
 
-                    String userAgent = RequestUtil.getUserAgent(request);
-                    String clientIp = RequestUtil.getClientIp(request);
-                    userService.verifyToken(userId, jwt.getId(), userAgent, clientIp);
+                        String userAgent = RequestUtil.getUserAgent(request);
+                        String clientIp = RequestUtil.getClientIp(request);
+                        userService.verifyToken(userId, jwt.getId(), userAgent, clientIp);
 
-                    UserInfo user = userService.getById(userId);
-                    userService.verifyUserStatus(user);
+                        UserInfo user = userService.getById(userId);
+                        userService.verifyUserStatus(user);
 
-                    List<SimpleGrantedAuthority> grantedAuthorityList = user.getPermissionIds().stream().map(SimpleGrantedAuthority::new).toList();
-                    SecurityContextHolder.getContext().setAuthentication(new JwtAuthenticationToken(jwt, grantedAuthorityList));
+                        List<SimpleGrantedAuthority> grantedAuthorityList = user.getPermissionIds().stream().map(SimpleGrantedAuthority::new).toList();
+                        SecurityContextHolder.getContext().setAuthentication(new JwtAuthenticationToken(jwt, grantedAuthorityList));
+                    }
                 } catch (AuthenticationException e) {
                     SecurityContextHolder.clearContext();
                     throw e;
@@ -151,7 +153,7 @@ public class SecurityConfiguration {
         }
 
         @Override
-        protected boolean shouldNotFilter(@Nonnull HttpServletRequest request) {
+        protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
             String path = PATH_HELPER.getLookupPathForRequest(request);
             return !PATH_MATCHER.match(WebConfig.CONTEXT_PATH + "/**", path);
         }

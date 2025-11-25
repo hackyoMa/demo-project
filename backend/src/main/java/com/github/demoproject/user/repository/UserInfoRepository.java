@@ -1,6 +1,7 @@
 package com.github.demoproject.user.repository;
 
 import com.github.demoproject.user.entity.UserInfo;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,7 +18,7 @@ import java.util.Optional;
  * @since 2022/4/1
  */
 @Repository
-public interface UserInfoRepository extends JpaRepository<UserInfo, String> {
+public interface UserInfoRepository extends JpaRepository<@NonNull UserInfo, @NonNull String> {
 
     /**
      * findByUsername
@@ -44,7 +45,7 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, String> {
      * @return user list
      */
     @Query("FROM user_info u WHERE u.id IN (SELECT ou.userId FROM org_user ou WHERE ou.orgId = ?1) AND (u.username LIKE %?2% OR u.name LIKE %?2% OR u.email LIKE %?2% OR CONCAT(u.areaCode, u.phone) LIKE %?2%) ORDER BY u.username ASC")
-    Page<UserInfo> findAllByIdInOrderByUsernameAsc(String orgId, String search, Pageable page);
+    Page<@NonNull UserInfo> findAllByIdInOrderByUsernameAsc(String orgId, String search, Pageable page);
 
     /**
      * findAllOrderBySort
@@ -54,7 +55,7 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, String> {
      * @return user list
      */
     @Query("FROM user_info u WHERE u.username LIKE %?1% OR u.name LIKE %?1% OR u.email LIKE %?1% OR CONCAT(u.areaCode, u.phone) LIKE %?1%")
-    Page<UserInfo> findAllOrderBySort(String search, Pageable page);
+    Page<@NonNull UserInfo> findAllOrderBySort(String search, Pageable page);
 
     /**
      * existsByUsername

@@ -1,6 +1,7 @@
 package com.github.demoproject.user.repository;
 
 import com.github.demoproject.user.entity.Permission;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ import java.util.List;
  * @since 2022/4/1
  */
 @Repository
-public interface PermissionRepository extends JpaRepository<Permission, String> {
+public interface PermissionRepository extends JpaRepository<@NonNull Permission, @NonNull String> {
 
     /**
      * findAllByBasicsOrderByNameAsc

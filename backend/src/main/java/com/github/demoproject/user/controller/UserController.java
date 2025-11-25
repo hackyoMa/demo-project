@@ -8,6 +8,7 @@ import com.github.demoproject.user.service.UserService;
 import com.github.demoproject.util.CurrentUser;
 import com.github.demoproject.util.RequestUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -92,10 +93,10 @@ public class UserController {
      */
     @GetMapping("/{page}/{pageSize}")
     @PreAuthorize("hasAuthority('user_management:read')")
-    public Page<UserInfo> get(@PathVariable Integer page, @PathVariable Integer pageSize,
-                              @RequestParam(required = false) String search,
-                              @RequestParam(required = false) String sorter,
-                              @RequestParam(required = false) SorterOrder sorterOrder) {
+    public Page<@NonNull UserInfo> get(@PathVariable Integer page, @PathVariable Integer pageSize,
+                                       @RequestParam(required = false) String search,
+                                       @RequestParam(required = false) String sorter,
+                                       @RequestParam(required = false) SorterOrder sorterOrder) {
         if (!StringUtils.hasLength(sorter)) {
             sorter = "username";
         }

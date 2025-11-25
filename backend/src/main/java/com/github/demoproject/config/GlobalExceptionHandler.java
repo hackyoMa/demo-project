@@ -2,9 +2,9 @@ package com.github.demoproject.config;
 
 import com.github.demoproject.common.BaseResult;
 import com.github.demoproject.common.HttpException;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,7 +27,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
  * @since 2022/4/1
  */
 @ControllerAdvice
-public class GlobalExceptionHandler implements ResponseBodyAdvice<Object> {
+public class GlobalExceptionHandler implements ResponseBodyAdvice<@NonNull Object> {
 
     /**
      * unauthorized exception
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object> {
      */
     @ExceptionHandler(AuthenticationException.class)
     @ResponseBody
-    public ResponseEntity<BaseResult> exceptionHandler(AuthenticationException e) {
+    public ResponseEntity<@NonNull BaseResult> exceptionHandler(AuthenticationException e) {
         return new ResponseEntity<>(BaseResult.fail(HttpStatus.UNAUTHORIZED, e.getMessage()),
                 HttpStatus.UNAUTHORIZED);
     }
@@ -50,7 +50,7 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object> {
      */
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseBody
-    public ResponseEntity<BaseResult> exceptionHandler(AccessDeniedException e) {
+    public ResponseEntity<@NonNull BaseResult> exceptionHandler(AccessDeniedException e) {
         return new ResponseEntity<>(BaseResult.fail(HttpStatus.FORBIDDEN, e.getMessage()),
                 HttpStatus.FORBIDDEN);
     }
@@ -75,7 +75,7 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object> {
      */
     @ExceptionHandler(HttpException.class)
     @ResponseBody
-    public ResponseEntity<BaseResult> exceptionHandler(HttpException e) {
+    public ResponseEntity<@NonNull BaseResult> exceptionHandler(HttpException e) {
         HttpStatus status = e.getHttpStatus() != null ? e.getHttpStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
         return new ResponseEntity<>(BaseResult.fail(status, e.getMessage()), status);
     }
@@ -88,7 +88,7 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object> {
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public ResponseEntity<BaseResult> exceptionHandler(Exception e) {
+    public ResponseEntity<@NonNull BaseResult> exceptionHandler(Exception e) {
         return new ResponseEntity<>(BaseResult.fail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -101,8 +101,8 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object> {
      * @return support
      */
     @Override
-    public boolean supports(@Nonnull MethodParameter returnType,
-                            @Nonnull Class<? extends HttpMessageConverter<?>> converterType) {
+    public boolean supports(@Nullable MethodParameter returnType,
+                            @Nullable Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
     }
 
@@ -118,11 +118,10 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object> {
      * @return return value
      */
     @Override
-    @Nonnull
-    public Object beforeBodyWrite(@Nullable Object body,
-                                  @Nonnull MethodParameter returnType, @Nonnull MediaType selectedContentType,
-                                  @Nonnull Class<? extends HttpMessageConverter<?>> selectedConverterType,
-                                  @Nonnull ServerHttpRequest request, @Nonnull ServerHttpResponse response) {
+    public Object beforeBodyWrite(Object body,
+                                  @Nullable MethodParameter returnType, @Nullable MediaType selectedContentType,
+                                  @Nullable Class<? extends HttpMessageConverter<?>> selectedConverterType,
+                                  @Nullable ServerHttpRequest request, @Nullable ServerHttpResponse response) {
         if (body != null && BaseResult.class.isAssignableFrom(body.getClass())) {
             return body;
         }

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.github.demoproject.util.TimeUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -28,10 +27,10 @@ public class JacksonConfig {
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
         simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
-        return Jackson2ObjectMapperBuilder.json()
-                .timeZone(TimeZone.getTimeZone(TimeUtil.DEFAULT_ZONE))
-                .modulesToInstall(simpleModule)
-                .build();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(simpleModule);
+        objectMapper.setTimeZone(TimeZone.getTimeZone(TimeUtil.DEFAULT_ZONE));
+        return objectMapper;
     }
 
     public static class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {

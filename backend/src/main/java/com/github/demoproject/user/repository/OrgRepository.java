@@ -1,6 +1,7 @@
 package com.github.demoproject.user.repository;
 
 import com.github.demoproject.user.entity.Org;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @since 2022/4/1
  */
 @Repository
-public interface OrgRepository extends JpaRepository<Org, String> {
+public interface OrgRepository extends JpaRepository<@NonNull Org, @NonNull String> {
 
     /**
      * existsByNameAndParentIdAndIdNot

@@ -1,6 +1,7 @@
 package com.github.demoproject.sys_config.repository;
 
 import com.github.demoproject.sys_config.entity.SysConfig;
+import org.jspecify.annotations.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
  * @since 2022/4/1
  */
 @Repository
-public interface SysConfigRepository extends JpaRepository<SysConfig, String> {
+public interface SysConfigRepository extends JpaRepository<@NonNull SysConfig, @NonNull String> {
 
     /**
      * findFirstByConfigKey

@@ -1,6 +1,7 @@
 package com.github.demoproject.config;
 
 import com.github.demoproject.util.CurrentUser;
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -22,9 +23,11 @@ import static org.springframework.data.web.config.EnableSpringDataWebSupport.Pag
 @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
 public class DataJpaConfig {
 
+    private static final String SYSTEM_USER = "system";
+
     @Bean
-    public AuditorAware<String> auditorProvider() {
-        return () -> Optional.ofNullable(CurrentUser.getId());
+    public AuditorAware<@NonNull String> auditorProvider() {
+        return () -> Optional.ofNullable(CurrentUser.getId()).or(() -> Optional.of(SYSTEM_USER));
     }
 
 }

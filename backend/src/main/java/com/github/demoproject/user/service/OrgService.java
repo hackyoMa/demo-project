@@ -8,6 +8,7 @@ import com.github.demoproject.user.repository.OrgRepository;
 import com.github.demoproject.user.repository.OrgUserRepository;
 import com.github.demoproject.user.repository.UserInfoRepository;
 import com.github.demoproject.util.I18n;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -84,7 +85,7 @@ public class OrgService {
         orgRepository.deleteById(orgId);
     }
 
-    public Page<UserInfo> getOrgUser(String orgId, PageRequest page, String search) {
+    public Page<@NonNull UserInfo> getOrgUser(String orgId, PageRequest page, String search) {
         return userRepository.findAllByIdInOrderByUsernameAsc(orgId, search, page);
     }
 
