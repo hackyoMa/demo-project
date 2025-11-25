@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.7</version>
+        <version>4.0.0</version>
         <relativePath/>
     </parent>
 
@@ -44,15 +44,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <java.version>25</java.version>
-        <netty.version>4.2.7.Final</netty.version>
-        <ulid.version>8.3.0</ulid.version>
-        <jjwt.version>0.13.0</jjwt.version>
-        <commons-codec.version>1.19.0</commons-codec.version>
-        <commons-exec.version>1.5.0</commons-exec.version>
-        <redisson.version>3.52.0</redisson.version>
-        <hikaricp.version>7.0.2</hikaricp.version>
-        <flyway.version>11.15.0</flyway.version>
         <postgresql.version>42.7.8</postgresql.version>
+        <redisson.version>3.52.0</redisson.version>
+        <ulid.version>8.3.0</ulid.version>
+        <commons-codec.version>1.20.0</commons-codec.version>
+        <commons-exec.version>1.5.0</commons-exec.version>
+        <jjwt.version>0.13.0</jjwt.version>
         <lombok.version>1.18.42</lombok.version>
         <smart-doc.version>3.1.2</smart-doc.version>
         <exec-maven-plugin.version>3.6.2</exec-maven-plugin.version>
