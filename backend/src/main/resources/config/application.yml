@@ -36,13 +36,9 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
   jpa:
     open-in-view: false
-  flyway:
-    locations: classpath:/db/migration
-    table: db_version
-logging:
-  level:
-    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
-    org.eclipse.jetty.ee10.servlet.ServletChannel: ERROR
+  liquibase:
+    database-change-log-lock-table: db_version_lock
+    database-change-log-table: db_version
 security:
   all-whitelist:
   whitelist:

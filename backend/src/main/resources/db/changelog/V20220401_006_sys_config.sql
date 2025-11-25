@@ -1,3 +1,5 @@
+--liquibase formatted sql
+--changeset hackyo:V20220401_006_sys_config
 CREATE TABLE sys_config
 (
     id                 VARCHAR(26)  NOT NULL,

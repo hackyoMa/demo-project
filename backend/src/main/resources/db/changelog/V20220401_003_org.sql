@@ -1,3 +1,5 @@
+--liquibase formatted sql
+--changeset hackyo:V20220401_003_org
 CREATE TABLE org
 (
     id                 VARCHAR(26)  NOT NULL,

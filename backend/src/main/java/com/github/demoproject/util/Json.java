@@ -1,11 +1,9 @@
 package com.github.demoproject.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.List;
 
@@ -15,61 +13,42 @@ import java.util.List;
  * @author hackyo
  * @since 2022/4/1
  */
-@Slf4j
 @Component
 public class Json {
 
-    public static ObjectMapper OBJECT_MAPPER;
+    public static JsonMapper jsonMapper;
 
     @Autowired
-    public Json(ObjectMapper objectMapper) {
-        OBJECT_MAPPER = objectMapper;
+    public Json(JsonMapper jsonMapper) {
+        Json.jsonMapper = jsonMapper;
     }
 
     public static <T> T toObject(ObjectNode objectNode, Class<T> clazz) {
-        return OBJECT_MAPPER.convertValue(objectNode, clazz);
+        return jsonMapper.convertValue(objectNode, clazz);
     }
 
     public static <T> T toArray(ObjectNode objectNode, Class<T> clazz) {
-        return OBJECT_MAPPER.convertValue(objectNode,
-                OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, clazz));
+        return jsonMapper.convertValue(objectNode, jsonMapper.getTypeFactory().constructCollectionType(List.class, clazz));
     }
 
     public static <T> T getObject(ObjectNode objectNode, String key, Class<T> clazz) {
-        return OBJECT_MAPPER.convertValue(objectNode.get(key), clazz);
+        return jsonMapper.convertValue(objectNode.get(key), clazz);
     }
 
     public static <T> List<T> getArray(ObjectNode objectNode, String key, Class<T> clazz) {
-        return OBJECT_MAPPER.convertValue(objectNode.get(key),
-                OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, clazz));
+        return jsonMapper.convertValue(objectNode.get(key), jsonMapper.getTypeFactory().constructCollectionType(List.class, clazz));
     }
 
     public static <T> T parseObject(String json, Class<T> clazz) {
-        try {
-            return OBJECT_MAPPER.readValue(json, clazz);
-        } catch (JsonProcessingException e) {
-            log.error("Error parsing json", e);
-            throw new RuntimeException(e);
-        }
+        return jsonMapper.readValue(json, clazz);
     }
 
     public static <T> List<T> parseArray(String json, Class<T> clazz) {
-        try {
-            return OBJECT_MAPPER.readValue(json,
-                    OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, clazz));
-        } catch (JsonProcessingException e) {
-            log.error("Error parsing json", e);
-            throw new RuntimeException(e);
-        }
+        return jsonMapper.readValue(json, jsonMapper.getTypeFactory().constructCollectionType(List.class, clazz));
     }
 
     public static String toJsonString(Object object) {
-        try {
-            return OBJECT_MAPPER.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
-            log.error("Error converting object to json", e);
-            throw new RuntimeException(e);
-        }
+        return jsonMapper.writeValueAsString(object);
     }
 
 }
