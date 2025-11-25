@@ -19,6 +19,8 @@ server:
 spring:
   application:
     name: demo-project
+  main:
+    banner-mode: off
   config:
     # Configuration file path
     import: optional:file:${FF_CONFIG_FILE:/opt/demo_project/config/conf.properties}
@@ -39,6 +41,9 @@ spring:
   liquibase:
     database-change-log-lock-table: db_version_lock
     database-change-log-table: db_version
+logging:
+  level:
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
 security:
   all-whitelist:
   whitelist:
