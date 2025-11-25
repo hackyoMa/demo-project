@@ -2,7 +2,6 @@ package com.github.demoproject.user.model;
 
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +11,7 @@ import java.util.Date;
  * @since 2022/4/1
  */
 @Data
-public class UserTokenModel implements Serializable {
+public class UserTokenModel {
 
     /**
      * user agent

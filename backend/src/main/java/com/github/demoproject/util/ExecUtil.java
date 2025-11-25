@@ -6,7 +6,6 @@ import org.apache.commons.exec.Executor;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.*;
@@ -73,7 +72,7 @@ public final class ExecUtil {
                 });
     }
 
-    public record ExecResult(boolean success, List<String> stdout, List<String> stderr) implements Serializable {
+    public record ExecResult(boolean success, List<String> stdout, List<String> stderr) {
     }
 
     private static class CollectingLogOutputStream extends LogOutputStream {

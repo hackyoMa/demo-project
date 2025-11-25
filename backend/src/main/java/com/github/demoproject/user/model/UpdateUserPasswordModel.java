@@ -2,8 +2,6 @@ package com.github.demoproject.user.model;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  * UpdateUserPasswordModel
  *
@@ -11,7 +9,7 @@ import java.io.Serializable;
  * @since 2022/4/1
  */
 @Data
-public class UpdateUserPasswordModel implements Serializable {
+public class UpdateUserPasswordModel {
 
     /**
      * original password

@@ -3,8 +3,6 @@ package com.github.demoproject.common;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
-import java.io.Serializable;
-
 /**
  * BaseResult
  *
@@ -12,7 +10,7 @@ import java.io.Serializable;
  * @since 2022/4/1
  */
 @Data
-public class BaseResult implements Serializable {
+public class BaseResult {
 
     /**
      * status success

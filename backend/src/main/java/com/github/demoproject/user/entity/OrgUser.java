@@ -6,8 +6,6 @@ import jakarta.persistence.IdClass;
 import lombok.Data;
 import lombok.experimental.FieldNameConstants;
 
-import java.io.Serializable;
-
 /**
  * OrgUser
  *
@@ -18,7 +16,7 @@ import java.io.Serializable;
 @Entity(name = "org_user")
 @IdClass(OrgUser.class)
 @FieldNameConstants
-public class OrgUser implements Serializable {
+public class OrgUser {
 
     /**
      * org id

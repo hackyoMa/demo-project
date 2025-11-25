@@ -6,8 +6,6 @@ import jakarta.persistence.IdClass;
 import lombok.Data;
 import lombok.experimental.FieldNameConstants;
 
-import java.io.Serializable;
-
 /**
  * RolePermission
  *
@@ -18,7 +16,7 @@ import java.io.Serializable;
 @Entity(name = "role_permission")
 @IdClass(RolePermission.class)
 @FieldNameConstants
-public class RolePermission implements Serializable {
+public class RolePermission {
 
     /**
      * role id

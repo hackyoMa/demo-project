@@ -3,7 +3,6 @@ package com.github.demoproject.user.model;
 import com.github.demoproject.user.entity.Role;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ import java.util.List;
  * @since 2022/4/1
  */
 @Data
-public class RoleModel implements Serializable {
+public class RoleModel {
 
     /**
      * role
