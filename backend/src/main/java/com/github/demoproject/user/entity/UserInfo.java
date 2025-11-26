@@ -4,7 +4,6 @@ import com.github.demoproject.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import lombok.Data;
-import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
  */
 @Data
 @Entity(name = "user_info")
-@FieldNameConstants
 public class UserInfo extends BaseEntity {
 
     /**

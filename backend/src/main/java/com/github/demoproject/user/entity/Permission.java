@@ -3,7 +3,6 @@ package com.github.demoproject.user.entity;
 import com.github.demoproject.common.BaseEntity;
 import jakarta.persistence.Entity;
 import lombok.Data;
-import lombok.experimental.FieldNameConstants;
 
 /**
  * Permission
@@ -13,7 +12,6 @@ import lombok.experimental.FieldNameConstants;
  */
 @Data
 @Entity(name = "permission")
-@FieldNameConstants
 public class Permission extends BaseEntity {
 
     /**

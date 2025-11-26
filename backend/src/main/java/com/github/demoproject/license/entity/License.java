@@ -3,7 +3,6 @@ package com.github.demoproject.license.entity;
 import com.github.demoproject.common.BaseEntity;
 import jakarta.persistence.Entity;
 import lombok.Data;
-import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +14,6 @@ import java.time.LocalDateTime;
  */
 @Data
 @Entity(name = "license")
-@FieldNameConstants
 public class License extends BaseEntity {
 
     /**

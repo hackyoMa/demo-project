@@ -3,7 +3,6 @@ package com.github.demoproject.sys_config.entity;
 import com.github.demoproject.common.BaseEntity;
 import jakarta.persistence.Entity;
 import lombok.Data;
-import lombok.experimental.FieldNameConstants;
 
 /**
  * SysConfig
@@ -13,7 +12,6 @@ import lombok.experimental.FieldNameConstants;
  */
 @Data
 @Entity(name = "sys_config")
-@FieldNameConstants
 public class SysConfig extends BaseEntity {
 
     /**

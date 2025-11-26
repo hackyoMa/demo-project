@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import lombok.Data;
-import lombok.experimental.FieldNameConstants;
 
 /**
  * RolePermission
@@ -15,7 +14,6 @@ import lombok.experimental.FieldNameConstants;
 @Data
 @Entity(name = "role_permission")
 @IdClass(RolePermission.class)
-@FieldNameConstants
 public class RolePermission {
 
     /**
