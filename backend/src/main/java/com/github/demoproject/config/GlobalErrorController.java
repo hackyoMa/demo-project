@@ -25,8 +25,7 @@ public class GlobalErrorController implements ErrorController {
     public void errorHtml(HttpServletRequest request) {
         HttpStatus status = getStatus(request);
         Exception exception = getException(request);
-        String errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
-        errorMessage = StringUtils.hasLength(errorMessage) ? errorMessage : status.getReasonPhrase();
+        String errorMessage = getErrorMessage(request, status, exception);
         if (HttpStatus.UNAUTHORIZED.equals(status) || exception instanceof AuthenticationException) {
             throw new BadCredentialsException(errorMessage);
         } else if (HttpStatus.FORBIDDEN.equals(status) || exception instanceof AccessDeniedException) {
@@ -58,6 +57,21 @@ public class GlobalErrorController implements ErrorController {
         } catch (Exception e) {
             return new Exception();
         }
+    }
+
+    private String getErrorMessage(HttpServletRequest request, HttpStatus status, Exception exception) {
+        String errorMessage = null;
+        if (exception != null) {
+            errorMessage = exception.getMessage();
+        }
+        if (StringUtils.hasLength(errorMessage)) {
+            return errorMessage;
+        }
+        errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
+        if (StringUtils.hasLength(errorMessage)) {
+            return errorMessage;
+        }
+        return status.getReasonPhrase();
     }
 
 }
