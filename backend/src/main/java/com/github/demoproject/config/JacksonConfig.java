@@ -1,6 +1,5 @@
 package com.github.demoproject.config;
 
-import com.github.demoproject.util.TimeUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tools.jackson.databind.DeserializationFeature;
@@ -21,9 +20,10 @@ public class JacksonConfig {
     @Bean
     public JsonMapper jsonMapper() {
         return JsonMapper.builder()
+                .findAndAddModules()
                 .disable(MapperFeature.DEFAULT_VIEW_INCLUSION)
                 .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                .defaultTimeZone(TimeZone.getTimeZone(TimeUtil.DEFAULT_ZONE))
+                .defaultTimeZone(TimeZone.getDefault())
                 .build();
     }
 

@@ -8,6 +8,7 @@ import com.github.demoproject.user.entity.UserInfo;
 import com.github.demoproject.user.entity.UserRole;
 import com.github.demoproject.user.model.UpdateUserModel;
 import com.github.demoproject.user.model.UserTokenModel;
+import com.github.demoproject.user.model.UserTokenRespModel;
 import com.github.demoproject.user.repository.OrgUserRepository;
 import com.github.demoproject.user.repository.PermissionRepository;
 import com.github.demoproject.user.repository.UserInfoRepository;
@@ -121,7 +122,7 @@ public class UserService {
         }
     }
 
-    public String login(UserInfo user, String userAgent, String clientIp) throws AuthenticationException {
+    public UserTokenRespModel login(UserInfo user, String userAgent, String clientIp) throws AuthenticationException {
         String username = user.getUsername();
         String password = EncryptUtil.blake3(user.getPassword());
         user = userRepository.findByUsername(username)
@@ -130,7 +131,7 @@ public class UserService {
             throw new BadCredentialsException(I18n.get("invalidUsernamePassword"));
         }
         verifyUserStatus(user);
-        return generateUserToken(user.getId(), userAgent, clientIp);
+        return new UserTokenRespModel(generateUserToken(user.getId(), userAgent, clientIp));
     }
 
     public UserInfo getById(String userId) {

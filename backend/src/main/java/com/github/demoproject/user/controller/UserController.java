@@ -4,6 +4,7 @@ import com.github.demoproject.constant.SorterOrder;
 import com.github.demoproject.user.entity.UserInfo;
 import com.github.demoproject.user.model.UpdateUserModel;
 import com.github.demoproject.user.model.UpdateUserPasswordModel;
+import com.github.demoproject.user.model.UserTokenRespModel;
 import com.github.demoproject.user.service.UserService;
 import com.github.demoproject.util.CurrentUser;
 import com.github.demoproject.util.RequestUtil;
@@ -40,7 +41,7 @@ public class UserController {
      * @return authentication key
      */
     @PostMapping("/_login")
-    public String login(@RequestBody UserInfo user, HttpServletRequest request) {
+    public UserTokenRespModel login(@RequestBody UserInfo user, HttpServletRequest request) {
         String userAgent = RequestUtil.getUserAgent(request);
         String clientIp = RequestUtil.getClientIp(request);
         return userService.login(user, userAgent, clientIp);
