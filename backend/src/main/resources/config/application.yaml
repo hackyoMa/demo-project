@@ -44,6 +44,7 @@ spring:
 logging:
   level:
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: ERROR
+    org.eclipse.jetty.ee11.servlet.ServletChannel: ERROR
 security:
   all-whitelist:
   whitelist:
