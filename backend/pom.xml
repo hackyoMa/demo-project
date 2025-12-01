@@ -89,6 +89,7 @@
             <groupId>com.google.crypto.tink</groupId>
             <artifactId>tink</artifactId>
             <version>${tink.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
