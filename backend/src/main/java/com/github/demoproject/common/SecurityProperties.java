@@ -2,6 +2,9 @@ package com.github.demoproject.common;
 
 import com.github.demoproject.util.EncryptUtil;
 import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.crypto.Ed25519Signer;
+import com.nimbusds.jose.crypto.Ed25519Verifier;
 import com.nimbusds.jose.jwk.Curve;
 import com.nimbusds.jose.jwk.OctetKeyPair;
 import com.nimbusds.jose.jwk.gen.OctetKeyPairGenerator;
@@ -36,10 +39,12 @@ public class SecurityProperties {
 
     @Data
     public static class Secret {
-        private static final String ALGORITHM = "Ed25519";
+        public static final JWSAlgorithm ALGORITHM = JWSAlgorithm.Ed25519;
 
         private OctetKeyPair privateKey;
         private OctetKeyPair publicKey;
+        private Ed25519Signer signer;
+        private Ed25519Verifier verifier;
 
         public Secret(Path privateKey, Path publicKey) throws IOException, JOSEException {
             if (!Files.exists(privateKey) || !Files.exists(publicKey)) {
@@ -51,6 +56,8 @@ public class SecurityProperties {
                         .d(Base64URL.encode(loadKey(privateKey))).build();
             }
             this.publicKey = this.privateKey.toPublicJWK();
+            this.signer = new Ed25519Signer(this.privateKey);
+            this.verifier = new Ed25519Verifier(this.publicKey);
         }
 
         private static byte[] loadKey(Path path) throws IOException {

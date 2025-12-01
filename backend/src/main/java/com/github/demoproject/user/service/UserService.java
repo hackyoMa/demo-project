@@ -16,7 +16,10 @@ import com.github.demoproject.user.repository.UserRoleRepository;
 import com.github.demoproject.util.EncryptUtil;
 import com.github.demoproject.util.I18n;
 import com.github.demoproject.util.ULID;
-import io.jsonwebtoken.Jwts;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 import jakarta.persistence.EntityNotFoundException;
 import org.jspecify.annotations.NonNull;
 import org.redisson.api.RMapCache;
@@ -87,12 +90,20 @@ public class UserService {
         userTokenModel.setIssuedAt(currentTime);
         RMapCache<String, UserTokenModel> userTokenMap = redissonClient.getMapCache(RedisAttribute.TOKEN_PREFIX + userId);
         userTokenMap.put(tokenId, userTokenModel, TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
-        return TOKEN_HEADER + Jwts.builder()
-                .subject(userId)
-                .id(tokenId)
-                .issuedAt(currentTime)
-                .signWith(securityProperties.getSecret().getPrivateKey(), Jwts.SIG.EdDSA)
-                .compact();
+
+        try {
+            SignedJWT signedJWT = new SignedJWT(
+                    new JWSHeader.Builder(SecurityProperties.Secret.ALGORITHM).build(),
+                    new JWTClaimsSet.Builder()
+                            .subject(userId)
+                            .jwtID(tokenId)
+                            .issueTime(currentTime)
+                            .build());
+            signedJWT.sign(securityProperties.getSecret().getSigner());
+            return TOKEN_HEADER + signedJWT.serialize();
+        } catch (JOSEException e) {
+            throw new AuthenticationServiceException(I18n.get("failedGenerateAccessToken"));
+        }
     }
 
     public void verifyToken(String userId, String tokenId, String userAgent, String clientIp) throws AuthenticationException {

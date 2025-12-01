@@ -6,7 +6,6 @@ import com.github.demoproject.user.service.UserService;
 import com.github.demoproject.util.I18n;
 import com.github.demoproject.util.RequestUtil;
 import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.crypto.Ed25519Verifier;
 import com.nimbusds.jwt.SignedJWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -108,7 +107,7 @@ public class SecurityConfiguration {
         return token -> {
             try {
                 SignedJWT signedJWT = SignedJWT.parse(token);
-                if (!signedJWT.verify(new Ed25519Verifier(securityProperties.getSecret().getPublicKey()))) {
+                if (!signedJWT.verify(securityProperties.getSecret().getVerifier())) {
                     throw new InvalidBearerTokenException(I18n.get("badCredentials"));
                 }
                 Map<String, Object> header = signedJWT.getHeader().toJSONObject();
