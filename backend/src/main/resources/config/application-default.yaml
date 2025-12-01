@@ -27,5 +27,5 @@ redisson:
   password: ${APP_REDIS_PASSWORD:redis}
 security:
   secret:
-    public-key: ${APP_SECRET_PUBLIC_KEY:/opt/demo_project/secret/id_ed25519.pub}
-    private-key: ${APP_SECRET_PRIVATE_KEY:/opt/demo_project/secret/id_ed25519}
+    public-key: ${APP_SECRET_PUBLIC_KEY:/opt/demo_project/secret/public-key.pem}
+    private-key: ${APP_SECRET_PRIVATE_KEY:/opt/demo_project/secret/private-key.pem}

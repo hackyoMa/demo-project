@@ -24,7 +24,15 @@ public final class EncryptUtil {
     }
 
     public static String bytesToBase64(byte[] bytes) {
-        return Base64.getEncoder().encodeToString(bytes);
+        return bytesToBase64(bytes, 0);
+    }
+
+    public static String bytesToBase64(byte[] bytes, int lineLength) {
+        return bytesToBase64(bytes, lineLength, "\n");
+    }
+
+    public static String bytesToBase64(byte[] bytes, int lineLength, String lineSeparator) {
+        return Base64.getMimeEncoder(lineLength, lineSeparator.getBytes(StandardCharsets.UTF_8)).encodeToString(bytes);
     }
 
     public static byte[] base64ToBytes(String base64) {

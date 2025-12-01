@@ -1,7 +1,6 @@
 package com.github.demoproject.common;
 
 import com.github.demoproject.util.EncryptUtil;
-import io.jsonwebtoken.security.Jwks;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -14,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.security.*;
+import java.security.spec.ECGenParameterSpec;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -36,17 +36,21 @@ public class SecurityProperties {
 
     @Data
     public static class Secret {
-        private static final String ALGORITHM = "Ed25519";
+        private static final String ALGORITHM = "EC";
+        private static final String CURVE = "secp256r1";
 
         private PublicKey publicKey;
         private PrivateKey privateKey;
 
         public Secret(Path publicKey, Path privateKey) throws IOException,
-                NoSuchAlgorithmException, InvalidKeySpecException {
+                NoSuchAlgorithmException, InvalidKeySpecException, InvalidAlgorithmParameterException {
             if (!Files.exists(publicKey) || !Files.exists(privateKey)) {
-                KeyPair pair = Jwks.CRV.Ed25519.keyPair().build();
-                this.publicKey = pair.getPublic();
-                this.privateKey = pair.getPrivate();
+                KeyPairGenerator keyGen = KeyPairGenerator.getInstance(ALGORITHM);
+                ECGenParameterSpec ecSpec = new ECGenParameterSpec(CURVE);
+                keyGen.initialize(ecSpec);
+                KeyPair keyPair = keyGen.generateKeyPair();
+                this.publicKey = keyPair.getPublic();
+                this.privateKey = keyPair.getPrivate();
                 writeKey(publicKey, this.publicKey, KeyType.PUBLIC);
                 writeKey(privateKey, this.privateKey, KeyType.PRIVATE);
             } else {
@@ -74,17 +78,9 @@ public class SecurityProperties {
                 Files.createDirectories(parent);
             }
             String keyString = type.getHeader() + "\n"
-                    + formatBase64(EncryptUtil.bytesToBase64(key.getEncoded()))
+                    + EncryptUtil.bytesToBase64(key.getEncoded(), 64) + "\n"
                     + type.getFooter() + "\n";
             Files.writeString(path, keyString, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-        }
-
-        private static String formatBase64(String base64) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < base64.length(); i += 64) {
-                sb.append(base64, i, Math.min(i + 64, base64.length())).append("\n");
-            }
-            return sb.toString();
         }
 
         @Getter
