@@ -5,10 +5,9 @@ import com.github.demoproject.user.entity.UserInfo;
 import com.github.demoproject.user.service.UserService;
 import com.github.demoproject.util.I18n;
 import com.github.demoproject.util.RequestUtil;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.crypto.Ed25519Verifier;
+import com.nimbusds.jwt.SignedJWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +28,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -41,7 +39,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.UrlPathHelper;
 
 import java.io.IOException;
-import java.time.Instant;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +58,6 @@ public class SecurityConfiguration {
     private final SecurityProperties securityProperties;
     private final WebServerFactory webServerFactory;
     private final UserService userService;
-    private final JwtParser jwtParser;
 
     @Autowired
     public SecurityConfiguration(SecurityProperties securityProperties,
@@ -69,7 +66,6 @@ public class SecurityConfiguration {
         this.securityProperties = securityProperties;
         this.webServerFactory = webServerFactory;
         this.userService = userService;
-        this.jwtParser = Jwts.parser().verifyWith(securityProperties.getSecret().getPublicKey()).build();
     }
 
     @Bean
@@ -111,11 +107,15 @@ public class SecurityConfiguration {
     public JwtDecoder jwtDecoder() {
         return token -> {
             try {
-                Jws<Claims> jws = jwtParser.parseSignedClaims(token);
-                Map<String, Object> payload = jws.getPayload();
-                return new Jwt(token, Instant.ofEpochMilli((Long) payload.get(JwtClaimNames.IAT)),
-                        null, jws.getHeader(), payload);
-            } catch (Exception e) {
+                SignedJWT signedJWT = SignedJWT.parse(token);
+                if (!signedJWT.verify(new Ed25519Verifier(securityProperties.getSecret().getPublicKey()))) {
+                    throw new InvalidBearerTokenException(I18n.get("badCredentials"));
+                }
+                Map<String, Object> header = signedJWT.getHeader().toJSONObject();
+                Map<String, Object> claims = signedJWT.getJWTClaimsSet().toJSONObject();
+                return new Jwt(token, signedJWT.getJWTClaimsSet().getIssueTime().toInstant(),
+                        null, header, claims);
+            } catch (ParseException | JOSEException e) {
                 throw new InvalidBearerTokenException(I18n.get("badCredentials"));
             }
         };
