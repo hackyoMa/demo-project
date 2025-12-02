@@ -9,9 +9,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -52,12 +54,15 @@ public class SecurityProperties {
                 this.publicKey = keyPair.getPublic();
                 writeKey(privateKey, this.privateKey.getEncoded(), KeyType.PRIVATE);
                 writeKey(publicKey, this.publicKey.getEncoded(), KeyType.PUBLIC);
+                if (FileSystems.getDefault().supportedFileAttributeViews().contains("posix")) {
+                    Files.setPosixFilePermissions(privateKey, PosixFilePermissions.fromString("rw-------"));
+                }
             } else {
                 KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
                 this.privateKey = keyFactory.generatePrivate(new PKCS8EncodedKeySpec(loadKey(privateKey)));
                 this.publicKey = keyFactory.generatePublic(new X509EncodedKeySpec(loadKey(publicKey)));
             }
-            this.keyId = EncryptUtil.blake3(this.privateKey.getEncoded());
+            this.keyId = EncryptUtil.blake3(this.publicKey.getEncoded());
         }
 
         private static byte[] loadKey(Path path) throws IOException {
