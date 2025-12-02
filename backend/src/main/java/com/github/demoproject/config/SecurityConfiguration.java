@@ -3,7 +3,8 @@ package com.github.demoproject.config;
 import com.github.demoproject.common.SecurityProperties;
 import com.github.demoproject.user.entity.UserInfo;
 import com.github.demoproject.user.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -16,6 +17,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtIssuerValidator;
+import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -34,20 +37,15 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private final SecurityProperties securityProperties;
     private final WebServerFactory webServerFactory;
     private final UserService userService;
 
-    @Autowired
-    public SecurityConfiguration(SecurityProperties securityProperties,
-                                 WebServerFactory webServerFactory,
-                                 UserService userService) {
-        this.securityProperties = securityProperties;
-        this.webServerFactory = webServerFactory;
-        this.userService = userService;
-    }
+    @Value("${spring.application.name}")
+    private String applicationName;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
@@ -86,9 +84,11 @@ public class SecurityConfiguration {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey((RSAPublicKey) securityProperties.getSecret().getPublicKey())
+        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withPublicKey((RSAPublicKey) securityProperties.getSecret().getPublicKey())
                 .signatureAlgorithm(SignatureAlgorithm.from(SecurityProperties.Secret.JWS_ALGORITHM))
                 .validateType(true).build();
+        jwtDecoder.setJwtValidator(JwtValidators.createDefaultWithValidators(new JwtIssuerValidator(applicationName)));
+        return jwtDecoder;
     }
 
     @Bean
