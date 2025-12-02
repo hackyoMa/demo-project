@@ -3,7 +3,7 @@ package com.github.demoproject.sys_config.controller;
 import com.github.demoproject.constant.SysConfigKey;
 import com.github.demoproject.sys_config.entity.SysConfig;
 import com.github.demoproject.sys_config.service.SysConfigService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,14 +15,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/sys-config")
+@RequiredArgsConstructor
 public class SysConfigController {
 
     private final SysConfigService sysConfigService;
-
-    @Autowired
-    public SysConfigController(SysConfigService sysConfigService) {
-        this.sysConfigService = sysConfigService;
-    }
 
     /**
      * get sys config

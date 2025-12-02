@@ -8,8 +8,8 @@ import com.github.demoproject.user.repository.OrgRepository;
 import com.github.demoproject.user.repository.OrgUserRepository;
 import com.github.demoproject.user.repository.UserInfoRepository;
 import com.github.demoproject.util.I18n;
+import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -28,6 +28,7 @@ import java.util.List;
  * @since 2022/4/1
  */
 @Service
+@RequiredArgsConstructor
 public class OrgService {
 
     private static final String ORG_ROOT = "root";
@@ -35,15 +36,6 @@ public class OrgService {
     private final OrgRepository orgRepository;
     private final OrgUserRepository orgUserRepository;
     private final UserInfoRepository userRepository;
-
-    @Autowired
-    public OrgService(OrgRepository orgRepository,
-                      OrgUserRepository orgUserRepository,
-                      UserInfoRepository userRepository) {
-        this.orgRepository = orgRepository;
-        this.orgUserRepository = orgUserRepository;
-        this.userRepository = userRepository;
-    }
 
     public List<Org> get() {
         return orgRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));

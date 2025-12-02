@@ -2,7 +2,7 @@ package com.github.demoproject.user.service;
 
 import com.github.demoproject.user.entity.Permission;
 import com.github.demoproject.user.repository.PermissionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +15,10 @@ import java.util.List;
  * @since 2022/4/1
  */
 @Service
+@RequiredArgsConstructor
 public class PermissionService {
 
     private final PermissionRepository permissionRepository;
-
-    @Autowired
-    public PermissionService(PermissionRepository permissionRepository) {
-        this.permissionRepository = permissionRepository;
-    }
 
     public List<Permission> get(Boolean basics) {
         if (basics == null) {

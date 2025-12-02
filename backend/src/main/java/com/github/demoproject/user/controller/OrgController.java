@@ -3,8 +3,8 @@ package com.github.demoproject.user.controller;
 import com.github.demoproject.user.entity.Org;
 import com.github.demoproject.user.entity.UserInfo;
 import com.github.demoproject.user.service.OrgService;
+import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,14 +20,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/org")
+@RequiredArgsConstructor
 public class OrgController {
 
     private final OrgService orgService;
-
-    @Autowired
-    public OrgController(OrgService orgService) {
-        this.orgService = orgService;
-    }
 
     /**
      * get org list

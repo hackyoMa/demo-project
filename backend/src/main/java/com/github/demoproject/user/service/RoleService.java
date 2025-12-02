@@ -9,7 +9,7 @@ import com.github.demoproject.user.repository.RolePermissionRepository;
 import com.github.demoproject.user.repository.RoleRepository;
 import com.github.demoproject.user.repository.UserRoleRepository;
 import com.github.demoproject.util.I18n;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,23 +25,13 @@ import java.util.List;
  * @since 2022/4/1
  */
 @Service
+@RequiredArgsConstructor
 public class RoleService {
 
     private final RoleRepository roleRepository;
     private final RolePermissionRepository rolePermissionRepository;
     private final UserRoleRepository userRoleRepository;
     private final PermissionRepository permissionRepository;
-
-    @Autowired
-    public RoleService(RoleRepository roleRepository,
-                       RolePermissionRepository rolePermissionRepository,
-                       UserRoleRepository userRoleRepository,
-                       PermissionRepository permissionRepository) {
-        this.roleRepository = roleRepository;
-        this.rolePermissionRepository = rolePermissionRepository;
-        this.userRoleRepository = userRoleRepository;
-        this.permissionRepository = permissionRepository;
-    }
 
     public List<Role> get() {
         return roleRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));

@@ -5,7 +5,7 @@ import com.github.demoproject.constant.SysConfigKey;
 import com.github.demoproject.sys_config.entity.SysConfig;
 import com.github.demoproject.sys_config.repository.SysConfigRepository;
 import com.github.demoproject.util.I18n;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -16,14 +16,10 @@ import org.springframework.util.StringUtils;
  * @since 2022/4/1
  */
 @Service
+@RequiredArgsConstructor
 public class SysConfigService {
 
     private final SysConfigRepository sysConfigRepository;
-
-    @Autowired
-    public SysConfigService(SysConfigRepository sysConfigRepository) {
-        this.sysConfigRepository = sysConfigRepository;
-    }
 
     public SysConfig get(SysConfigKey configKey) {
         return sysConfigRepository.findFirstByConfigKey(configKey.name()).orElseThrow();

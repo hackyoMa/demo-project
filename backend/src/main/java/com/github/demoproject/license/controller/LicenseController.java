@@ -2,7 +2,7 @@ package com.github.demoproject.license.controller;
 
 import com.github.demoproject.license.entity.License;
 import com.github.demoproject.license.service.LicenseService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/license")
+@RequiredArgsConstructor
 public class LicenseController {
 
     private final LicenseService licenseService;
-
-    @Autowired
-    public LicenseController(LicenseService licenseService) {
-        this.licenseService = licenseService;
-    }
 
     /**
      * get current license

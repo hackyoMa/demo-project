@@ -3,7 +3,7 @@ package com.github.demoproject.user.controller;
 import com.github.demoproject.user.entity.Role;
 import com.github.demoproject.user.model.RoleModel;
 import com.github.demoproject.user.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +17,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/role")
+@RequiredArgsConstructor
 public class RoleController {
 
     private final RoleService roleService;
-
-    @Autowired
-    public RoleController(RoleService roleService) {
-        this.roleService = roleService;
-    }
 
     /**
      * get role list
