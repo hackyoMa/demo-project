@@ -3,9 +3,6 @@ package com.github.demoproject.config;
 import com.github.demoproject.common.SecurityProperties;
 import com.github.demoproject.user.entity.UserInfo;
 import com.github.demoproject.user.service.UserService;
-import com.github.demoproject.util.I18n;
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jwt.SignedJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,16 +14,15 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
-import java.text.ParseException;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -90,20 +86,9 @@ public class SecurityConfiguration {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        return token -> {
-            try {
-                SignedJWT signedJWT = SignedJWT.parse(token);
-                if (!signedJWT.verify(securityProperties.getSecret().getVerifier())) {
-                    throw new InvalidBearerTokenException(I18n.get("badCredentials"));
-                }
-                Map<String, Object> header = signedJWT.getHeader().toJSONObject();
-                Map<String, Object> claims = signedJWT.getJWTClaimsSet().toJSONObject();
-                return new Jwt(token, signedJWT.getJWTClaimsSet().getIssueTime().toInstant(),
-                        null, header, claims);
-            } catch (ParseException | JOSEException e) {
-                throw new InvalidBearerTokenException(I18n.get("badCredentials"));
-            }
-        };
+        return NimbusJwtDecoder.withPublicKey((RSAPublicKey) securityProperties.getSecret().getPublicKey())
+                .signatureAlgorithm(SignatureAlgorithm.from(SecurityProperties.Secret.JWS_ALGORITHM.getName()))
+                .validateType(true).build();
     }
 
     @Bean

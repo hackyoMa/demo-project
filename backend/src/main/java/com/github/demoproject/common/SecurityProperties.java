@@ -1,14 +1,8 @@
 package com.github.demoproject.common;
 
 import com.github.demoproject.util.EncryptUtil;
-import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.crypto.Ed25519Signer;
-import com.nimbusds.jose.crypto.Ed25519Verifier;
-import com.nimbusds.jose.jwk.Curve;
-import com.nimbusds.jose.jwk.OctetKeyPair;
-import com.nimbusds.jose.jwk.gen.OctetKeyPairGenerator;
-import com.nimbusds.jose.util.Base64URL;
+import com.nimbusds.jose.crypto.RSASSASigner;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -20,6 +14,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Map;
 
 /**
@@ -39,27 +37,30 @@ public class SecurityProperties {
 
     @Data
     public static class Secret {
-        public static final JWSAlgorithm ALGORITHM = JWSAlgorithm.Ed25519;
+        public static final JWSAlgorithm JWS_ALGORITHM = JWSAlgorithm.RS256;
+        private static final String ALGORITHM = "RSA";
+        private static final int KEY_SIZE = 2048;
 
         private String keyId;
-        private OctetKeyPair privateKey;
-        private OctetKeyPair publicKey;
-        private Ed25519Signer signer;
-        private Ed25519Verifier verifier;
+        private PrivateKey privateKey;
+        private PublicKey publicKey;
+        private RSASSASigner signer;
 
-        public Secret(Path privateKey, Path publicKey) throws IOException, JOSEException {
+        public Secret(Path privateKey, Path publicKey) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
             if (!Files.exists(privateKey) || !Files.exists(publicKey)) {
-                OctetKeyPair keyPair = new OctetKeyPairGenerator(Curve.Ed25519).generate();
-                writeKey(privateKey, keyPair.getDecodedD(), KeyType.PRIVATE);
-                writeKey(publicKey, keyPair.getDecodedX(), KeyType.PUBLIC);
+                KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM);
+                keyPairGenerator.initialize(KEY_SIZE);
+                KeyPair keyPair = keyPairGenerator.generateKeyPair();
+                this.privateKey = keyPair.getPrivate();
+                this.publicKey = keyPair.getPublic();
+                writeKey(privateKey, this.privateKey.getEncoded(), KeyType.PRIVATE);
+                writeKey(publicKey, this.publicKey.getEncoded(), KeyType.PUBLIC);
+            } else {
+                KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
+                this.privateKey = keyFactory.generatePrivate(new PKCS8EncodedKeySpec(loadKey(privateKey)));
+                this.publicKey = keyFactory.generatePublic(new X509EncodedKeySpec(loadKey(publicKey)));
             }
-            byte[] decodedD = loadKey(privateKey);
-            this.keyId = EncryptUtil.blake3(decodedD);
-            this.privateKey = new OctetKeyPair.Builder(Curve.Ed25519, Base64URL.encode(loadKey(publicKey)))
-                    .d(Base64URL.encode(decodedD)).keyID(this.keyId).build();
-            this.publicKey = this.privateKey.toPublicJWK();
-            this.signer = new Ed25519Signer(this.privateKey);
-            this.verifier = new Ed25519Verifier(this.publicKey);
+            this.signer = new RSASSASigner(this.privateKey);
         }
 
         private static byte[] loadKey(Path path) throws IOException {
@@ -82,7 +83,7 @@ public class SecurityProperties {
         @Getter
         @AllArgsConstructor
         private enum KeyType {
-            PRIVATE("-----BEGIN PRIVATE KEY-----", "-----END PRIVATE KEY-----"),
+            PRIVATE("-----BEGIN RSA PRIVATE KEY-----", "-----END RSA PRIVATE KEY-----"),
             PUBLIC("-----BEGIN PUBLIC KEY-----", "-----END PUBLIC KEY-----");
 
             private final String header;

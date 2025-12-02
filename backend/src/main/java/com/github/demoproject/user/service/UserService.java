@@ -97,7 +97,7 @@ public class UserService {
 
         try {
             SignedJWT signedJWT = new SignedJWT(
-                    new JWSHeader.Builder(SecurityProperties.Secret.ALGORITHM)
+                    new JWSHeader.Builder(SecurityProperties.Secret.JWS_ALGORITHM)
                             .type(JOSEObjectType.JWT)
                             .keyID(securityProperties.getSecret().getKeyId())
                             .build(),
