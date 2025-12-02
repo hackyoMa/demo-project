@@ -23,14 +23,14 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class DistributedLock {
 
-    private final RedissonClient redissonClient;
+    private static RedissonClient redissonClient;
 
     @Autowired
     public DistributedLock(RedissonClient redissonClient) {
-        this.redissonClient = redissonClient;
+        DistributedLock.redissonClient = redissonClient;
     }
 
-    public void tryLock(RedisAttribute.LockType lockType, String key, Runnable task, Duration waitLockTimeout) {
+    public static void tryLock(RedisAttribute.LockType lockType, String key, Runnable task, Duration waitLockTimeout) {
         if (lockType == null || !StringUtils.hasLength(key)) {
             return;
         }
@@ -38,7 +38,7 @@ public class DistributedLock {
         tryLock(lock, task, waitLockTimeout);
     }
 
-    public void tryMultiLock(RedisAttribute.LockType lockType, List<String> keyList, Runnable task, Duration waitLockTimeout) {
+    public static void tryMultiLock(RedisAttribute.LockType lockType, List<String> keyList, Runnable task, Duration waitLockTimeout) {
         if (lockType == null || CollectionUtils.isEmpty(keyList)) {
             return;
         }
@@ -49,7 +49,7 @@ public class DistributedLock {
         tryLock(multiLock, task, waitLockTimeout);
     }
 
-    private void tryLock(RLock lock, Runnable task, Duration waitLockTimeout) {
+    private static void tryLock(RLock lock, Runnable task, Duration waitLockTimeout) {
         boolean isLockAcquired = false;
         try {
             isLockAcquired = waitLockTimeout == null ? lock.tryLock() : lock.tryLock(waitLockTimeout.toMillis(), TimeUnit.MILLISECONDS);
