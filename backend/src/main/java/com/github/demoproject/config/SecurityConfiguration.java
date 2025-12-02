@@ -87,7 +87,7 @@ public class SecurityConfiguration {
     @Bean
     public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey((RSAPublicKey) securityProperties.getSecret().getPublicKey())
-                .signatureAlgorithm(SignatureAlgorithm.from(SecurityProperties.Secret.JWS_ALGORITHM.getName()))
+                .signatureAlgorithm(SignatureAlgorithm.from(SecurityProperties.Secret.JWS_ALGORITHM))
                 .validateType(true).build();
     }
 

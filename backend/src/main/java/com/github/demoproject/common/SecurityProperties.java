@@ -1,8 +1,6 @@
 package com.github.demoproject.common;
 
 import com.github.demoproject.util.EncryptUtil;
-import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.crypto.RSASSASigner;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -37,14 +35,13 @@ public class SecurityProperties {
 
     @Data
     public static class Secret {
-        public static final JWSAlgorithm JWS_ALGORITHM = JWSAlgorithm.RS256;
+        public static final String JWS_ALGORITHM = "RS256";
         private static final String ALGORITHM = "RSA";
         private static final int KEY_SIZE = 2048;
 
         private String keyId;
         private PrivateKey privateKey;
         private PublicKey publicKey;
-        private RSASSASigner signer;
 
         public Secret(Path privateKey, Path publicKey) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
             if (!Files.exists(privateKey) || !Files.exists(publicKey)) {
@@ -60,7 +57,7 @@ public class SecurityProperties {
                 this.privateKey = keyFactory.generatePrivate(new PKCS8EncodedKeySpec(loadKey(privateKey)));
                 this.publicKey = keyFactory.generatePublic(new X509EncodedKeySpec(loadKey(publicKey)));
             }
-            this.signer = new RSASSASigner(this.privateKey);
+            this.keyId = EncryptUtil.blake3(this.privateKey.getEncoded());
         }
 
         private static byte[] loadKey(Path path) throws IOException {

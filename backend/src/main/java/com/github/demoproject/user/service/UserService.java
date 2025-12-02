@@ -18,7 +18,9 @@ import com.github.demoproject.util.I18n;
 import com.github.demoproject.util.ULID;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JOSEObjectType;
+import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import jakarta.persistence.EntityNotFoundException;
@@ -66,6 +68,7 @@ public class UserService {
     private final UserRoleRepository userRoleRepository;
     private final OrgUserRepository orgUserRepository;
     private final PermissionRepository permissionRepository;
+    private final RSASSASigner signer;
 
     @Value("${spring.application.name}")
     private String applicationName;
@@ -83,6 +86,7 @@ public class UserService {
         this.userRoleRepository = userRoleRepository;
         this.orgUserRepository = orgUserRepository;
         this.permissionRepository = permissionRepository;
+        this.signer = new RSASSASigner(securityProperties.getSecret().getPrivateKey());
     }
 
     private String generateUserToken(String userId, String userAgent, String clientIp) {
@@ -95,21 +99,21 @@ public class UserService {
         RMapCache<String, UserTokenModel> userTokenMap = redissonClient.getMapCache(RedisAttribute.TOKEN_PREFIX + userId);
         userTokenMap.put(tokenId, userTokenModel, TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
 
+        SignedJWT signedJWT = new SignedJWT(
+                new JWSHeader.Builder(JWSAlgorithm.parse(SecurityProperties.Secret.JWS_ALGORITHM))
+                        .type(JOSEObjectType.JWT)
+                        .keyID(securityProperties.getSecret().getKeyId())
+                        .build(),
+                new JWTClaimsSet.Builder()
+                        .jwtID(tokenId)
+                        .issuer(applicationName)
+                        .issueTime(issueTime)
+                        .subject(userId)
+                        .audience(applicationName)
+                        .notBeforeTime(issueTime)
+                        .build());
         try {
-            SignedJWT signedJWT = new SignedJWT(
-                    new JWSHeader.Builder(SecurityProperties.Secret.JWS_ALGORITHM)
-                            .type(JOSEObjectType.JWT)
-                            .keyID(securityProperties.getSecret().getKeyId())
-                            .build(),
-                    new JWTClaimsSet.Builder()
-                            .jwtID(tokenId)
-                            .issuer(applicationName)
-                            .issueTime(issueTime)
-                            .subject(userId)
-                            .audience(applicationName)
-                            .notBeforeTime(issueTime)
-                            .build());
-            signedJWT.sign(securityProperties.getSecret().getSigner());
+            signedJWT.sign(signer);
             return TOKEN_HEADER + signedJWT.serialize();
         } catch (JOSEException e) {
             throw new AuthenticationServiceException(I18n.get("failedGenerateAccessToken"));
