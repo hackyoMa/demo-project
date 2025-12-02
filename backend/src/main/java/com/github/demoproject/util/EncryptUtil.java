@@ -40,8 +40,12 @@ public final class EncryptUtil {
     }
 
     public static String blake3(String original) {
+        return blake3(original.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public static String blake3(byte[] original) {
         Blake3 hasher = Blake3.initHash();
-        hasher.update(original.getBytes(StandardCharsets.UTF_8));
+        hasher.update(original);
         byte[] hash = new byte[32];
         hasher.doFinalize(hash);
         return bytesToHex(hash);
