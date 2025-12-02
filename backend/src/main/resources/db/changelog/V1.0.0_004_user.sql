@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset hackyo:V20220401_004_user
+--changeset hackyo:V1.0.0_004_user
 CREATE TABLE user_info
 (
     id                      VARCHAR(26)  NOT NULL,

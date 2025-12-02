@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset hackyo:V20220401_001_permission
+--changeset hackyo:V1.0.0_001_permission
 CREATE TABLE permission
 (
     id                 VARCHAR(100) NOT NULL,

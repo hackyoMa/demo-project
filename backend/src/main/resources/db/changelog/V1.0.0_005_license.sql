@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset hackyo:V20220401_005_license
+--changeset hackyo:V1.0.0_005_license
 CREATE TABLE license
 (
     id                 VARCHAR(26)  NOT NULL,

@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset hackyo:V20220401_002_role
+--changeset hackyo:V1.0.0_002_role
 CREATE TABLE role
 (
     id                 VARCHAR(26)  NOT NULL,

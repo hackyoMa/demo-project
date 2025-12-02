@@ -1,13 +1,13 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/V20220401_001_permission.sql
+      file: db/changelog/V1.0.0_001_permission.sql
   - include:
-      file: db/changelog/V20220401_002_role.sql
+      file: db/changelog/V1.0.0_002_role.sql
   - include:
-      file: db/changelog/V20220401_003_org.sql
+      file: db/changelog/V1.0.0_003_org.sql
   - include:
-      file: db/changelog/V20220401_004_user.sql
+      file: db/changelog/V1.0.0_004_user.sql
   - include:
-      file: db/changelog/V20220401_005_license.sql
+      file: db/changelog/V1.0.0_005_license.sql
   - include:
-      file: db/changelog/V20220401_006_sys_config.sql
+      file: db/changelog/V1.0.0_006_sys_config.sql
