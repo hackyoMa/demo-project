@@ -41,6 +41,7 @@ public class SecurityProperties {
     public static class Secret {
         public static final JWSAlgorithm ALGORITHM = JWSAlgorithm.Ed25519;
 
+        private String keyId;
         private OctetKeyPair privateKey;
         private OctetKeyPair publicKey;
         private Ed25519Signer signer;
@@ -48,13 +49,14 @@ public class SecurityProperties {
 
         public Secret(Path privateKey, Path publicKey) throws IOException, JOSEException {
             if (!Files.exists(privateKey) || !Files.exists(publicKey)) {
-                this.privateKey = new OctetKeyPairGenerator(Curve.Ed25519).generate();
-                writeKey(privateKey, this.privateKey.getDecodedD(), KeyType.PRIVATE);
-                writeKey(publicKey, this.privateKey.getDecodedX(), KeyType.PUBLIC);
-            } else {
-                this.privateKey = new OctetKeyPair.Builder(Curve.Ed25519, Base64URL.encode(loadKey(publicKey)))
-                        .d(Base64URL.encode(loadKey(privateKey))).build();
+                OctetKeyPair keyPair = new OctetKeyPairGenerator(Curve.Ed25519).generate();
+                writeKey(privateKey, keyPair.getDecodedD(), KeyType.PRIVATE);
+                writeKey(publicKey, keyPair.getDecodedX(), KeyType.PUBLIC);
             }
+            byte[] decodedD = loadKey(privateKey);
+            this.keyId = EncryptUtil.blake3(decodedD);
+            this.privateKey = new OctetKeyPair.Builder(Curve.Ed25519, Base64URL.encode(loadKey(publicKey)))
+                    .d(Base64URL.encode(decodedD)).keyID(this.keyId).build();
             this.publicKey = this.privateKey.toPublicJWK();
             this.signer = new Ed25519Signer(this.privateKey);
             this.verifier = new Ed25519Verifier(this.publicKey);
@@ -68,7 +70,7 @@ public class SecurityProperties {
 
         private static void writeKey(Path path, byte[] key, KeyType type) throws IOException {
             Path parent = path.getParent();
-            if (parent != null) {
+            if (parent != null && !Files.exists(parent)) {
                 Files.createDirectories(parent);
             }
             String keyString = type.getHeader() + "\n"
