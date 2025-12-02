@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2022/4/1
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping(value = "/user", version = "1.0.0+")
 @RequiredArgsConstructor
 public class UserController {
 

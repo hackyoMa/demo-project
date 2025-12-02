@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022/4/1
  */
 @RestController
-@RequestMapping("/license")
+@RequestMapping(value = "/license", version = "1.0.0+")
 @RequiredArgsConstructor
 public class LicenseController {
 

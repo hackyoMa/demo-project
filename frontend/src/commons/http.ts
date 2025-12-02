@@ -3,6 +3,7 @@ import adapterFetch from 'alova/fetch';
 import VueHook from 'alova/vue';
 import router from '@/router';
 import { mainStore } from '@/store';
+import packageInfo from '../../package.json';
 
 const http = createAlova({
   baseURL: '/api',
@@ -13,6 +14,7 @@ const http = createAlova({
     if (!method.meta || method.meta.loading !== false) {
       window.$loading.start();
     }
+    method.config.headers['X-API-Version'] = packageInfo.version;
     const mStore = mainStore(window.$pinia);
     method.config.headers['Accept-Language'] = mStore.getLanguage;
     const token = mStore.getToken;

@@ -85,12 +85,6 @@
             <artifactId>commons-exec</artifactId>
             <version>${commons-exec.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.crypto.tink</groupId>
-            <artifactId>tink</artifactId>
-            <version>${tink.version}</version>
-            <scope>runtime</scope>
-        </dependency>
 
         <dependency>
             <groupId>com.github.demoproject</groupId>

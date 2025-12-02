@@ -19,7 +19,7 @@ import java.util.List;
  * @since 2022/4/1
  */
 @RestController
-@RequestMapping("/org")
+@RequestMapping(value = "/org", version = "1.0.0+")
 @RequiredArgsConstructor
 public class OrgController {
 

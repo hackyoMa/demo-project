@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2022/4/1
  */
 @RestController
-@RequestMapping("/permission")
+@RequestMapping(value = "/permission", version = "1.0.0+")
 @RequiredArgsConstructor
 public class PermissionController {
 

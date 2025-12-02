@@ -16,7 +16,7 @@ import java.util.List;
  * @since 2022/4/1
  */
 @RestController
-@RequestMapping("/role")
+@RequestMapping(value = "/role", version = "1.0.0+")
 @RequiredArgsConstructor
 public class RoleController {
 
