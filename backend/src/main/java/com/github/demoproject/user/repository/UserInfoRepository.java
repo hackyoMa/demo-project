@@ -15,7 +15,7 @@ import java.util.Optional;
  * UserInfoRepository
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Repository
 public interface UserInfoRepository extends JpaRepository<@NonNull UserInfo, @NonNull String> {

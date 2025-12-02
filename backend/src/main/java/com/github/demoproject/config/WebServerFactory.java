@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
  * WebServerFactory
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Configuration
 public class WebServerFactory implements WebServerFactoryCustomizer<@NonNull JettyServletWebServerFactory> {

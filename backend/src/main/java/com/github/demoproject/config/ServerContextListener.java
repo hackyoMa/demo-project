@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * ServerContextListener
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Slf4j
 @Configuration

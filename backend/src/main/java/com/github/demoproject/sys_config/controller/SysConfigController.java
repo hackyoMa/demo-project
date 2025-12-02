@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * SysConfigController
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @RestController
 @RequestMapping(value = "/sys-config", version = "1.0.0+")

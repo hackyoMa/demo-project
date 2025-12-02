@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * ApiPrefixConfig
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -26,7 +26,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void configureApiVersioning(ApiVersionConfigurer configurer) {
-        configurer.useRequestHeader("X-API-Version");
+        configurer.useRequestHeader("X-API-Version")
+                .setDefaultVersion("1.0.0");
     }
 
 }

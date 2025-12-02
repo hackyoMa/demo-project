@@ -9,7 +9,7 @@ import lombok.Data;
  * RolePermission
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Data
 @Entity(name = "role_permission")

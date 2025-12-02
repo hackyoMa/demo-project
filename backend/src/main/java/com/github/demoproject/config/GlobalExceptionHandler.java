@@ -24,7 +24,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
  * GlobalExceptionHandler
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @ControllerAdvice
 public class GlobalExceptionHandler implements ResponseBodyAdvice<@NonNull Object> {

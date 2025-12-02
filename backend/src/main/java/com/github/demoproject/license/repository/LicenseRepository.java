@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * LicenseRepository
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Repository
 public interface LicenseRepository extends JpaRepository<@NonNull License, @NonNull String> {

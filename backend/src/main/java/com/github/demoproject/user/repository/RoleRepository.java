@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * RoleRepository
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Repository
 public interface RoleRepository extends JpaRepository<@NonNull Role, @NonNull String> {

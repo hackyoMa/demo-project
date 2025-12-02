@@ -16,7 +16,7 @@ import static org.springframework.data.web.config.EnableSpringDataWebSupport.Pag
  * DataJpaConfig
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Configuration
 @EnableJpaAuditing

@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * CurrentUser
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 public final class CurrentUser {
 

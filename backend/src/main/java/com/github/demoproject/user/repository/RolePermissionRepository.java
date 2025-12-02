@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * RolePermissionRepository
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Repository
 public interface RolePermissionRepository extends JpaRepository<@NonNull RolePermission, @NonNull String> {

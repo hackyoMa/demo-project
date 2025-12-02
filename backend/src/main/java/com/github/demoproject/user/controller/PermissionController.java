@@ -15,7 +15,7 @@ import java.util.List;
  * PermissionController
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @RestController
 @RequestMapping(value = "/permission", version = "1.0.0+")

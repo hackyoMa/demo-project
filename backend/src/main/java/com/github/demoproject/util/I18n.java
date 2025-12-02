@@ -11,7 +11,7 @@ import java.util.Arrays;
  * I18n
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Component
 public class I18n {

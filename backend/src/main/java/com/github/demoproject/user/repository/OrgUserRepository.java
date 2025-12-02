@@ -12,7 +12,7 @@ import java.util.List;
  * OrgUserRepository
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Repository
 public interface OrgUserRepository extends JpaRepository<@NonNull OrgUser, @NonNull String> {

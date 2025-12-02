@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * GlobalErrorController
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Controller
 public class GlobalErrorController implements ErrorController {

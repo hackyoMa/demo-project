@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
  * HttpException
  *
  * @author hackyo
- * @since 2022/4/1
+ * @since 1.0.0
  */
 @Data
 public class HttpException extends RuntimeException {
