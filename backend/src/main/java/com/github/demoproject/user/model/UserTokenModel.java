@@ -24,8 +24,8 @@ public class UserTokenModel {
     private String clientIp;
 
     /**
-     * issued at
+     * issue time
      */
-    private Date issuedAt;
+    private Date issueTime;
 
 }

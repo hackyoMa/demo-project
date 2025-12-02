@@ -17,6 +17,7 @@ import com.github.demoproject.util.EncryptUtil;
 import com.github.demoproject.util.I18n;
 import com.github.demoproject.util.ULID;
 import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
@@ -25,6 +26,7 @@ import org.jspecify.annotations.NonNull;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.*;
@@ -36,7 +38,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,6 +67,9 @@ public class UserService {
     private final OrgUserRepository orgUserRepository;
     private final PermissionRepository permissionRepository;
 
+    @Value("${spring.application.name}")
+    private String applicationName;
+
     @Autowired
     public UserService(RedissonClient redissonClient,
                        SecurityProperties securityProperties,
@@ -82,22 +86,28 @@ public class UserService {
     }
 
     private String generateUserToken(String userId, String userAgent, String clientIp) {
-        Date currentTime = Date.from(Instant.now());
+        Date issueTime = new Date();
         String tokenId = ULID.randomULID();
         UserTokenModel userTokenModel = new UserTokenModel();
         userTokenModel.setUserAgent(userAgent);
         userTokenModel.setClientIp(clientIp);
-        userTokenModel.setIssuedAt(currentTime);
+        userTokenModel.setIssueTime(issueTime);
         RMapCache<String, UserTokenModel> userTokenMap = redissonClient.getMapCache(RedisAttribute.TOKEN_PREFIX + userId);
         userTokenMap.put(tokenId, userTokenModel, TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
 
         try {
             SignedJWT signedJWT = new SignedJWT(
-                    new JWSHeader.Builder(SecurityProperties.Secret.ALGORITHM).build(),
+                    new JWSHeader.Builder(SecurityProperties.Secret.ALGORITHM)
+                            .type(JOSEObjectType.JWT)
+                            .keyID(securityProperties.getSecret().getKeyId())
+                            .build(),
                     new JWTClaimsSet.Builder()
-                            .subject(userId)
                             .jwtID(tokenId)
-                            .issueTime(currentTime)
+                            .issuer(applicationName)
+                            .issueTime(issueTime)
+                            .subject(userId)
+                            .audience(applicationName)
+                            .notBeforeTime(issueTime)
                             .build());
             signedJWT.sign(securityProperties.getSecret().getSigner());
             return TOKEN_HEADER + signedJWT.serialize();
@@ -106,14 +116,13 @@ public class UserService {
         }
     }
 
-    public void verifyToken(String userId, String tokenId, String userAgent, String clientIp) throws AuthenticationException {
+    public void verifyToken(String userId, String tokenId) throws AuthenticationException {
         RMapCache<String, UserTokenModel> userTokenMap = redissonClient.getMapCache(RedisAttribute.TOKEN_PREFIX + userId);
         UserTokenModel userToken = userTokenMap.get(tokenId);
-        if (userToken == null || !userToken.getUserAgent().equals(userAgent)) {
+        if (userToken == null) {
             throw new CredentialsExpiredException(I18n.get("certificationExpired"));
         }
         if (userTokenMap.remainTimeToLive(tokenId) < TOKEN_RENEWAL_THRESHOLD) {
-            userToken.setClientIp(clientIp);
             userTokenMap.put(tokenId, userToken, TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
         }
     }
