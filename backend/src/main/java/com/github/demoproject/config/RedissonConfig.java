@@ -31,10 +31,10 @@ public class RedissonConfig {
             config = Config.fromYAML(new File(file));
         } else {
             config = new Config();
+            config.setPassword(password);
             config.useSingleServer()
                     .setAddress("redis://" + host + ":" + port)
-                    .setDatabase(database)
-                    .setPassword(password);
+                    .setDatabase(database);
         }
         return Redisson.create(config);
     }
